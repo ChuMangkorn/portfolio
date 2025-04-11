@@ -23,7 +23,7 @@ export default function HomePage() {
       {/* Text Column */}
       <div className="text-center md:text-left">
         <h1 className="text-4xl md:text-6xl font-bold mb-3 leading-tight">
-          Hi, I'm Chulaprungrueang Mangkorn
+          Hi, I&apos;m Chulaprungrueang Mangkorn
         </h1>
         {/* Replace static text with TypeAnimation */}
         <TypeAnimation
