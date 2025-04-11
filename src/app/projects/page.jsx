@@ -27,8 +27,8 @@ const projectsData = [
     description: "My personal portfolio website built using Next.js App Router and modern design principles.",
     imageUrl: "/portfolio.png", // Ensure this image exists in /public/images/
     tags: ["Next.js", "App Router", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "#", // Replace with actual link
-    repoUrl: "#" // Replace with actual link
+    liveUrl: "https://portfolio-omega-livid-27.vercel.app/", // Replace with actual link
+    repoUrl: "https://github.com/ChuMangkorn/portfolio" // Replace with actual link
   },
 ];
 // --- End of Project Data ---
