@@ -5,9 +5,11 @@ import { motion } from 'framer-motion'; // Import motion
 
 export default function EducationPage() {
   // Keep educationList as before
-   const educationList = [
-    { institution: 'Your University Name', degree: 'BSc Computer Science', years: '2018 - 2022', description: 'Relevant coursework...' },
-    { institution: 'Online Course Platform', degree: 'Advanced React Cert', years: '2023', description: 'Focused on...' },
+  const educationList = [
+    { institution: 'RAJAMANGALA UNIVERSITY OF TECHNOLOGY LANNA', degree: "Bachelor's degree", years: '2015 - 2020', description: 'Computer Information Systems (CIS)' },
+    { institution: 'Lanna Commercial Technological College', degree: 'Vocational Certificate', years: '2013 - 2015', description: 'Computer Business' },
+    { institution: 'Futureskill Course Platform', degree: 'Next.js Basics for Web Application Developers', years: '2025', description: 'Creating a Full-Stack Project using Next.js' },
+    { institution: 'Futureskill Course Platform', degree: 'Pokemon Search App with Next.js & Tailwind CSS', years: '2025', description: 'Next.js Frontend Basics with REST APIs' },
   ];
 
   // Re-use or define cardVariants (can be moved to a separate file)
@@ -19,7 +21,7 @@ export default function EducationPage() {
   return (
     <div>
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">Education & Learning</h1>
-      <p className="text-lg text-slate-600 mb-10 text-center max-w-xl mx-auto">
+      <p className="text-lg text-slate-400 mb-10 text-center max-w-xl mx-auto">
         My academic background and relevant certifications.
       </p>
       {/* Use motion.div for the container to stagger children */}

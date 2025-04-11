@@ -28,7 +28,7 @@ export default function SkillsPage() {
   return (
     <div>
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">My Technical Skills</h1>
-      <p className="text-lg text-slate-600 mb-10 text-center max-w-xl mx-auto">
+      <p className="text-lg text-slate-400 mb-10 text-center max-w-xl mx-auto">
         Here's a list of technologies and tools I'm proficient with.
       </p>
       {/* Use motion.div for the grid container to stagger children */}

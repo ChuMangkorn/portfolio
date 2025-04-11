@@ -23,7 +23,7 @@ export default function HomePage() {
       {/* Text Column */}
       <div className="text-center md:text-left">
         <h1 className="text-4xl md:text-6xl font-bold mb-3 leading-tight">
-          Hi, I'm [Your Name]
+          Hi, I'm Chulaprungrueang Mangkorn
         </h1>
         {/* Replace static text with TypeAnimation */}
         <TypeAnimation
@@ -40,7 +40,7 @@ export default function HomePage() {
           ]}
           wrapper="p" // Use a 'p' tag for the text
           speed={50} // Typing speed
-          className="text-lg md:text-xl text-slate-600 mb-6 max-w-xl" // Apply styling
+          className="text-lg md:text-xl text-slate-400 mb-6 max-w-xl" // Apply styling
           repeat={Infinity} // Repeat animation infinitely
         />
         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">

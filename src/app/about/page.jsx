@@ -22,9 +22,9 @@ export default function AboutPage() {
         />
       </div>
 
-      <div className="space-y-6 text-lg text-slate-700 leading-relaxed">
+      <div className="space-y-6 text-lg text-slate-400 leading-relaxed">
         <p>
-          Hello! I'm [Mangkorn Chulaprungrueang], a passionate [Your Role] based in [Your Location, e.g., Chiang Mai]. My journey into web development started back in [Year/Time], driven by a fascination with how websites work and a desire to create intuitive digital experiences.
+          Hello! I am committed to continuous learning, currently undertaking further studies in Japan and consistently practicing coding to refine my abilities. I possess JLPT N3 Japanese proficiency and functional English skills. I am enthusiastic about applying my skills to real-world challenges and contributing to a forward-thinking company.
         </p>
         {/* ... rest of your paragraphs ... */}
       </div>
