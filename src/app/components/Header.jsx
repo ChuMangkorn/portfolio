@@ -32,16 +32,16 @@ export default function Header() {
         {/* Desktop Menu (Hidden on small screens) */}
         <ul className="hidden md:flex space-x-5 text-sm font-medium text-slate-700"> {/* Adjusted space-x-5 */}
           {menuItems.map((item) => (
-             <li key={item.href}>
-               <Link href={item.href} className="hover:text-indigo-600 transition-colors">
-                 {item.label}
-               </Link>
-             </li>
+            <li key={item.href}>
+              <Link href={item.href} className="hover:text-indigo-600 transition-colors">
+                {item.label}
+              </Link>
+            </li>
           ))}
         </ul>
 
         {/* Mobile Menu Button (Visible on small screens) */}
-        <div className="md:hidden">
+        <div className="md:hidden text-slate-700">
           <button onClick={toggleMobileMenu} aria-label="Toggle menu">
             {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
@@ -50,13 +50,14 @@ export default function Header() {
 
       {/* Mobile Menu (Dropdown) - Shows when isMobileMenuOpen is true */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md z-40">
+        <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md z-40 ">
            <ul className="flex flex-col items-center py-4">
               {menuItems.map((item) => (
-                 <li key={item.href} className="w-full text-center py-2">
+                 <li key={item.href} className="w-full text-center py-1"> {/* อาจจะลด padding ตรงนี้ถ้าต้องการ */}
                   <Link
                     href={item.href}
-                    className="block hover:text-indigo-600 transition-colors"
+                    // *** เพิ่ม text-slate-700 หรือสีเข้มอื่นๆ ตรงนี้ ***
+                    className="block text-slate-700 hover:text-indigo-600 transition-colors py-2" // <--- เพิ่มสีตรงนี้ และอาจจะเพิ่ม padding y
                     onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
                   >
                     {item.label}

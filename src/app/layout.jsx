@@ -13,8 +13,8 @@ const inter = Inter({
 
 export const metadata = {
   title: { // Improved title handling
-    template: '%s | My Modern Portfolio', // Template for page titles
-    default: 'My Modern Portfolio', // Default title
+    template: '%s | My Portfolio', // Template for page titles
+    default: 'My Portfolio', // Default title
   },
   description: 'A modern personal portfolio website built with Next.js App Router and Tailwind CSS.',
 };
