@@ -21,7 +21,7 @@ export default function ContactPage() {
 
         {/* LinkedIn */}
         <a
-          href="https://linkedin.com/in/chulaprungrueang-mangkorn-12584735b"
+          href="https://www.linkedin.com/in/chulaprungrueang-mangkorn"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center space-x-2 bg-slate-700 hover:bg-slate-800 text-white font-medium py-3 px-6 rounded-md transition-all duration-200 shadow-md hover:shadow-lg w-full md:w-auto ml-0 md:ml-4 mt-4 md:mt-0 hover:scale-105 transform" // Added transform effects
