@@ -30,6 +30,12 @@ const projectsData = [
     liveUrl: "https://portfolio-omega-livid-27.vercel.app/", // Replace with actual link
     repoUrl: "https://github.com/ChuMangkorn/portfolio" // Replace with actual link
   },
+  {
+    title: "Educational Agency Website Ichiban Japan (2013)",
+    description: "Informational site for Japanese language studies and study abroad programs in Japan.",
+    imageUrl: "/ichiban.png", // Ensure this image exists in /public/images/
+    tags: ["WordPress", "PHP", "MySQL", "Bootstrap","jQuery"]
+  },
 ];
 // --- End of Project Data ---
 
@@ -63,13 +69,16 @@ export default function ProjectsPage() {
             className="bg-white rounded-lg shadow-md hover:shadow-xl overflow-hidden flex flex-col transition-all duration-300 hover:scale-[1.03]" // Card styling
             variants={cardVariants}
           >
-            {/* Project Image */}
-            <div className="relative w-full aspect-video"> {/* Container for fixed aspect ratio */}
+            {/* Project Image Container */}
+            <div className="relative w-full aspect-video bg-slate-100"> {/* Container ควรมี position: relative และ ขนาด/สัดส่วน */}
               <Image
                 src={project.imageUrl}
                 alt={`${project.title} screenshot`}
-                fill // Use fill to cover the container
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Optimize image loading
+                fill // ใช้ fill เพื่อให้ภาพเต็ม container
+                // ----- ตรวจสอบบรรทัดนี้ -----
+                className="object-obtain" // *** object-cover (เต็มกรอบ แต่รูปถูกตัด) กับ object-contain (เห็นรูปครบ แต่มีขอบว่าง) ***
+                // ---------------------------
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
 

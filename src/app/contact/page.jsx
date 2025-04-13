@@ -30,6 +30,17 @@ export default function ContactPage() {
           <span>Connect on LinkedIn</span>
         </a>
 
+        {/* Indeed */}
+        <a
+          href="https://profile.indeed.com/p/mangkornc-sykyjft"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center space-x-2 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-md transition-all duration-200 shadow-md hover:shadow-lg w-full md:w-auto ml-0 md:ml-4 mt-4 md:mt-0 hover:scale-105 transform" // Added transform effects
+        >
+          {/* <FiGithub className="w-5 h-5" /> */}
+          <span>Connect on indeed</span>
+        </a>
+
         {/* GitHub */}
         <a
           href="https://github.com/ChuMangkorn"

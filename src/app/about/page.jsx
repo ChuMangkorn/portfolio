@@ -1,10 +1,6 @@
 // app/about/page.jsx
 import Image from 'next/image'; // *** 1. Import Image component ***
 
-export const metadata = {
-  title: 'About Me | My Modern Portfolio',
-};
-
 export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto">
