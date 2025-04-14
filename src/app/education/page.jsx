@@ -8,8 +8,8 @@ export default function EducationPage() {
   const educationList = [
     { institution: 'RAJAMANGALA UNIVERSITY OF TECHNOLOGY LANNA', degree: "Bachelor's degree", years: '2015 - 2020', description: 'Computer Information Systems (CIS)' },
     { institution: 'Lanna Commercial Technological College', degree: 'Vocational Certificate', years: '2013 - 2015', description: 'Computer Business' },
-    { institution: 'Futureskill Course Platform', degree: 'Next.js Basics for Web Application Developers', years: '2025', description: 'Creating a Full-Stack Project using Next.js' },
-    { institution: 'Futureskill Course Platform', degree: 'Pokemon Search App with Next.js & Tailwind CSS', years: '2025', description: 'Next.js Frontend Basics with REST APIs' },
+    { institution: 'Futureskill Course Platform', degree: 'Next.js Basics for Web Application Developers Certificate', years: '2025', description: 'Creating a Full-Stack Project using Next.js' },
+    { institution: 'Futureskill Course Platform', degree: 'Pokemon Search App with Next.js & Tailwind CSS Certificate', years: '2025', description: 'Next.js Frontend Basics with REST APIs' },
   ];
 
   // Re-use or define cardVariants (can be moved to a separate file)

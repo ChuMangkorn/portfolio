@@ -1,11 +1,13 @@
 // app/skills/page.jsx
-'use client'; // *** Mark component as Client Component for Framer Motion ***
+'use client';
 
-import { motion } from 'framer-motion'; // Import motion
+import { motion } from 'framer-motion';
+// ถ้าต้องการไอคอนภาษา: npm install react-icons
+// import { FaLanguage } from 'react-icons/fa';
 
 export default function SkillsPage() {
-  // Keep skillsList as before
-  const skillsList = [
+  // แยก Technical Skills ออกมา
+  const technicalSkills = [
     { name: 'JavaScript (ES6+)', level: 'Advanced' },
     { name: 'React', level: 'Advanced' },
     { name: 'Next.js (App Router)', level: 'Intermediate' },
@@ -15,47 +17,66 @@ export default function SkillsPage() {
     { name: 'Git & GitHub', level: 'Advanced' },
     { name: 'UI/UX Design', level: 'Basic' },
   ];
+  const languageSkills = [
+    { name: 'Japanese', level: 'JLPT N3 Certified' },
+    { name: 'English', level: 'Intermediate' },
+    { name: 'Thai', level: 'Native Speaker' },
+  ];
+  
 
-  // Animation Variants for cards
+  // Animation Variants (เหมือนเดิม)
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 }, // Start hidden and slightly down
-    visible: {
-      opacity: 1, y: 0,   // Fade in and slide up
-      transition: { duration: 0.5 }
-    }
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
   return (
     <div>
-      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">My Technical Skills</h1>
-      <p className="text-lg text-slate-400 mb-10 text-center max-w-xl mx-auto">
-        Here's a list of technologies and tools I'm proficient with.
+      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">My Skills</h1>
+      <p className="text-lg text-slate-600 mb-10 text-center max-w-xl mx-auto">
+        A combination of technical skills and language proficiency.
       </p>
-      {/* Use motion.div for the grid container to stagger children */}
+
+      {/* --- Technical Skills Section --- */}
+      <h2 className="text-2xl font-semibold mb-6 text-slate-800">Technical Skills</h2>
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12" // เพิ่มระยะห่างด้านล่าง
         initial="hidden"
-        animate="visible" // Or use whileInView on individual cards if preferred
-        variants={{
-          visible: { transition: { staggerChildren: 0.1 } } // Stagger animation
-        }}
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
       >
-        {skillsList.map((skill, index) => (
-          // Wrap each card with motion.div
+        {technicalSkills.map((skill, index) => (
           <motion.div
             key={index}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 transition-all duration-300 hover:scale-105" // Added hover:scale-105
+            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 transition-all duration-300 hover:scale-105"
             variants={cardVariants}
-            // Add whileInView if not using staggerChildren on parent:
-            // initial="hidden"
-            // whileInView="visible"
-            // viewport={{ once: true, amount: 0.3 }} // Trigger animation once when 30% visible
           >
             <h3 className="text-lg font-semibold text-indigo-700 mb-2">{skill.name}</h3>
             <p className="text-sm text-slate-500">{skill.level}</p>
           </motion.div>
         ))}
       </motion.div>
+
+      {/* --- Language Skills Section --- */}
+      <h2 className="text-2xl font-semibold mb-6 text-slate-800">Language Skills</h2>
+      <motion.div
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12" // เพิ่มระยะห่างด้านล่าง
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+      >
+        {languageSkills.map((skill, index) => (
+          <motion.div
+            key={index}
+            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 transition-all duration-300 hover:scale-105"
+            variants={cardVariants}
+          >
+            <h3 className="text-lg font-semibold text-indigo-700 mb-2">{skill.name}</h3>
+            <p className="text-sm text-slate-500">{skill.level}</p>
+          </motion.div>
+        ))}
+      </motion.div>
+
     </div>
   );
 }
