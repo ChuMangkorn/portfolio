@@ -1,5 +1,4 @@
-// app/education/page.jsx
-'use client'; // *** Mark component as Client Component ***
+'use client'; 
 
 import { motion } from 'framer-motion'; // Import motion
 

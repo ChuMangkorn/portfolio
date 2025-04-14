@@ -1,7 +1,4 @@
-// app/contact/page.jsx
-'use client'; // May need this if using icons or complex interactions later
-
-// ... (imports if needed)
+'use client'; 
 
 export default function ContactPage() {
   // ... (rest of the component)
@@ -37,7 +34,7 @@ export default function ContactPage() {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center space-x-2 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-md transition-all duration-200 shadow-md hover:shadow-lg w-full md:w-auto ml-0 md:ml-4 mt-4 md:mt-0 hover:scale-105 transform" // Added transform effects
         >
-          {/* <FiGithub className="w-5 h-5" /> */}
+          {/* <Fiindeed className="w-5 h-5" /> */}
           <span>Connect on indeed</span>
         </a>
 

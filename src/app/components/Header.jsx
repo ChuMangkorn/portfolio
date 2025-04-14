@@ -1,4 +1,3 @@
-// components/Header.jsx
 'use client'; // Needed for useState
 
 import Link from 'next/link';
@@ -51,7 +50,7 @@ export default function Header() {
       {/* Mobile Menu (Dropdown) - Shows when isMobileMenuOpen is true */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md z-40 ">
-           <ul className="flex flex-col items-center py-4">
+          <ul className="flex flex-col items-center py-4">
               {menuItems.map((item) => (
                  <li key={item.href} className="w-full text-center py-1"> {/* อาจจะลด padding ตรงนี้ถ้าต้องการ */}
                   <Link
@@ -62,9 +61,9 @@ export default function Header() {
                   >
                     {item.label}
                   </Link>
-                 </li>
+                </li>
               ))}
-           </ul>
+          </ul>
         </div>
       )}
     </header>

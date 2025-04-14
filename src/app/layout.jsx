@@ -1,4 +1,3 @@
-// app/layout.jsx
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Header from './components/Header'; // Assuming components/Header.jsx exists

@@ -1,4 +1,3 @@
-// app/about/page.jsx
 import Image from 'next/image'; // *** 1. Import Image component ***
 
 export default function AboutPage() {

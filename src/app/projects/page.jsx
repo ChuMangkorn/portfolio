@@ -1,4 +1,3 @@
-// app/projects/page.jsx
 'use client'; // Needed for Framer Motion
 
 import Image from 'next/image';
@@ -11,21 +10,21 @@ const projectsData = [
   {
     title: "E-commerce Platform",
     description: "A research project submission system featuring real-time chat via Socket.IO and notifications through email and Line Notify.",
-    imageUrl: "/project-ecommerce.jpg", // Ensure this image exists in /public/images/
+    imageUrl: "/project-ecommerce.jpg", 
     tags: ["Next.js", "NestJS", "Tailwind CSS","React"]
   },
   {
     title: "Pokemon Search App with Next.js & Tailwind CSS",
     description: "Next.js Frontend Basics with REST APIs.",
-    imageUrl: "/pokemonproject.png", // Ensure this image exists in /public/images/
+    imageUrl: "/pokemonproject.png", 
     tags: ["Next.js", "JavaScript","Tailwind CSS", "React"],
-    liveUrl: "https://nextjs-tailwindcss-eight.vercel.app", // Replace with actual link or remove if none
-    repoUrl: "https://github.com/ChuMangkorn/nextjs-tailwindcss" // Replace with actual link or remove if none
+    liveUrl: "https://nextjs-tailwindcss-eight.vercel.app", 
+    repoUrl: "https://github.com/ChuMangkorn/nextjs-tailwindcss" 
   },
   {
     title: "Portfolio Website",
     description: "My personal portfolio website built using Next.js App Router and modern design principles.",
-    imageUrl: "/portfolio.png", // Ensure this image exists in /public/images/
+    imageUrl: "/portfolio.png", 
     tags: ["Next.js", "App Router", "Tailwind CSS", "Framer Motion"],
     liveUrl: "https://portfolio-omega-livid-27.vercel.app/", 
     repoUrl: "https://github.com/ChuMangkorn/portfolio" 

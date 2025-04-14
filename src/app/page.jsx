@@ -1,4 +1,3 @@
-// app/page.jsx
 'use client'; // *** Mark component as Client Component ***
 
 import Link from 'next/link';
