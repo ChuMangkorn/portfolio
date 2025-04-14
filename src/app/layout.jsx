@@ -3,6 +3,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import Header from './components/Header'; // Assuming components/Header.jsx exists
 import Footer from './components/Footer'; // Assuming components/Footer.jsx exists
+import 'flag-icon-css/css/flag-icons.min.css';
 
 // Configure Inter font weights
 const inter = Inter({
