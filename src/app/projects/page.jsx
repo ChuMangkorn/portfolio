@@ -27,15 +27,28 @@ const projectsData = [
     description: "My personal portfolio website built using Next.js App Router and modern design principles.",
     imageUrl: "/portfolio.png", // Ensure this image exists in /public/images/
     tags: ["Next.js", "App Router", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://portfolio-omega-livid-27.vercel.app/", // Replace with actual link
-    repoUrl: "https://github.com/ChuMangkorn/portfolio" // Replace with actual link
+    liveUrl: "https://portfolio-omega-livid-27.vercel.app/", 
+    repoUrl: "https://github.com/ChuMangkorn/portfolio" 
   },
   {
     title: "Educational Agency Website Ichiban Japan (2013)",
     description: "Informational site for Japanese language studies and study abroad programs in Japan.",
-    imageUrl: "/ichiban.png", // Ensure this image exists in /public/images/
+    imageUrl: "/ichiban.png", 
     tags: ["WordPress", "PHP", "MySQL", "Bootstrap","jQuery"]
   },
+  {
+    title: "Insurance Policy & Claims Management System (2018)",
+    description: "An integrated system designed to manage insurance operations efficiently.",
+    imageUrl: "/g-pacv.png", 
+    tags: ["PHP", "Javascript", "MySQL", "Bootstrap","jQuery"]
+  },
+  {
+    title: "Tour Agency Management System (2019)",
+    description: "Web app for K.Star Travel tour agency, featuring customer booking functions and an admin management panel. ",
+    imageUrl: "/k-travel.png", 
+    tags: ["PHP", "Javascript", "MySQL", "Bootstrap","jQuery"]
+  },
+  
 ];
 // --- End of Project Data ---
 
