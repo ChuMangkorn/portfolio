@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // หรือ "./src" ก็ได้ แล้วปรับ paths ให้สอดคล้องกัน
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"] // ถ้า baseUrl คือ "."
+      // หรือ "@/*": ["*"] ถ้า baseUrl คือ "./src"
     }
-  }
+  },
+  "include": ["src"] // ระบุให้ Intellisense มองเฉพาะใน src ก็ได้
 }

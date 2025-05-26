@@ -4,8 +4,7 @@ import { NextResponse } from 'next/server';
 import { getFullPortfolioContext } from '@/lib/portfolioData';
 
 const apiKey = process.env.GOOGLE_API_KEY;
-// --- ย้ายการสร้าง genAI ไปไว้ข้างใน POST หรือทำให้เป็น global ที่ปลอดภัย ---
-// --- หรือจะ Initialize ใน POST เลยก็ได้ ถ้าไม่ต้องการใช้ที่อื่น ---
+// ตรวจสอบว่า apiKey มีค่าอยู่หรือไม่
 let genAI;
 if (apiKey) {
   genAI = new GoogleGenerativeAI(apiKey);
