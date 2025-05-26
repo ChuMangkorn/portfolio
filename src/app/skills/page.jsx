@@ -4,13 +4,9 @@ import { motion } from 'framer-motion';
 // --- Import Icons ---
 import { SiJavascript, SiReact, SiNextdotjs, SiTailwindcss, SiNodedotjs, SiGit, SiTypescript } from "react-icons/si";
 import { FiCode, FiPenTool } from "react-icons/fi";
-import * as React from 'react'; // Import React for Factory
-import FlagIconFactory from 'react-flag-icon-css'; // (อย่าลืม Import CSS ธงชาติ ใน layout.jsx ) ---// import 'flag-icon-css/css/flag-icons.min.css';
+import Flag from 'react-world-flags'; 
 
-// --- สร้าง FlagIcon component ---
-const FlagIcon = FlagIconFactory(React, { useCssModules: false });
-
-// --- 1. ย้าย Data Definitions ออกมานอก Component หลัก ---
+// ---  ย้าย Data Definitions ออกมานอก Component หลัก ---
 const technicalSkillsData = [
   { name: 'JavaScript (ES6+)', level: 'Advanced', icon: <SiJavascript size={24} className="text-yellow-400" /> },
   { name: 'React', level: 'Advanced', icon: <SiReact size={24} className="text-sky-500" /> },
@@ -24,9 +20,9 @@ const technicalSkillsData = [
 ];
 
 const languageSkillsData = [
-  { name: 'Japanese', level: 'JLPT N3 Certified', icon: <FlagIcon code="jp" title="Japanese" className="!w-6 !h-auto shadow-sm" /> },
-  { name: 'English', level: 'Intermediate', icon: <FlagIcon code="gb" title="English" className="!w-6 !h-auto shadow-sm" /> },
-  { name: 'Thai', level: 'Native Speaker', icon: <FlagIcon code="th" title="Thai" className="!w-6 !h-auto shadow-sm" /> },
+  { name: 'Japanese', level: 'JLPT N3 Certified', icon: <Flag code="jp" height="24" title="Japanese" className="!w-6 !h-auto shadow-sm" /> },
+  { name: 'English', level: 'Intermediate', icon: <Flag code="gb" height="24" title="English" className="!w-6 !h-auto shadow-sm" /> },
+  { name: 'Thai', level: 'Native Speaker', icon: <Flag code="th" height="24" title="Thai" className="!w-6 !h-auto shadow-sm" /> },
 ];
 
 // --- Animation Variants (ไว้ข้างนอกได้) ---
@@ -36,7 +32,7 @@ const cardVariants = {
 };
 
 
-// --- 2. สร้าง Component สำหรับ Technical Skill Card ---
+// ---  Component สำหรับ Technical Skill Card ---
 function TechnicalSkillCard({ skill, variants }) {
   return (
     <motion.div
@@ -52,15 +48,16 @@ function TechnicalSkillCard({ skill, variants }) {
   );
 }
 
-// --- 3. สร้าง Component สำหรับ Language Skill Card ---
+// ---  Component สำหรับ Language Skill Card ---
 function LanguageSkillCard({ skill, variants }) {
   return (
     <motion.div
       className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 transition-all duration-300 hover:scale-105 flex flex-col"
-      variants={variants} // รับ variants มาจาก props
+      variants={variants}
     >
       <div className="flex items-center mb-3">
-        {skill.icon && <span className="mr-3 flex-shrink-0 inline-block leading-none">{skill.icon}</span>}
+        {/* ---  ปรับการแสดงผล Icon --- */}
+        {skill.icon && <span className="mr-3 flex-shrink-0 w-6 h-auto flex items-center">{skill.icon}</span>}
         <h3 className="text-lg font-semibold text-sky-700 leading-tight">{skill.name}</h3>
       </div>
       <p className="text-sm text-slate-500 mt-auto">{skill.level}</p>
