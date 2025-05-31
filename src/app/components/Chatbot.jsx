@@ -71,7 +71,7 @@ export default function Chatbot() {
       {/* --- Chat Bubble Button --- */}
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 z-[100] hover:scale-110"
+        className="fixed bottom-6 right-6 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-all duration-300 z-[100] hover:scale-110" //
         aria-label="Open Chatbot"
       >
         {isOpen ? <FiX size={24} /> : <FiMessageSquare size={24} />}
@@ -85,57 +85,57 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.8 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-            className="fixed bottom-24 right-6 w-80 h-[500px] bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden z-[99]"
+            className="fixed bottom-24 right-6 w-80 h-[500px] bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 flex flex-col overflow-hidden z-[99]" //
           >
             {/* Header */}
-            <div className="bg-indigo-600 text-white p-4 text-center font-semibold text-lg shadow-sm">
+            <div className="bg-indigo-600 text-white p-4 text-center font-semibold text-lg shadow-sm dark:bg-indigo-700"> {/* */}
               AI Assistant
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 p-4 overflow-y-auto bg-slate-50 space-y-3">
+            <div className="flex-1 p-4 overflow-y-auto bg-slate-50 dark:bg-slate-700 space-y-3"> {/* */}
               {messages.map((msg, index) => (
                 <div
-                  key={index} // <-- ยังใช้ index ได้ เพราะเรา append อย่างเดียว ไม่ลบ/สลับ
+                  key={index}
                   className={`flex ${msg.from === 'bot' ? 'justify-start' : 'justify-end'}`}
                 >
                   <div
                     className={`p-3 rounded-xl max-w-[80%] text-sm shadow-sm ${
                       msg.from === 'bot'
-                        ? 'bg-white text-slate-800 rounded-bl-none'
-                        : 'bg-indigo-500 text-white rounded-br-none'
+                        ? 'bg-white dark:bg-slate-600 text-slate-800 dark:text-slate-100 rounded-bl-none' //
+                        : 'bg-indigo-500 dark:bg-indigo-600 text-white rounded-br-none' //
                     }`}
                   >
                     {msg.text}
                   </div>
                 </div>
               ))}
-              {isLoading && ( // <-- แสดง Typing Indicator
+              {isLoading && (
                 <div className="flex justify-start">
-                    <div className="p-3 rounded-xl bg-white text-slate-500 rounded-bl-none text-sm shadow-sm italic">
+                    <div className="p-3 rounded-xl bg-white dark:bg-slate-600 text-slate-500 dark:text-slate-400 rounded-bl-none text-sm shadow-sm italic"> {/* */}
                         AI กำลังคิด...
                     </div>
                 </div>
               )}
-              <div ref={messagesEndRef} /> {/* <-- จุดสำหรับ Scroll */}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-slate-200 bg-white flex items-center gap-2">
+            <div className="p-4 border-t border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 flex items-center gap-2"> {/* */}
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="พิมพ์คำถามที่นี่..."
-                className="flex-1 border border-slate-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
-                disabled={isLoading} // <-- Disable ตอน AI กำลังคิด
+                className="flex-1 border border-slate-300 dark:border-slate-500 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500" //
+                disabled={isLoading}
               />
               <button
                 onClick={handleSend}
-                className={`bg-indigo-600 text-white p-3 rounded-full hover:bg-indigo-700 transition-colors duration-200 focus:outline-none ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`bg-indigo-600 text-white p-3 rounded-full hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors duration-200 focus:outline-none ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`} //
                 aria-label="Send Message"
-                disabled={isLoading} // <-- Disable ตอน AI กำลังคิด
+                disabled={isLoading}
               >
                 <FiSend size={18} />
               </button>

@@ -10,7 +10,7 @@ import Flag from 'react-world-flags';
 const technicalSkillsData = [
   { name: 'JavaScript (ES6+)', level: 'Advanced', description: 'Experienced with modern JavaScript features and best practices.', icon: <SiJavascript size={24} className="text-yellow-400" /> },
   { name: 'React', level: 'Advanced', description: 'Proficient in building interactive user interfaces with React.', icon: <SiReact size={24} className="text-sky-500" /> },
-  { name: 'Next.js (App Router)',description: 'Experienced in building server-side rendered applications with Next.js.', level: 'Intermediate', icon: <SiNextdotjs size={24} className="text-black" /> },
+  { name: 'Next.js (App Router)', description: 'Experienced in building server-side rendered applications with Next.js.', level: 'Intermediate', icon: <SiNextdotjs size={24} className="text-black" /> },
   { name: 'Tailwind CSS', level: 'Advanced', description: 'Skilled in styling and building responsive designs with Tailwind CSS.', icon: <SiTailwindcss size={24} className="text-teal-500" /> },
   { name: 'HTML5 & CSS3', level: 'Advanced', description: 'Proficient in creating structured and styled web pages.', icon: <FiCode size={24} className="text-orange-500" /> },
   { name: 'Node.js', level: 'Intermediate', description: 'Familiar with server-side JavaScript and event-driven architectures.', icon: <SiNodedotjs size={24} className="text-green-600" /> },
@@ -36,64 +36,63 @@ const cardVariants = {
 function TechnicalSkillCard({ skill, variants }) {
   return (
     <motion.div
-      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 transition-all duration-300 hover:scale-105 flex flex-col"
-      variants={variants} // รับ variants มาจาก props
+      className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:scale-105 flex flex-col" // เพิ่ม dark:bg-slate-800, dark:border-slate-700
+      variants={variants}
     >
       <div className="flex items-center mb-3">
         {skill.icon && <span className="mr-3 flex-shrink-0">{skill.icon}</span>}
-        <h3 className="text-lg font-semibold text-indigo-700 leading-tight">{skill.name}</h3>
+        <h3 className="text-lg font-semibold text-indigo-700 dark:text-indigo-400 leading-tight">{skill.name}</h3> {/* เพิ่ม dark:text-indigo-400 */}
       </div>
-      <p className="text-sm text-slate-500 mt-auto">{skill.level}</p>
+      <p className="text-sm text-slate-500 dark:text-slate-400 mt-auto">{skill.level}</p> {/* เพิ่ม dark:text-slate-400 */}
       {skill.description && (
-        <p className="text-xs text-slate-400 mt-2">{skill.description}</p>
+        <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">{skill.description}</p> 
       )}
     </motion.div>
   );
 }
 
+
+
 // ---  Component สำหรับ Language Skill Card ---
 function LanguageSkillCard({ skill, variants }) {
   return (
     <motion.div
-      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 transition-all duration-300 hover:scale-105 flex flex-col"
+      className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md hover:shadow-lg border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:scale-105 flex flex-col" // เพิ่ม dark:bg-slate-800, dark:border-slate-700
       variants={variants}
     >
       <div className="flex items-center mb-3">
-        {/* ---  ปรับการแสดงผล Icon --- */}
         {skill.icon && <span className="mr-3 flex-shrink-0 w-6 h-auto flex items-center">{skill.icon}</span>}
-        <h3 className="text-lg font-semibold text-sky-700 leading-tight">{skill.name}</h3>
+        <h3 className="text-lg font-semibold text-sky-700 dark:text-sky-400 leading-tight">{skill.name}</h3> {/* เพิ่ม dark:text-sky-400 */}
       </div>
-      <p className="text-sm text-slate-500 mt-auto">{skill.level}</p>
+      <p className="text-sm text-slate-500 dark:text-slate-400 mt-auto">{skill.level}</p> {/* เพิ่ม dark:text-slate-400 */}
     </motion.div>
   );
 }
+
 
 
 // --- 4. Component หลัก (SkillsPage) จะกระชับขึ้นมาก ---
 export default function SkillsPage() {
   return (
     <div>
-      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">My Skills</h1>
-      <p className="text-lg text-slate-600 mb-10 text-center max-w-xl mx-auto">
+      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center text-slate-800 dark:text-slate-100">My Skills</h1> {/* เพิ่ม dark:text-slate-100 */}
+      <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 text-center max-w-xl mx-auto"> {/* เพิ่ม dark:text-slate-400 */}
         A combination of technical skills and language proficiency.
       </p>
 
-      {/* --- Technical Skills Section --- */}
-      <h2 className="text-2xl font-semibold mb-6 text-slate-800">Technical Skills</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Technical Skills</h2> {/* เพิ่ม dark:text-slate-200 */}
       <motion.div
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mb-12"
         initial="hidden"
         animate="visible"
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
       >
-        {/* ใช้ Component ย่อยแทนการเขียน JSX ยาวๆ */}
         {technicalSkillsData.map((skill, index) => (
           <TechnicalSkillCard key={index} skill={skill} variants={cardVariants} />
         ))}
       </motion.div>
 
-      {/* --- Language Skills Section --- */}
-      <h2 className="text-2xl font-semibold mb-6 text-slate-800">Language Skills</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Language Skills</h2> {/* เพิ่ม dark:text-slate-200 */}
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12"
         initial="hidden"
