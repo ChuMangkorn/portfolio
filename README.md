@@ -43,7 +43,7 @@
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/ChuMangkorn/portfolio.git](https://github.com/ChuMangkorn/portfolio.git)
+    git clone https://github.com/ChuMangkorn/portfolio.git
     cd portfolio
     ```
 
