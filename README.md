@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Modern & Interactive Personal Portfolio
 
-## Getting Started
+[![Deploy with Vercel](https://vercel.com/button)](https://portfolio-omega-livid-27.vercel.app/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-15.3.0-black?logo=next.js)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.8-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 
-First, run the development server:
+นี่คือโปรเจกต์ Personal Portfolio ของผม สร้างขึ้นเพื่อนำเสนอทักษะ, ผลงาน, และประสบการณ์การทำงานในฐานะนักพัฒนาเว็บสมัยใหม่ โปรเจกต์นี้ไม่ได้เป็นแค่เว็บแสดงข้อมูล แต่ยังรวมฟีเจอร์ที่น่าสนใจเพื่อสร้างประสบการณ์ที่ดีให้กับผู้เยี่ยมชม
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Portfolio Screenshot](./public/portfolio.png)
+*(แนะนำ: บันทึกภาพหน้าจอโปรเจกต์ของคุณ แล้วนำไปไว้ในโฟลเดอร์ `public` และใช้ชื่อไฟล์ตามนี้ หรือจะสร้างเป็นไฟล์ GIF เพื่อโชว์การทำงานของเว็บก็ได้)*
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Key Features (ฟีเจอร์เด่น)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Modern UI & Responsive Design**: ออกแบบด้วยดีไซน์ที่ทันสมัยและรองรับการแสดงผลบนทุกอุปกรณ์โดยใช้ Tailwind CSS.
+- **AI-Powered Chatbot**: ผู้ช่วย AI ที่สามารถตอบคำถามเกี่ยวกับข้อมูลใน Portfolio ได้ทันที โดยใช้ Google Gemini API (gemini-1.5-flash).
+- **Dark/Light Mode**: รองรับการสลับ Theme เพื่อความสบายตาของผู้ใช้งาน.
+- **Smooth Animations**: ใช้ `Framer Motion` เพื่อสร้าง Animation ที่สวยงามและลื่นไหล.
+- **Built with Next.js App Router**: ใช้โครงสร้างล่าสุดของ Next.js เพื่อประสิทธิภาพสูงสุดและการจัดการ Routing ที่ดี.
+- **Centralized Portfolio Data**: จัดการข้อมูลทั้งหมด (ประวัติ, สกิล, โปรเจกต์) จากไฟล์ส่วนกลาง (`portfolioData.js`) เพื่อให้ง่ายต่อการอัปเดตและนำไปใช้กับส่วนต่างๆ รวมถึงเป็น Context ให้กับ AI.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack (เทคโนโลยีที่ใช้)
 
-## Learn More
+| Category      | Technology                                                                                                |
+|---------------|-----------------------------------------------------------------------------------------------------------|
+| **Framework** | [Next.js](https://nextjs.org/) (v15.3.0), [React](https://react.dev/) (v19)               |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) (v4.1.8)                                               |
+| **Animation** | [Framer Motion](https://www.framer.com/motion/)                                                 |
+| **AI** | [Google Generative AI (Gemini)](https://ai.google.dev/)                                         |
+| **Icons** | [React Icons](https://react-icons.github.io/react-icons/)                                       |
+| **Linting** | [ESLint](https://eslint.org/)                                                                   |
+| **Deployment**| [Vercel](https://vercel.com/)                                                                             |
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Getting Started (การติดตั้งและเริ่มใช้งาน)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ทำตามขั้นตอนด้านล่างเพื่อติดตั้งและรันโปรเจกต์นี้บนเครื่องของคุณ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prerequisites (สิ่งที่ต้องมี)
 
-## Deploy on Vercel
+- [Node.js](https://nodejs.org/en/) (แนะนำเวอร์ชัน 18.18.0 หรือสูงกว่า)
+- [npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/), or [pnpm](https://pnpm.io/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Installation (ขั้นตอนการติดตั้ง)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/ChuMangkorn/portfolio.git](https://github.com/ChuMangkorn/portfolio.git)
+    cd portfolio
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    ```
+
+3.  **Set up environment variables:**
+    โปรเจกต์นี้ต้องใช้ API Key จาก Google AI Studio เพื่อให้ Chatbot ทำงานได้
+    
+    -   สร้างไฟล์ใหม่ชื่อ `.env.local` ใน root directory ของโปรเจกต์
+    -   เพิ่มค่า `GOOGLE_API_KEY` ลงในไฟล์:
+        ```env
+        GOOGLE_API_KEY="YOUR_API_KEY_HERE"
+        ```
+    -   คุณสามารถรับ API Key ได้จาก [Google AI Studio](https://makersuite.google.com/).
+
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+    เปิด [http://localhost:3000](http://localhost:3000) บนเบราว์เซอร์ของคุณเพื่อดูผลลัพธ์
+
+## 🌐 Deployment (การนำโปรเจกต์ขึ้นโปรดักชัน)
+
+วิธีที่ง่ายที่สุดในการ Deploy คือการใช้ [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) ซึ่งเป็นผู้สร้าง Next.js
+-   อย่าลืมเพิ่ม Environment Variable `GOOGLE_API_KEY` ในหน้าตั้งค่าโปรเจกต์บน Vercel ด้วย
+
+## 👤 Contact (ช่องทางการติดต่อ)
+
+- **Portfolio**: [your-portfolio-url.com](https://portfolio-omega-livid-27.vercel.app/)
+- **LinkedIn**: [Chulaprungrueang Mangkorn](https://www.linkedin.com/in/chulaprungrueang-mangkorn)
+- **Email**: [chu.mangkorn@gmail.com](mailto:chu.mangkorn@gmail.com)
+
+## 📄 License
+
+โปรเจกต์นี้อยู่ภายใต้ลิขสิทธิ์ของ MIT License - ดูรายละเอียดเพิ่มเติมได้ที่ไฟล์ `LICENSE`
