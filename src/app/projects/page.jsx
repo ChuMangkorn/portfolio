@@ -10,44 +10,66 @@ const projectsData = [
   {
     title: "E-commerce Platform",
     description: "A research project submission system featuring real-time chat via Socket.IO and notifications through email and Line Notify.",
-    imageUrl: "/project-ecommerce.jpg", 
-    tags: ["Next.js", "NestJS", "Tailwind CSS","React"]
+    imageUrl: "/project-ecommerce.jpg",
+    tags: ["Next.js", "NestJS", "Tailwind CSS", "React"]
+  },
+  {
+    title: "Leng AI - LINE Bot (Gemini + Firebase)",
+    description: "Open-source LINE Bot project powered by Google Gemini Flash 2.0 and Firebase Functions v2, featuring multimodal capabilities, weather forecasting, and a web dashboard.",
+    imageUrl: "/line.jpg",
+    tags: ["Node.js", "Firebase", "Gemini AI", "LINE API", "CI/CD"],
+    repoUrl: "https://github.com/ChuMangkorn/Line-Gemini-Bot",
+  },
+  {
+    title: "ProTrade - Crypto Trading Interface",
+    description: "A feature-rich crypto trading interface inspired by Binance, built with Next.js and real-time WebSocket data streams.",
+    imageUrl: "/trade.png",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "WebSocket", "React"],
+    liveUrl: "https://pro-trade-a8v1wknwb-chumangkorns-projects.vercel.app/"
   },
   {
     title: "Pokemon Search App with Next.js & Tailwind CSS",
     description: "Next.js Frontend Basics with REST APIs.",
-    imageUrl: "/pokemonproject.png", 
-    tags: ["Next.js", "JavaScript","Tailwind CSS", "React"],
-    liveUrl: "https://nextjs-tailwindcss-eight.vercel.app", 
-    repoUrl: "https://github.com/ChuMangkorn/nextjs-tailwindcss" 
+    imageUrl: "/pokemonproject.png",
+    tags: ["Next.js", "JavaScript", "Tailwind CSS", "React"],
+    liveUrl: "https://nextjs-tailwindcss-eight.vercel.app",
+    repoUrl: "https://github.com/ChuMangkorn/nextjs-tailwindcss"
   },
   {
-    title: "Portfolio Website",
-    description: "My personal portfolio website built using Next.js App Router and modern design principles.",
-    imageUrl: "/portfolio.png", 
-    tags: ["Next.js", "App Router", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://portfolio-omega-livid-27.vercel.app/", 
-    repoUrl: "https://github.com/ChuMangkorn/portfolio" 
+    title: "Interactive AI-Powered Portfolio",
+    description: "An interactive personal portfolio built with the Next.js App Router. Features a custom AI chatbot (powered by Google Gemini), seamless dark/light mode, and smooth, engaging animations with Framer Motion.", // <-- เลือก Description ที่ชอบ
+    imageUrl: "/portfolio.png",
+    tags: [
+      "Next.js",
+      "App Router",
+      "React",
+      "Tailwind CSS",
+      "Framer Motion",
+      "AI Chatbot",
+      "Gemini API"
+    ],
+    liveUrl: "https://portfolio-omega-livid-27.vercel.app/",
+    repoUrl: "https://github.com/ChuMangkorn/portfolio"
   },
   {
     title: "Educational Agency Website Ichiban Japan (2013)",
     description: "Informational site for Japanese language studies and study abroad programs in Japan.",
-    imageUrl: "/ichiban.png", 
-    tags: ["WordPress", "PHP", "MySQL", "Bootstrap","jQuery"]
+    imageUrl: "/ichiban.png",
+    tags: ["WordPress", "PHP", "MySQL", "Bootstrap", "jQuery"]
   },
   {
     title: "Insurance Policy & Claims Management System (2018)",
     description: "An integrated system designed to manage insurance operations efficiently.",
-    imageUrl: "/g-pacv.png", 
-    tags: ["PHP", "Javascript", "MySQL", "Bootstrap","jQuery"]
+    imageUrl: "/g-pacv.png",
+    tags: ["PHP", "Javascript", "MySQL", "Bootstrap", "jQuery"]
   },
   {
     title: "Tour Agency Management System (2019)",
     description: "Web app for K.Star Travel tour agency, featuring customer booking functions and an admin management panel. ",
-    imageUrl: "/k-travel.png", 
-    tags: ["PHP", "Javascript", "MySQL", "Bootstrap","jQuery"]
+    imageUrl: "/k-travel.png",
+    tags: ["PHP", "Javascript", "MySQL", "Bootstrap", "jQuery"]
   },
-  
+
 ];
 // --- End of Project Data ---
 
@@ -107,16 +129,16 @@ export default function ProjectsPage() {
               <div className="flex justify-end space-x-3 mt-auto pt-4 border-t border-slate-100 dark:border-slate-700"> {/* เพิ่ม dark:border-slate-700 */}
                 {project.liveUrl && (
                   <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors" // เพิ่ม dark:text-indigo-400, dark:hover:text-indigo-300
-                        title="View Live Demo">
+                    className="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors" // เพิ่ม dark:text-indigo-400, dark:hover:text-indigo-300
+                    title="View Live Demo">
                     <FiExternalLink className="w-4 h-4 mr-1" />
                     Live Demo
                   </Link>
                 )}
                 {project.repoUrl && (
                   <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-300 transition-colors" // เพิ่ม dark:text-slate-400, dark:hover:text-slate-300
-                        title="View Source Code">
+                    className="inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-300 transition-colors" // เพิ่ม dark:text-slate-400, dark:hover:text-slate-300
+                    title="View Source Code">
                     <FiGithub className="w-4 h-4 mr-1" />
                     Code
                   </Link>
