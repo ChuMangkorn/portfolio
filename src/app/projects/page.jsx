@@ -25,7 +25,7 @@ const projectsData = [
     description: "A feature-rich crypto trading interface inspired by Binance, built with Next.js and real-time WebSocket data streams.",
     imageUrl: "/trade.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "WebSocket", "React"],
-    liveUrl: "https://pro-trade-a8v1wknwb-chumangkorns-projects.vercel.app/"
+    liveUrl: "https://pro-trade-app.vercel.app/trade/BTCUSDT"
   },
   {
     title: "Pokemon Search App with Next.js & Tailwind CSS",
