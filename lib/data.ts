@@ -41,6 +41,7 @@ export type CaseStudy = {
   link?: string;
   image?: { src: string; alt: string; width: number; height: number };
   excerpt?: { caption: string; lines: string[] };
+  metric?: { value: string; label: string };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -59,11 +60,12 @@ export const caseStudies: CaseStudy[] = [
       "Every release goes to a staging theme first, then to production on a date agreed with the client.",
     stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
     personal: false,
+    metric: { value: "300+", label: "store locations in one searchable finder" },
     image: {
       src: "/work-storefinder.png",
       alt: "Store finder with chain and prefecture filters and a list of drugstore locations",
       width: 780,
-      height: 560,
+      height: 440,
     },
   },
   {
@@ -110,7 +112,7 @@ export const caseStudies: CaseStudy[] = [
       src: "/work-meetrec.png",
       alt: "MeetRec subtitle window showing Japanese speech translated to Thai in real time",
       width: 1186,
-      height: 440,
+      height: 520,
     },
   },
   {

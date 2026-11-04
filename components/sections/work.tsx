@@ -16,15 +16,15 @@ function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
           width={c.image.width}
           height={c.image.height}
           sizes={VISUAL_SIZES}
-          className="h-auto w-full"
+          className="h-auto w-full brightness-90"
         />
       </div>
     );
   }
   if (c.excerpt) {
     return (
-      <figure className="rounded-card border bg-bg-tint p-5">
-        <pre tabIndex={0} className={`overflow-x-auto whitespace-pre font-mono leading-relaxed text-fg-muted ${large ? "text-sm" : "text-xs"}`}>
+      <figure className="flex h-full flex-col justify-center rounded-card border bg-bg-tint p-5 md:p-8">
+        <pre tabIndex={0} className={`overflow-x-auto whitespace-pre max-md:[mask-image:linear-gradient(to_right,black_82%,transparent)] font-mono leading-relaxed text-fg-muted ${large ? "text-sm" : "text-xs"}`}>
           {c.excerpt.lines.join("\n")}
         </pre>
         <figcaption className="mt-3 text-xs text-fg-faint">{c.excerpt.caption}</figcaption>
@@ -34,9 +34,9 @@ function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
   return null;
 }
 
-function Title({ c }: { c: CaseStudy }) {
+function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   return (
-    <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight">
+    <h3 className={`mt-2 font-semibold leading-tight tracking-tight ${lead ? "text-3xl" : "text-xl"}`}>
       {c.link ? (
         <a href={c.link} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1 hover:text-accent">
           {c.title}
@@ -95,7 +95,13 @@ export function Work() {
                     <>
                       <div className="flex flex-col md:col-span-5">
                         <p className="text-sm text-fg-faint">{c.client}</p>
-                        <Title c={c} />
+                        <Title c={c} lead={i === 0} />
+                        {c.metric && (
+                          <p className="mt-4 flex items-baseline gap-3">
+                            <span className="font-mono text-4xl tracking-tight text-accent">{c.metric.value}</span>
+                            <span className="text-sm text-fg-muted">{c.metric.label}</span>
+                          </p>
+                        )}
                         <p className="mt-4 leading-relaxed text-fg-muted">{c.problem}</p>
                         <div className="mt-6 flex flex-1 flex-col">
                           <Details c={c} />

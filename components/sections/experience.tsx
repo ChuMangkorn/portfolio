@@ -16,7 +16,7 @@ export function Experience() {
                 <li className="grid grid-cols-[7rem_1fr] gap-4">
                   <span className="pt-1 font-mono text-xs text-fg-faint">{e.period}</span>
                   <div>
-                    <h3 className={i === 0 ? "text-lg font-medium leading-snug" : "font-medium leading-snug"}>
+                    <h3 className={i === 0 ? "text-xl font-semibold leading-snug" : "font-medium leading-snug"}>
                       {e.role}
                       <span className="text-fg-muted">
                         {" at "}
@@ -24,7 +24,7 @@ export function Experience() {
                         {e.location ? `, ${e.location}` : ""}
                       </span>
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-fg-muted">{e.summary}</p>
+                    <p className={`mt-2 leading-relaxed text-fg-muted ${i === 0 ? "text-base" : "text-sm"}`}>{e.summary}</p>
                   </div>
                 </li>
               </Reveal>

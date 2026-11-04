@@ -14,7 +14,7 @@ export function Hero() {
         <h1 className="text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
           {profile.headline}
         </h1>
-        <p lang="ja" className="mt-6 font-jp text-base font-medium leading-relaxed text-fg">
+        <p lang="ja" className="mt-6 font-jp text-base font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase]">
           {profile.jp}
         </p>
         <p className="mt-3 max-w-[48ch] text-lg leading-relaxed text-fg-muted">{profile.tagline}</p>
@@ -45,9 +45,9 @@ export function Hero() {
             <LinkedinLogoIcon size={20} />
           </a>
         </div>
-        <ol aria-label="How a project moves" className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1 font-jp text-sm text-fg-faint">
+        <ol aria-label="How a project moves" className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-1 font-jp text-sm text-fg-faint">
           {profile.pipeline.map((step, i) => (
-            <li key={step} className="flex items-center gap-3">
+            <li key={step} className="flex items-center gap-2 whitespace-nowrap">
               {i > 0 && (
                 <span aria-hidden className="text-accent">
                   {"\u2192"}
@@ -72,7 +72,7 @@ export function Hero() {
             fill
             priority
             sizes={PORTRAIT_SIZES}
-            className="object-contain object-bottom"
+            className="object-contain object-bottom [mask-image:linear-gradient(to_top,transparent,black_16%)]"
           />
         </div>
       </div>
