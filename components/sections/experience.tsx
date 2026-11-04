@@ -6,7 +6,7 @@ export function Experience() {
     <section id="experience" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Experience</h2>
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Where I have worked</h2>
         </Reveal>
 
         <ol className="mt-12 grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2">

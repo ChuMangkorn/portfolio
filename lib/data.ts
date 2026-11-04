@@ -11,7 +11,7 @@ export const profile = {
   email: "chu.mangkorn@gmail.com",
   github: "https://github.com/ChuMangkorn",
   linkedin: "https://linkedin.com/in/chulaprungrueang-mangkorn",
-  photo: "/profile.jpg",
+  photo: "/profile-cutout.png",
 };
 
 export const about = {
@@ -23,7 +23,7 @@ export const about = {
     { value: "300+", label: "Store locations in a store finder I shipped" },
     { value: "40+", label: "Products migrated to Shopify" },
     { value: "N3", label: "JLPT, used daily with clients" },
-    { value: "3", label: "Working languages: TH, JP, EN" },
+    { value: "5+", label: "Years building for the web" },
   ],
 };
 
@@ -36,7 +36,8 @@ export type CaseStudy = {
   stack: string[];
   personal: boolean;
   link?: string;
-  tone: "a" | "b" | "c" | "d";
+  image?: { src: string; alt: string; width: number; height: number };
+  excerpt?: { caption: string; lines: string[] };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -55,7 +56,12 @@ export const caseStudies: CaseStudy[] = [
       "Every release goes to a staging theme first, then to production on a date agreed with the client.",
     stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
     personal: false,
-    tone: "a",
+    image: {
+      src: "/work-storefinder.png",
+      alt: "Store finder with chain and prefecture filters and a list of drugstore locations",
+      width: 780,
+      height: 560,
+    },
   },
   {
     title: "MeetRec: screen recorder with live translated subtitles",
@@ -69,9 +75,14 @@ export const caseStudies: CaseStudy[] = [
     ],
     outcome:
       "Used in real client meetings. Thai transcription quality was tested and tuned on actual recordings.",
-    stack: ["TypeScript", "Electron", "Whisper", "Claude API"],
+    stack: ["Swift", "macOS", "Apple Speech", "Claude API"],
     personal: true,
-    tone: "b",
+    image: {
+      src: "/work-meetrec.png",
+      alt: "MeetRec subtitle window showing Japanese speech translated to Thai in real time",
+      width: 1186,
+      height: 700,
+    },
   },
   {
     title: "An AI engineering workflow that runs my day",
@@ -88,7 +99,16 @@ export const caseStudies: CaseStudy[] = [
       "One engineer covers requirements, code, QA, images, and video for several clients at once.",
     stack: ["Claude Code", "MCP", "Playwright", "Node.js"],
     personal: true,
-    tone: "c",
+    excerpt: {
+      caption: "From the routing table the agent reads at the start of every task",
+      lines: [
+        "Bug / broken / slow      -> diagnosing-bugs, then an independent debugger",
+        "New feature / page       -> brainstorm, plan, tdd, code-review",
+        "Check a page in browser  -> playwright, screenshot PC 1440 + SP 390",
+        "Shopify theme / store    -> shiptest first, production after sign-off",
+        "Anything sent outside    -> ask first",
+      ],
+    },
   },
   {
     title: "Landing pages for Japanese consumer brands",
@@ -105,7 +125,6 @@ export const caseStudies: CaseStudy[] = [
       "Pages ship within days of the brief, mobile and desktop checked side by side before every handover.",
     stack: ["Tailwind CSS", "GTM", "GA4", "Photoshop", "Premiere"],
     personal: false,
-    tone: "d",
   },
 ];
 

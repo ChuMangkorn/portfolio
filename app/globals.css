@@ -12,7 +12,9 @@
   --line: #26262d;
   --accent: #e2a640;
   --accent-ink: #171004;
+  --radius-sm: 6px;
   --radius: 12px;
+  --radius-lg: 20px;
   --portrait: 380px;
 }
 
@@ -29,6 +31,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --radius-card: var(--radius);
+  --radius-control: var(--radius-sm);
+  --radius-portrait: var(--radius-lg);
+  --font-jp: var(--font-noto-jp);
   --container-portrait: var(--portrait);
 }
 

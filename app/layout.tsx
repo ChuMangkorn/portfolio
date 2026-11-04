@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const notoJp = Noto_Sans_JP({ variable: "--font-noto-jp", subsets: ["latin"], weight: ["400", "500"] });
 
 const description =
   "Software engineer in Bangkok. Japanese client brief to shipped product: Shopify, landing pages, tracking, and media, driven by an AI workflow.";
@@ -17,13 +18,13 @@ export const metadata: Metadata = {
     title: `${profile.name}, Software Engineer`,
     description,
     type: "website",
-    images: [{ url: "/profile.jpg", width: 800, height: 800 }],
+    images: [{ url: "/profile-cutout.png", width: 813, height: 1024 }],
   },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${notoJp.variable} antialiased`}>
       <body className="min-h-dvh">
         <a
           href="#main"
