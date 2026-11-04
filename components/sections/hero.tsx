@@ -8,8 +8,8 @@ const PORTRAIT_SIZES = "(min-width: 768px) 380px, 100vw"; // ds-allow-hardcode
 /* The hero is above the fold, so it renders without a reveal animation. */
 export function Hero() {
   return (
-    <section className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pb-20 pt-16 sm:px-8 md:min-h-[calc(100dvh-4rem)] md:grid-cols-12 md:pb-24 md:pt-20">
-      <div className="md:col-span-7">
+    <section className="mx-auto grid max-w-6xl grid-cols-1 items-end gap-12 px-5 pb-20 pt-16 sm:px-8 md:min-h-[calc(100dvh-4rem)] md:grid-cols-12 md:pb-0 md:pt-20">
+      <div className="self-center md:col-span-7 md:pb-24">
         <p className="mb-5 text-sm text-fg-muted">{profile.role}</p>
         <h1 className="text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
           {profile.headline}
@@ -45,14 +45,26 @@ export function Hero() {
             <LinkedinLogoIcon size={20} />
           </a>
         </div>
+        <ol aria-label="How a project moves" className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1 font-jp text-sm text-fg-faint">
+          {profile.pipeline.map((step, i) => (
+            <li key={step} className="flex items-center gap-3">
+              {i > 0 && (
+                <span aria-hidden className="text-accent">
+                  {"\u2192"}
+                </span>
+              )}
+              {step}
+            </li>
+          ))}
+        </ol>
       </div>
 
       <div className="md:col-span-5 md:flex md:justify-end">
-        {/* Cut-out portrait on a raised surface with a warm glow behind the head. */}
-        <div className="relative aspect-[4/5] w-full max-w-portrait overflow-hidden rounded-portrait bg-bg-raised">
+        {/* Cut-out portrait: no box. The glow sits behind the head and the shoulders land on the section edge. */}
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-portrait">
           <div
             aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,color-mix(in_oklab,var(--accent)_45%,transparent)_0%,transparent_62%)]"
+            className="absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_40%,color-mix(in_oklab,var(--accent)_40%,transparent)_0%,transparent_65%)]"
           />
           <Image
             src={profile.photo}
@@ -60,7 +72,7 @@ export function Hero() {
             fill
             priority
             sizes={PORTRAIT_SIZES}
-            className="object-cover object-top"
+            className="object-contain object-bottom"
           />
         </div>
       </div>

@@ -6,7 +6,7 @@ import { Reveal } from "@/components/reveal";
 // Half the container above the md breakpoint, full width below it.
 const VISUAL_SIZES = "(min-width: 768px) 50vw, 100vw"; // ds-allow-hardcode
 
-function Visual({ c }: { c: CaseStudy }) {
+function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
   if (c.image) {
     return (
       <div className="overflow-hidden rounded-card border bg-bg-tint">
@@ -24,7 +24,7 @@ function Visual({ c }: { c: CaseStudy }) {
   if (c.excerpt) {
     return (
       <figure className="rounded-card border bg-bg-tint p-5">
-        <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-fg-muted">
+        <pre tabIndex={0} className={`overflow-x-auto whitespace-pre font-mono leading-relaxed text-fg-muted ${large ? "text-sm" : "text-xs"}`}>
           {c.excerpt.lines.join("\n")}
         </pre>
         <figcaption className="mt-3 text-xs text-fg-faint">{c.excerpt.caption}</figcaption>
@@ -83,7 +83,7 @@ export function Work() {
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
           {caseStudies.map((c, i) => {
-            const wide = i === 0 || i === caseStudies.length - 1;
+            const wide = i < 2;
             return (
               <Reveal key={c.title} delay={i * 0.06} className={wide ? "md:col-span-2" : undefined}>
                 <article
@@ -102,7 +102,7 @@ export function Work() {
                         </div>
                       </div>
                       <div className="mt-6 md:col-span-7 md:mt-0">
-                        <Visual c={c} />
+                        <Visual c={c} large />
                       </div>
                     </>
                   ) : (

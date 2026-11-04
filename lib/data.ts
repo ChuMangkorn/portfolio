@@ -5,6 +5,7 @@ export const profile = {
   shortName: "Mangkorn",
   role: "Software Engineer, Bangkok",
   headline: "One engineer, end to end.",
+  pipeline: ["要件ヒアリング (JA)", "設計", "実装", "QA", "納品"],
   tagline:
     "I take a Japanese client brief and ship the product myself: code, design, and media, in one AI-driven workflow.",
   jp: "日本語での要件ヒアリングから納品まで、一人で対応します。",
@@ -19,11 +20,13 @@ export const about = {
     "At a Bangkok agency serving Japanese clients, I am the person between the client and the result. I read the brief in Japanese, decide what to build, build it, test it, and report back in Japanese.",
     "Most of my output goes through an AI agent workflow I built myself: a task harness, project memory, review agents, and browser automation. It lets one person cover work that used to need a small team.",
   ],
-  stats: [
-    { value: "300+", label: "Store locations in a store finder I shipped" },
-    { value: "40+", label: "Products migrated to Shopify" },
-    { value: "N3", label: "JLPT, used daily with clients" },
-    { value: "5+", label: "Years building for the web" },
+  lead: { value: "1", label: "person on the client's engineering side" },
+  ledger: [
+    { key: "Brief language", value: "Japanese, JLPT N3" },
+    { key: "Store finder", value: "300+ locations" },
+    { key: "Migrated", value: "40+ products" },
+    { key: "Building for the web", value: "5+ years" },
+    { key: "Based in", value: "Bangkok" },
   ],
 };
 
@@ -64,6 +67,32 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
+    title: "An AI engineering workflow that runs my day",
+    client: "Personal tooling",
+    problem:
+      "Agent tools are only useful if they are reliable. I wanted a setup where the agent knows the client history, follows my rules, and checks its own work.",
+    work: [
+      "Task harness that routes work to the right tool and sub-agent",
+      "Persistent project memory across sessions",
+      "Independent review agents before anything ships",
+      "Browser, Photoshop, and Premiere driven from the same workflow",
+    ],
+    outcome:
+      "I cover requirements, code, QA, images, and video for several clients at once.",
+    stack: ["Claude Code", "MCP", "Playwright", "Node.js"],
+    personal: true,
+    excerpt: {
+      caption: "This is how every task enters my day",
+      lines: [
+        "bug or slow         diagnose first, then a second debugger",
+        "new feature         brainstorm, plan, tdd, code review",
+        "check a page        playwright, PC 1440 and SP 390 shots",
+        "shopify store       staging first, production on sign-off",
+        "anything external   ask first",
+      ],
+    },
+  },
+  {
     title: "MeetRec: screen recorder with live translated subtitles",
     client: "Personal project",
     problem:
@@ -85,32 +114,6 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    title: "An AI engineering workflow that runs my day",
-    client: "Personal tooling",
-    problem:
-      "Agent tools are only useful if they are reliable. I wanted a setup where the agent knows the client history, follows my rules, and checks its own work.",
-    work: [
-      "Task harness that routes work to the right tool and sub-agent",
-      "Persistent project memory across sessions",
-      "Independent review agents before anything ships",
-      "Browser, Photoshop, and Premiere driven from the same workflow",
-    ],
-    outcome:
-      "I cover requirements, code, QA, images, and video for several clients at once.",
-    stack: ["Claude Code", "MCP", "Playwright", "Node.js"],
-    personal: true,
-    excerpt: {
-      caption: "From the routing table the agent reads at the start of every task",
-      lines: [
-        "bug or slow         diagnose first, then a second debugger",
-        "new feature         brainstorm, plan, tdd, code review",
-        "check a page        playwright, PC 1440 and SP 390 shots",
-        "shopify store       staging first, production on sign-off",
-        "anything external   ask first",
-      ],
-    },
-  },
-  {
     title: "Landing pages for Japanese consumer brands",
     client: "Food and consumer brands, via agency",
     problem:
@@ -125,6 +128,15 @@ export const caseStudies: CaseStudy[] = [
       "Pages ship within days of the brief, mobile and desktop checked side by side before every handover.",
     stack: ["Tailwind CSS", "GTM", "GA4", "Photoshop", "Premiere"],
     personal: false,
+    excerpt: {
+      caption: "Handover check, run before every page goes to the client",
+      lines: [
+        "viewports   PC 1440 and SP 390",
+        "tracking    GTM, GA4, pixels intact",
+        "copy        Japanese lines as supplied",
+        "release     staging, then production",
+      ],
+    },
   },
 ];
 
