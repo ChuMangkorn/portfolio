@@ -15,8 +15,8 @@ export function About() {
         <Reveal delay={0.1}>
           <dl className="mt-16 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
             {about.stats.map((s) => (
-              <div key={s.label}>
-                <dt className="order-2 mt-2 text-sm leading-snug text-fg-muted">{s.label}</dt>
+              <div key={s.label} className="flex flex-col-reverse">
+                <dt className="mt-2 text-sm leading-snug text-fg-muted">{s.label}</dt>
                 <dd className="font-mono text-4xl tracking-tight text-fg md:text-5xl">{s.value}</dd>
               </div>
             ))}

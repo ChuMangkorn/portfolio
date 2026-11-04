@@ -6,7 +6,7 @@ export const profile = {
   role: "Software Engineer, Bangkok",
   headline: "One engineer, end to end.",
   tagline:
-    "From a Japanese client brief to a shipped product: code, design, and media, one engineer, one AI workflow.",
+    "I take a Japanese client brief and ship the product myself: code, design, and media, in one AI-driven workflow.",
   jp: "日本語での要件ヒアリングから納品まで、一人で対応します。",
   email: "chu.mangkorn@gmail.com",
   github: "https://github.com/ChuMangkorn",
@@ -45,7 +45,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Shopify store for a Japanese D2C cosmetics brand",
     client: "Japanese D2C cosmetics brand",
     problem:
-      "The brand needed its online store, a nationwide store finder, and seasonal bundle campaigns, all maintained by one engineer against a Japanese-speaking client.",
+      "The brand needed its online store, a nationwide store finder, and seasonal bundle campaigns, maintained by me alone for a Japanese-speaking client.",
     work: [
       "Migrated 40+ products and variants from the client master sheet",
       "Built a store finder covering 300+ drugstore locations with prefecture sort",
@@ -81,7 +81,7 @@ export const caseStudies: CaseStudy[] = [
       src: "/work-meetrec.png",
       alt: "MeetRec subtitle window showing Japanese speech translated to Thai in real time",
       width: 1186,
-      height: 700,
+      height: 440,
     },
   },
   {
@@ -96,17 +96,17 @@ export const caseStudies: CaseStudy[] = [
       "Browser, Photoshop, and Premiere driven from the same workflow",
     ],
     outcome:
-      "One engineer covers requirements, code, QA, images, and video for several clients at once.",
+      "I cover requirements, code, QA, images, and video for several clients at once.",
     stack: ["Claude Code", "MCP", "Playwright", "Node.js"],
     personal: true,
     excerpt: {
       caption: "From the routing table the agent reads at the start of every task",
       lines: [
-        "Bug / broken / slow      -> diagnosing-bugs, then an independent debugger",
-        "New feature / page       -> brainstorm, plan, tdd, code-review",
-        "Check a page in browser  -> playwright, screenshot PC 1440 + SP 390",
-        "Shopify theme / store    -> shiptest first, production after sign-off",
-        "Anything sent outside    -> ask first",
+        "bug or slow         diagnose first, then a second debugger",
+        "new feature         brainstorm, plan, tdd, code review",
+        "check a page        playwright, PC 1440 and SP 390 shots",
+        "shopify store       staging first, production on sign-off",
+        "anything external   ask first",
       ],
     },
   },

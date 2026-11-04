@@ -24,7 +24,7 @@ function Visual({ c }: { c: CaseStudy }) {
   if (c.excerpt) {
     return (
       <figure className="rounded-card border bg-bg-tint p-5">
-        <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-fg-muted">
+        <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-fg-muted">
           {c.excerpt.lines.join("\n")}
         </pre>
         <figcaption className="mt-3 text-xs text-fg-faint">{c.excerpt.caption}</figcaption>
@@ -55,7 +55,7 @@ function Details({ c }: { c: CaseStudy }) {
       <ul className="space-y-2 text-sm leading-relaxed text-fg">
         {c.work.map((w) => (
           <li key={w} className="flex gap-3">
-            <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0 bg-accent" />
+            <span aria-hidden className="mt-[0.65rem] h-0.5 w-3 shrink-0 bg-accent" />
             {w}
           </li>
         ))}

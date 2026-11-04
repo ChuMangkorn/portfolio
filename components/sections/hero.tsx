@@ -52,7 +52,7 @@ export function Hero() {
         <div className="relative aspect-[4/5] w-full max-w-portrait overflow-hidden rounded-portrait bg-bg-raised">
           <div
             aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,color-mix(in_oklab,var(--accent)_28%,transparent)_0%,transparent_62%)]"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,color-mix(in_oklab,var(--accent)_45%,transparent)_0%,transparent_62%)]"
           />
           <Image
             src={profile.photo}
