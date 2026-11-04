@@ -3,7 +3,7 @@ import { ArrowDownIcon, GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons
 import { profile } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 
-// Must match --width-portrait in globals.css and the md breakpoint.
+// Must match --portrait in globals.css and the md breakpoint.
 const PORTRAIT_SIZES = "(min-width: 768px) 380px, 100vw"; // ds-allow-hardcode
 
 export function Hero() {

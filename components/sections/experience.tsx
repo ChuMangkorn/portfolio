@@ -18,8 +18,7 @@ export function Experience() {
                   <h3 className="font-medium leading-snug">
                     {e.role}
                     <span className="text-fg-muted">
-                      {" "}
-                      at {e.company}
+                      {e.company ? ` at ${e.company}` : ""}
                       {e.location ? `, ${e.location}` : ""}
                     </span>
                   </h3>

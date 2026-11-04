@@ -52,7 +52,7 @@ export const caseStudies: CaseStudy[] = [
       "Shipped bundle campaign pages, shipping rules for remote islands, and a staging to production release flow",
     ],
     outcome:
-      "Every release goes to a staging theme first, then to production on a date agreed with the client. Zero rollbacks since launch.",
+      "Every release goes to a staging theme first, then to production on a date agreed with the client.",
     stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
     personal: false,
     tone: "a",
@@ -98,7 +98,7 @@ export const caseStudies: CaseStudy[] = [
     work: [
       "Built responsive pages in Tailwind from design files",
       "Kept client tracking tags (GTM, GA4, ad pixels) intact across edits",
-      "Debugged GA4 over-counting and documented the fix for the client",
+      "Debugged a GA4 over-counting issue on a client site and documented the fix",
       "Prepared image and video assets with Photoshop and Premiere",
     ],
     outcome:
@@ -120,8 +120,8 @@ export const experience = [
   },
   {
     period: "2022 - 2025",
-    company: "Japan",
-    location: "",
+    company: "",
+    location: "Japan",
     role: "Language study",
     summary: "Lived in Japan, studied Japanese, built side projects.",
   },
