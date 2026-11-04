@@ -8,7 +8,7 @@
   --bg-tint: #1a1a20;
   --fg: #ececf1;
   --fg-muted: #a0a0ab;
-  --fg-faint: #6b6b76;
+  --fg-faint: #8a8a95;
   --line: #26262d;
   --accent: #e2a640;
   --accent-ink: #171004;
@@ -57,8 +57,28 @@
   }
 }
 
+/* Reveal elements must never depend on JS or motion to become visible. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  /* Colour fades may stay; movement must not. */
+  .transition-transform {
+    transition: none !important;
+  }
+  .active\:scale-\[0\.98\]:active {
+    scale: 1;
+  }
+}
+@media (scripting: none) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

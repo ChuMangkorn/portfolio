@@ -31,7 +31,7 @@ export function Contact() {
           <p className="mt-6 font-mono text-sm text-fg-muted">{profile.email}</p>
         </Reveal>
 
-        <footer className="mt-20 flex flex-col gap-4 border-t pt-8 text-sm text-fg-faint sm:flex-row sm:items-center sm:justify-between">
+        <footer className="mt-20 flex flex-col gap-4 border-t pt-8 text-sm text-fg-muted sm:flex-row sm:items-center sm:justify-between">
           <span>
             {profile.name}, {new Date().getFullYear()}
           </span>

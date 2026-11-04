@@ -42,3 +42,4 @@ next-env.d.ts
 
 # real client names used only by the content test
 tests/banned.local.txt
+.gates/

@@ -14,10 +14,10 @@ export function Nav() {
         <Link href="#main" className="font-medium tracking-tight">
           {profile.shortName}
         </Link>
-        <ul className="flex items-center gap-6 text-sm text-fg-muted">
+        <ul className="flex items-center gap-4 text-sm text-fg-muted sm:gap-6">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="transition-colors hover:text-fg">
+              <Link href={l.href} className="inline-flex min-h-6 items-center py-2 transition-colors hover:text-fg">
                 {l.label}
               </Link>
             </li>
