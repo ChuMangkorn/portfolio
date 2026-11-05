@@ -45,11 +45,11 @@ function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
 
 function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   return (
-    <h3 className={`mt-2 font-semibold leading-tight tracking-tight ${lead ? "text-3xl" : "text-xl"}`}>
+    <h3 className={`mt-2 font-display font-normal leading-tight tracking-normal ${lead ? "text-4xl" : "text-3xl"}`}>
       {c.link ? (
         <a href={c.link} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1 hover:text-accent">
           {c.title}
-          <ArrowUpRightIcon size={18} className="mt-1 shrink-0" />
+          <ArrowUpRightIcon size={20} className="mt-1.5 shrink-0" />
         </a>
       ) : (
         c.title
@@ -90,51 +90,34 @@ export function Work() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
-          {caseStudies.map((c, i) => {
-            const wide = i < 2;
-            return (
-              <Reveal key={c.title} delay={i * 0.06} className={wide ? "md:col-span-2" : undefined}>
-                <article
-                  className={`flex h-full flex-col rounded-card border bg-bg-raised p-6 sm:p-8 ${
-                    wide ? "md:grid md:grid-cols-12 md:gap-10" : ""
+        <div className="mt-12 space-y-5">
+          {caseStudies.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.06}>
+              <article className="flex h-full flex-col rounded-card border bg-bg-raised p-6 sm:p-8 md:grid md:grid-cols-12 md:gap-10">
+                <div className="flex flex-col md:col-span-5">
+                  <p className="text-sm text-fg-faint">{c.client}</p>
+                  <Title c={c} lead={i === 0} />
+                  {c.metric && (
+                    <p className="mt-4 flex items-baseline gap-3">
+                      <CountUp value={c.metric.value} className="font-mono text-4xl tracking-tight text-accent" />
+                      <span className="text-sm text-fg-muted">{c.metric.label}</span>
+                    </p>
+                  )}
+                  <p className="mt-4 leading-relaxed text-fg-muted">{c.problem}</p>
+                  <div className="mt-6 flex flex-1 flex-col">
+                    <Details c={c} />
+                  </div>
+                </div>
+                <div
+                  className={`mt-6 md:col-span-7 md:mt-0 md:self-center ${c.image ? "max-md:order-first max-md:mb-6 max-md:mt-0" : ""} ${
+                    i % 2 === 1 ? "md:order-first" : ""
                   }`}
                 >
-                  {wide ? (
-                    <>
-                      <div className="flex flex-col md:col-span-5">
-                        <p className="text-sm text-fg-faint">{c.client}</p>
-                        <Title c={c} lead={i === 0} />
-                        {c.metric && (
-                          <p className="mt-4 flex items-baseline gap-3">
-                            <CountUp value={c.metric.value} className="font-mono text-4xl tracking-tight text-accent" />
-                            <span className="text-sm text-fg-muted">{c.metric.label}</span>
-                          </p>
-                        )}
-                        <p className="mt-4 leading-relaxed text-fg-muted">{c.problem}</p>
-                        <div className="mt-6 flex flex-1 flex-col">
-                          <Details c={c} />
-                        </div>
-                      </div>
-                      <div className="mb-6 max-md:order-first md:col-span-7 md:mb-0 md:self-center">
-                        <Visual c={c} large />
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <Visual c={c} />
-                      <p className="mt-6 text-sm text-fg-faint">{c.client}</p>
-                      <Title c={c} />
-                      <p className="mt-4 leading-relaxed text-fg-muted">{c.problem}</p>
-                      <div className="mt-6 flex flex-1 flex-col">
-                        <Details c={c} />
-                      </div>
-                    </>
-                  )}
-                </article>
-              </Reveal>
-            );
-          })}
+                  <Visual c={c} large />
+                </div>
+              </article>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

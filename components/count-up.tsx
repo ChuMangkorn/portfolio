@@ -17,7 +17,6 @@ export function CountUp({ value, className }: { value: string; className?: strin
 
   useEffect(() => {
     if (!hasNumber || reduce || !inView) return;
-    setShown(0);
     const controls = animate(0, target, {
       duration: 1.4,
       ease: EASE_OUT,

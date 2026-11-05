@@ -9,14 +9,17 @@ export function Reveal({
   children,
   delay = 0,
   className,
+  as = "div",
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
+  as?: "div" | "li";
 }) {
   const reduce = useReducedMotion();
+  const Tag = as === "li" ? motion.li : motion.div;
   return (
-    <motion.div
+    <Tag
       data-reveal
       className={className}
       initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -25,6 +28,6 @@ export function Reveal({
       transition={{ duration: 0.5, delay, ease: EASE_OUT }}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
