@@ -27,7 +27,7 @@ function Score() {
           /10
         </span>
       </p>
-      <p className="mt-0.5 text-fg-faint">{run.scoreLabel}</p>
+      <p className="mt-0.5 text-fg-muted">{run.scoreLabel}</p>
     </div>
   );
 }
@@ -48,6 +48,8 @@ function Done() {
    layout answers to the panel's own width, so it works in a narrow column and in a wide one. The title links to the
    case study that holds the same numbers in full. */
 export function RunPanel({ className = "" }: { className?: string }) {
+  // "AI-built page · 10 review rounds": the second part drops out when the panel is too narrow to hold it.
+  const [titleLead, ...titleRest] = run.title.split(" · ");
   return (
     <RunGate className={`run-panel run-part @container rounded-card border bg-bg-raised px-4 pb-3 pt-2 font-mono text-label @max-[17rem]:text-xs ${className}`}>
       <div className="flex items-center justify-between gap-3 border-b pb-1.5">
@@ -56,7 +58,10 @@ export function RunPanel({ className = "" }: { className?: string }) {
           aria-label={`${run.title}, ${run.link.label.toLowerCase()}`}
           className="-my-2.5 inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap text-fg-muted transition-colors hover:text-accent"
         >
-          {run.title}
+          {/* Two whole labels, one shown at a time. Splitting one label across a text node and an inline span trips the
+              label-in-name check (Lighthouse and axe read the visible text as not matching the link's name). */}
+          <span className={titleRest.length > 0 ? "@max-[19rem]:hidden" : undefined}>{run.title}</span>
+          {titleRest.length > 0 && <span className="hidden @max-[19rem]:inline">{titleLead}</span>}
           <ArrowDownIcon aria-hidden size={12} weight="bold" />
         </a>
         <ReplayButton label={run.replay} />
@@ -71,8 +76,8 @@ export function RunPanel({ className = "" }: { className?: string }) {
               style={{ "--s": row.stage } as CSSProperties}
               className="run-row flex items-center gap-1.5 @min-[19rem]:grid @min-[19rem]:grid-cols-[3.5rem_1fr_auto] @min-[19rem]:gap-x-2"
             >
-              <span className="text-fg-faint">{row.who}</span>
-              <span className="sr-only text-fg-muted @min-[19rem]:not-sr-only">{row.what}</span>
+              <span className="text-fg-muted">{row.who}</span>
+              <span className="sr-only text-fg @min-[19rem]:not-sr-only">{row.what}</span>
               <Done />
             </li>
           ))}

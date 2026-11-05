@@ -16,7 +16,7 @@ const displaySerif = Instrument_Serif({ variable: "--font-display-serif", subset
 const description =
   "Software engineer in Bangkok. Japanese client briefs to delivery: Shopify, landing pages, WordPress and tracking, using AI agents I run and review.";
 
-const title = `${profile.name}, ${profile.title} in ${profile.city}`;
+const title = `${profile.name}, ${profile.tabTitle}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

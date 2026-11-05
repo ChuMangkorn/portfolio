@@ -20,7 +20,7 @@
   --radius-sm: 6px;
   --radius: 12px;
   --radius-lg: 20px;
-  --portrait: 440px;
+  --portrait: 27.5rem; /* 440px at the default root size; scales with it on large monitors */
   --portrait-sm: 15rem;
   --dur-pipeline: 1.2s;
   --dur-reveal: 0.5s;
@@ -92,6 +92,18 @@
   --container-portrait: min(var(--portrait), 56vh);
   --container-portrait-sm: var(--portrait-sm);
   --font-display: var(--font-display-serif), Georgia, serif;
+}
+
+/* Large monitors. A 1920x1080 desk screen is the most common way a hiring reader will see this page, and at the default
+   root size the hero floats in the middle of it. Scaling the root size scales every rem in the page together, so the
+   layout keeps its proportions: the reader's default size (16px) up to 1600px, about 18px at 1920 and capped at 125% of
+   the default. The bounds are percentages so a reader who set a larger default text size keeps it. The hero plus the stage rail
+   measure about 50 rem tall, so the height term (1.9vh) keeps the rail on the first screen in a short window too.
+   Media queries in rem still measure against the default size, so none of the breakpoints move. */
+@media screen and (min-width: 100rem) { /* ds-allow-hardcode: breakpoint */
+  :root {
+    font-size: clamp(100%, min(calc(0.55vw + 7.4px), 1.9vh), 125%); /* ds-allow-hardcode: scales from the reader's own default size */
+  }
 }
 
 @layer base {
@@ -409,12 +421,19 @@
   background: var(--accent);
 }
 @keyframes hero-recede {
+  from {
+    opacity: 1;
+    transform: none;
+  }
   to {
     opacity: 0.35;
     transform: translateY(-1.5rem) scale(0.98);
   }
 }
 @keyframes scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
   to {
     transform: scaleX(1);
   }
@@ -432,6 +451,56 @@
       animation-timeline: scroll(root);
     }
   }
+}
+
+/* Experience as the rail again: a dot per entry, the current job in amber, joined by a line. As each entry arrives, an
+   amber fill runs down its segment (the same release as the chart bars, so it works in every browser); at rest, with no
+   script and under reduced motion, the line is simply drawn. The grey segment is the track; the fill is a real element
+   scaled with a transform. */
+.exp-rail {
+  position: relative;
+}
+.exp-stop {
+  position: relative;
+}
+.exp-stop::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0.55rem;
+  left: calc(var(--exp-x) - 0.3125rem);
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px; /* ds-allow-hardcode: dot */
+  border: 2px solid var(--fg-faint); /* ds-allow-hardcode: dot outline */
+  background: var(--bg-raised);
+}
+.exp-stop--now::before {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+/* From this entry's dot to the next one: the list's 2rem gap plus the dot's offset. */
+.exp-stop:not(:last-child)::after,
+.exp-fill {
+  position: absolute;
+  left: calc(var(--exp-x) - 1px); /* ds-allow-hardcode: centres the 2px line on its x */
+  top: 0.8625rem;
+  bottom: calc(-2rem - 0.8625rem);
+  width: 2px; /* ds-allow-hardcode: hairline */
+}
+.exp-stop:not(:last-child)::after {
+  content: "";
+  background: var(--line);
+}
+.exp-fill {
+  z-index: 1;
+  pointer-events: none;
+  background: var(--accent);
+  transform-origin: top;
+  transition: transform var(--dur-bar) var(--ease-out) calc(var(--reveal-delay, 0s) + var(--tick-delay));
+}
+[data-pending] .exp-fill {
+  transform: scaleY(0);
 }
 
 /* A short amber tick above each section heading, the same mark that stands over each station of the rail. It draws in
@@ -481,7 +550,8 @@
   }
   .score-bar,
   .score-label,
-  .section-tick::before {
+  .section-tick::before,
+  .exp-fill {
     transition: none !important;
   }
 }
@@ -544,6 +614,9 @@
     opacity: 1 !important;
   }
   .section-tick::before {
+    transform: none !important;
+  }
+  .exp-fill {
     transform: none !important;
   }
   li,

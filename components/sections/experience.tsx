@@ -2,7 +2,7 @@ import { education, experience } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 
 // Below sm the date sits above the role so the role gets the full width.
-const ROW = "grid gap-1 sm:grid-cols-[11rem_1fr] sm:gap-4";
+const ROW = "grid gap-1 max-sm:pl-7 sm:grid-cols-[11rem_1fr] sm:gap-x-8";
 const DATE = "whitespace-nowrap font-mono text-label text-fg-faint sm:pt-1";
 
 export function Experience() {
@@ -13,12 +13,13 @@ export function Experience() {
           <h2 className="section-tick font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Where I have worked</h2>
         </Reveal>
 
-        <ol className="mt-12 space-y-8 md:col-span-8 md:mt-0">
+        <ol className="exp-rail mt-12 space-y-8 [--exp-x:0.3rem] sm:[--exp-x:12rem] md:col-span-8 md:mt-0">
           {experience.map((e, i) => {
             // The gap years have no employer; they read as a quieter entry, with their own summary.
             const quiet = !e.company;
             return (
-              <Reveal as="li" key={e.period + e.role} delay={i * 0.05} className={ROW}>
+              <Reveal as="li" key={e.period + e.role} delay={i * 0.05} className={`exp-stop ${i === 0 ? "exp-stop--now " : ""}${ROW}`}>
+                <span aria-hidden className="exp-fill" />
                 <span className={DATE}>{e.period}</span>
                 <div>
                   <h3
@@ -38,7 +39,7 @@ export function Experience() {
               </Reveal>
             );
           })}
-          <Reveal as="li" delay={0.3} className={ROW}>
+          <Reveal as="li" delay={0.3} className={`exp-stop ${ROW}`}>
             <span className={DATE}>{education.period}</span>
             <h3 className="font-medium leading-snug">
               {education.degree}

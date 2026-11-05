@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type NavLink = { href: string; label: string };
+type NavLink = { href: string; label: string; cta?: boolean };
 
 /* Marks the section the reader is in. A thin band across the middle of the viewport decides which section counts as current. */
 export function NavLinks({ links }: { links: NavLink[] }) {
@@ -37,7 +37,11 @@ export function NavLinks({ links }: { links: NavLink[] }) {
           <Link
             href={l.href}
             aria-current={current === l.href.slice(1) ? "location" : undefined}
-            className="inline-flex min-h-11 items-center underline-offset-8 transition-colors hover:text-fg aria-[current=location]:text-accent aria-[current=location]:underline aria-[current=location]:decoration-accent"
+            className={
+              l.cta
+                ? "inline-flex min-h-11 items-center text-accent transition-colors hover:text-fg min-[24rem]:min-h-9 min-[24rem]:rounded-control min-[24rem]:border min-[24rem]:border-accent/60 min-[24rem]:px-3 min-[24rem]:hover:bg-accent min-[24rem]:hover:text-accent-ink min-[24rem]:aria-[current=location]:bg-accent min-[24rem]:aria-[current=location]:text-accent-ink"
+                : "inline-flex min-h-11 items-center underline-offset-8 transition-colors hover:text-fg aria-[current=location]:text-accent aria-[current=location]:underline aria-[current=location]:decoration-accent"
+            }
           >
             {l.label}
           </Link>

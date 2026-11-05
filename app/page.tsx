@@ -1,5 +1,6 @@
 import { Nav } from "@/components/nav";
 import { Hero } from "@/components/sections/hero";
+import { Receipts } from "@/components/sections/receipts";
 import { About } from "@/components/sections/about";
 import { Work } from "@/components/sections/work";
 import { Experience } from "@/components/sections/experience";
@@ -27,6 +28,7 @@ export default function Home() {
       <Nav />
       <main id="main">
         <Hero />
+        <Receipts />
         <About />
         <Work />
         <Experience />

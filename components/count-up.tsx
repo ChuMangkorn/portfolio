@@ -24,6 +24,13 @@ export function CountUp({ value, className }: { value: string; className?: strin
 
     let frame = 0;
     let observer: IntersectionObserver | undefined;
+    // Printing or saving as PDF must never catch a number mid-count (or still at zero): settle on the real value.
+    const settle = () => {
+      observer?.disconnect();
+      cancelAnimationFrame(frame);
+      el.textContent = value;
+    };
+    window.addEventListener("beforeprint", settle);
     const stop = onEngage(() => {
       if (el.getBoundingClientRect().top < window.innerHeight) return; // already on screen: keep the final value
       el.textContent = `0${suffix}`;
@@ -44,11 +51,12 @@ export function CountUp({ value, className }: { value: string; className?: strin
       observer.observe(el);
     });
     return () => {
+      window.removeEventListener("beforeprint", settle);
       stop();
       observer?.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [target, suffix, hasNumber]);
+  }, [value, target, suffix, hasNumber]);
 
   return (
     <span className={className}>

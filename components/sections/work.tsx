@@ -87,7 +87,7 @@ function Visual({ c }: { c: CaseStudy }) {
       <figure className="flex flex-col overflow-hidden rounded-card bg-bg-tint">
         <div className="border-b px-5 py-3 font-mono text-label text-fg-faint sm:px-8">{c.excerpt.title}</div>
         <div className="p-5 sm:p-8">
-          <StaggerRows rows={c.excerpt.rows} className="space-y-3 font-mono text-sm leading-relaxed sm:text-base lg:space-y-4" />
+          <StaggerRows rows={c.excerpt.rows} caret={false} className="space-y-3 font-mono text-sm leading-relaxed sm:text-base lg:space-y-4" />
         </div>
         <figcaption className="border-t px-5 py-3 text-label text-fg-faint sm:px-8">{c.excerpt.caption}</figcaption>
       </figure>
@@ -174,7 +174,7 @@ export function Work() {
 
         <div className="mt-12 space-y-5">
           {caseStudies.map((c, i) => {
-            const lead = i === 0;
+            const lead = i === 0 || Boolean(c.metric);
             return (
               <Reveal key={c.title} delay={i * 0.06}>
                 {/* Two columns from lg. Below that the card is one column so tablets keep readable measures. */}

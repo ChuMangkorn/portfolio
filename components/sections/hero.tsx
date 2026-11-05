@@ -5,8 +5,8 @@ import { profile } from "@/lib/data";
 import { RunGate } from "@/components/run-gate";
 import { RunPanel } from "@/components/run-panel";
 
-// Must match --portrait in globals.css and the md breakpoint.
-const PORTRAIT_SIZES = "(min-width: 768px) 440px, 100vw"; // ds-allow-hardcode
+// Must match --portrait in globals.css (27.5rem, growing to about 34rem on a large monitor) and the md breakpoint.
+const PORTRAIT_SIZES = "(min-width: 1600px) 550px, (min-width: 768px) 440px, 100vw"; // ds-allow-hardcode
 
 /* The hero opens with one scripted run of about four seconds (timing in globals.css): the headline lands word by word,
    the portrait is lit, an amber line travels the five stages, and a panel replays how this page was built, its checks
@@ -15,18 +15,34 @@ const PORTRAIT_SIZES = "(min-width: 768px) 440px, 100vw"; // ds-allow-hardcode
    From md the stages run as a rail under both columns and the portrait stands on its line. The panel sits over the
    portrait's lower left from xl, above the portrait below that, and is dropped between md and xl on a window shorter
    than 58rem (a rule in globals.css), where it would push the rail off the first screen. On a phone it comes straight
-   after the buttons. */
+   after the buttons. Under md a small portrait also sits beside the name, because the large one is below the first screen. */
 export function Hero() {
   const last = profile.pipeline.length - 1;
   const words = profile.headline.split(" ");
   const [before, after] = profile.tagline.split(profile.taglineEmphasis);
+  const [roleBefore, roleAfter] = profile.role.split(profile.roleEmphasis);
   return (
     <section className="hero-recede mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-9 sm:px-8 md:min-h-[min(calc(100dvh-4.25rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 md:short:pt-10 print:min-h-0 print:pt-8">
       <div className="order-1 md:col-span-7 md:row-start-1 md:self-center md:pb-12 md:short:pb-6">
-        <p className="hero-fade hero-fade--lead mb-4 flex flex-wrap gap-x-3 text-sm md:mb-5 md:short:mb-3">
-          <span className="font-medium text-fg">{profile.name}</span>
-          <span className="text-fg-muted">{profile.role}</span>
-        </p>
+        <div className="hero-fade hero-fade--lead mb-5 flex items-center gap-4 md:mb-5 md:short:mb-3">
+          {/* On a phone the large portrait sits below the first screen, so the face is here as well. It is lazy on purpose:
+              a browser does not fetch a lazy image that is display:none, so a wide screen never downloads it. */}
+          <span className="relative block h-[4.5rem] w-[4.5rem] shrink-0 overflow-hidden rounded-full border-2 border-accent/50 bg-bg-raised md:hidden">
+            <span
+              aria-hidden
+              className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,color-mix(in_oklab,var(--accent)_34%,transparent)_0%,transparent_75%)]"
+            />
+            <Image src={profile.photo} alt="" fill sizes="72px" className="object-cover object-[50%_0%]" />
+          </span>
+          <p className="flex flex-col gap-0.5 text-sm md:flex-row md:flex-wrap md:gap-x-3">
+            <span className="font-medium text-fg">{profile.name}</span>
+            <span className="text-fg-muted">
+              {roleBefore}
+              <span className="font-medium text-accent">{profile.roleEmphasis}</span>
+              {roleAfter}
+            </span>
+          </p>
+        </div>
         <h1 className="font-display text-hero tracking-normal [word-spacing:0.06em] [text-wrap:balance]">
           {words.map((word, i) => (
             <Fragment key={i}>
@@ -81,7 +97,7 @@ export function Hero() {
       <RunGate
         as="ol"
         label="How a project moves"
-        className="rail order-3 mb-10 mt-6 flex flex-wrap max-md:border-t max-md:pt-4 items-start gap-x-1 gap-y-2 font-jp text-sm text-fg-faint md:order-none md:col-span-12 md:row-start-2 md:mb-0 md:mt-0 md:grid md:grid-cols-5 md:gap-x-0 md:border-t"
+        className="rail order-3 mb-10 mt-6 flex flex-wrap max-md:border-t max-md:pt-4 items-start gap-x-3 gap-y-2 font-jp text-sm text-fg-faint min-[22.4rem]:gap-x-1 md:order-none md:col-span-12 md:row-start-2 md:mb-0 md:mt-0 md:grid md:grid-cols-5 md:gap-x-0 md:border-t"
       >
         {profile.pipeline.map((step, i) => (
           <li

@@ -4,8 +4,13 @@ export const profile = {
   name: "Mangkorn Chulaprungrueang",
   shortName: "Mangkorn",
   title: "Software Engineer",
+  // How the role reads in the browser tab and in a link preview (LINE, Slack and Chatwork show the title in bold).
+  // `title` stays the plain job title for structured data.
+  tabTitle: "AI-driven Software Engineer",
   city: "Bangkok",
-  role: "Software Engineer, Bangkok",
+  role: "AI-driven Software Engineer, Bangkok",
+  // The part of the role line the hero marks in the accent colour, so "AI" is read in the first line of the page.
+  roleEmphasis: "AI-driven",
   headline: "One engineer, end to end.",
   pipeline: [
     { ja: "要件ヒアリング", en: "Japanese brief" },
@@ -50,7 +55,7 @@ export const buildScores = [5.0, 6.0, 6.5, 6.7, 6.8, 7.0, 7.2, 7.5, 8.0, 8.3];
 export type RunRow = { who: string; what: string; stage: number };
 
 export const run = {
-  title: "ai workflow · this page",
+  title: `AI-built page · ${buildScores.length} review rounds`,
   replay: "Replay the run",
   link: { label: "How it was built", href: "#workflow" },
   scoreLabel: "reviewer agent",
@@ -60,6 +65,38 @@ export const run = {
     { who: "me", what: "final call", stage: 4 },
   ] satisfies RunRow[],
 };
+
+/* The strip under the hero: four measurements from the work below it, each linking to the case that holds the evidence.
+   Three are about the AI workflow (a comparison, a defect the reviewer caught, the score) and one is client delivery.
+   A figure written "a to b" reads as before and after. A test ties every figure and label to the case text it comes from. */
+export type Receipt = { figure: string; label: string; where: string; href: string };
+
+export const receipts: Receipt[] = [
+  {
+    figure: "16/18",
+    label: "About 16 of 18 sentences kept their meaning with Claude, about 7 of 18 with on-device translation.",
+    where: "MeetRec, one 90 second meeting",
+    href: "#meetrec",
+  },
+  {
+    figure: "28 to 0",
+    label: "Blocks hidden with scripts blocked. The reviewer agent caught it in round 8.",
+    where: "how it was built",
+    href: "#workflow",
+  },
+  {
+    figure: "5.0 to 8.3",
+    label: "The reviewer agent's score across 10 rounds on this page.",
+    where: "how it was built",
+    href: "#workflow",
+  },
+  {
+    figure: "300+",
+    label: "Drugstore locations in the store finder, searchable by chain and prefecture.",
+    where: "store finder",
+    href: "#store-finder",
+  },
+];
 
 export type ExcerptRow = { label: string; value: string };
 
@@ -92,31 +129,6 @@ export type CaseStudy = {
 };
 
 export const caseStudies: CaseStudy[] = [
-  {
-    title: "Online store with a nationwide store finder",
-    client: "Japanese D2C cosmetics brand",
-    problem:
-      "The brand sells online and through drugstores across Japan. It needed shoppers to find a nearby shelf, seasonal bundles to launch on schedule, and one person to own all of it for a Japanese‑speaking client.",
-    work: [
-      "Migrated 40+ products and variants from the client master sheet",
-      "Built a searchable directory of drugstore locations with chain and prefecture filters",
-      "Wrote Jest and Playwright tests for the finder and wired them into CI",
-      "Shipped bundle campaign pages, shipping rules for remote islands, and a staging to production release flow",
-    ],
-    outcome:
-      "The list grew from 61 locations in the first build to over 300 as chains were added. Every release goes to a staging theme first, then to production on a date agreed with the client.",
-    stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
-    personal: false,
-    metric: { value: "300+", label: "locations today, searchable by chain and prefecture" },
-    image: {
-      src: "/work-storefinder.png",
-      alt: "Early build of the store finder with chain and prefecture filters and a list of drugstore locations",
-      width: 780,
-      height: 440,
-      label: "store finder",
-      note: "Early build with 61 locations. The live list has since grown past 300.",
-    },
-  },
   {
     title: "An AI engineering workflow that runs my day",
     client: "Personal tooling",
@@ -155,11 +167,37 @@ export const caseStudies: CaseStudy[] = [
       checks: [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
-        { label: "every commit", value: "type check, lint, 7 content tests, no looping motion" },
+        { label: "every commit", value: "type check, lint, 9 content tests, no looping motion" },
         { label: "whole page", value: "about 360 KB over the wire, fonts included" },
       ],
       caption:
         "Rebuilt in one day, in small commits. I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks. A separate reviewer agent, fresh each round, scored the rendered page, and I stopped when the rest needed material only I can supply.",
+    },
+  },
+  {
+    title: "Online store with a nationwide store finder",
+    client: "Japanese D2C cosmetics brand",
+    problem:
+      "The brand sells online and through drugstores across Japan. It needed shoppers to find a nearby shelf, seasonal bundles to launch on schedule, and one person to own all of it for a Japanese‑speaking client.",
+    work: [
+      "Migrated 40+ products and variants from the client master sheet",
+      "Built a searchable directory of drugstore locations with chain and prefecture filters",
+      "Wrote Jest and Playwright tests for the finder and wired them into CI",
+      "Shipped bundle campaign pages, shipping rules for remote islands, and a staging to production release flow",
+    ],
+    outcome:
+      "The list grew from 61 locations in the first build to over 300 as chains were added. Every release goes to a staging theme first, then to production on a date agreed with the client.",
+    stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
+    personal: false,
+    anchor: "store-finder",
+    metric: { value: "300+", label: "locations today, searchable by chain and prefecture" },
+    image: {
+      src: "/work-storefinder.png",
+      alt: "Early build of the store finder with chain and prefecture filters and a list of drugstore locations",
+      width: 780,
+      height: 440,
+      label: "store finder",
+      note: "Early build with 61 locations. The live list has since grown past 300.",
     },
   },
   {
@@ -176,6 +214,7 @@ export const caseStudies: CaseStudy[] = [
       "Tested on a real 90 second meeting segment: Apple's on-device translation kept the meaning in about 7 of 18 sentences, Claude's in about 16 of 18. The app shows the quick one first, then swaps in the better one. A private-meeting switch keeps translation on the device and asks before any summary leaves it.",
     stack: ["Swift", "SwiftUI", "ScreenCaptureKit", "Apple Speech", "Claude"],
     personal: true,
+    anchor: "meetrec",
     image: {
       src: "/work-meetrec.png",
       alt: "MeetRec live subtitle window: each Japanese line from the meeting with its Thai translation below it",

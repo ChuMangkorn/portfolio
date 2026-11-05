@@ -28,7 +28,7 @@ These scores are an AI reviewer's judgement. They are shown to document the loop
 - content tests: no client names, no placeholder text, no inflated language level, no dashes
 - a motion rule: nothing on the page loops (WCAG 2.2.2)
 
-`npm run check` is the full local pipeline and needs the design-check plugin I use with Claude Code. It adds a production build, share-card and metadata checks (preview image, icons, JSON-LD, robots, sitemap, 404), contrast, target size, overflow and reduced-motion checks on a rendered snapshot, axe-core, and writes receipts that a hook reads before the agent may call work finished. Two checks run in a real browser against the build: the hero run must end within 4.5 seconds, no animation may play longer than 5, and nothing may start by itself under reduced motion; and every Japanese character on the page must be in the cut-down font.
+`npm run check` is the full local pipeline and needs the design-check plugin I use with Claude Code. It adds a production build, share-card and metadata checks (preview image, icons, JSON-LD, robots, sitemap, 404), contrast, target size, overflow and reduced-motion checks on a rendered snapshot, axe-core, and writes receipts that a hook reads before the agent may call work finished. Three checks run in a real browser against the build: the hero run must end within 4.5 seconds, no animation may play longer than 5, and nothing may start by itself under reduced motion; every Japanese character on the page must be in the cut-down font; and the visible text of every labelled control must be part of its accessible name (the rule Lighthouse calls label-content-name-mismatch).
 
 Measured on the finished build:
 
@@ -41,6 +41,7 @@ Measured on the finished build:
 
 - [`docs/adr/0001-anonymized-case-studies.md`](docs/adr/0001-anonymized-case-studies.md): why no client is ever named
 - [`docs/adr/0002-impact-from-one-run-not-loops.md`](docs/adr/0002-impact-from-one-run-not-loops.md): why the first screen gets one scripted run instead of loops, WebGL or a scroll library
+- [`docs/research/portfolio-evidence.md`](docs/research/portfolio-evidence.md): what first-party sources say about how a hiring reader reads a page, what AI employers ask candidates for, and which browser features are safe to rely on (each claim cited, with what could not be verified)
 - [`CODING_STANDARDS.md`](CODING_STANDARDS.md): the judgement calls a check cannot make
 - [`GLOSSARY.md`](GLOSSARY.md): the vocabulary the content uses
 - [`AGENTS.md`](AGENTS.md): what the agent reads before it touches the code

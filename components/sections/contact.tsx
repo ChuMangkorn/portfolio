@@ -88,7 +88,7 @@ export function Contact() {
           <span>
             {profile.name}, {new Date().getFullYear()}
           </span>
-          <a href="#main" className="inline-flex min-h-11 items-center hover:text-fg">
+          <a href="#" className="inline-flex min-h-11 items-center hover:text-fg">
             Back to top
           </a>
         </footer>
