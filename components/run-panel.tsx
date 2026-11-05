@@ -61,17 +61,18 @@ export function RunPanel({ className = "" }: { className?: string }) {
         </a>
         <ReplayButton label={run.replay} />
       </div>
-      <div className="grid gap-x-4 gap-y-2.5 pt-3 @min-[17rem]:grid-cols-[auto_1fr] @min-[17rem]:items-center">
+      <div className="grid gap-x-4 gap-y-2.5 pt-3 @min-[19rem]:grid-cols-[auto_1fr] @min-[19rem]:items-center">
         <Score />
-        <ul>
+        {/* Narrow: one line of "who, tick" with the description kept for screen readers. From 19rem: a column of full lines. */}
+        <ul className="flex flex-wrap gap-x-5 gap-y-1 @min-[19rem]:block">
           {run.rows.map((row) => (
             <li
               key={row.who}
               style={{ "--s": row.stage } as CSSProperties}
-              className="run-row grid grid-cols-[3.5rem_1fr_auto] items-center gap-x-2"
+              className="run-row flex items-center gap-1.5 @min-[19rem]:grid @min-[19rem]:grid-cols-[3.5rem_1fr_auto] @min-[19rem]:gap-x-2"
             >
               <span className="text-fg-faint">{row.who}</span>
-              <span className="text-fg-muted">{row.what}</span>
+              <span className="sr-only text-fg-muted @min-[19rem]:not-sr-only">{row.what}</span>
               <Done />
             </li>
           ))}

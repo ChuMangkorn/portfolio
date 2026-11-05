@@ -13,16 +13,17 @@ const PORTRAIT_SIZES = "(min-width: 768px) 440px, 100vw"; // ds-allow-hardcode
    and its score landing as the line reaches each stage. It is all in the HTML and finishes at rest, so a reader who
    never sees it still gets the whole page.
    From md the stages run as a rail under both columns and the portrait stands on its line. The panel sits over the
-   portrait's lower left from xl, above the portrait below that, and is dropped on short windows between md and xl,
-   where it would push the rail off the first screen. On a phone it comes straight after the buttons. */
+   portrait's lower left from xl, above the portrait below that, and is dropped between md and xl on a window shorter
+   than 58rem (a rule in globals.css), where it would push the rail off the first screen. On a phone it comes straight
+   after the buttons. */
 export function Hero() {
   const last = profile.pipeline.length - 1;
   const words = profile.headline.split(" ");
   const [before, after] = profile.tagline.split(profile.taglineEmphasis);
   return (
-    <section className="hero-recede mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-12 sm:px-8 md:min-h-[min(calc(100dvh-4.25rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 md:short:pt-10 print:min-h-0 print:pt-8">
+    <section className="hero-recede mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-9 sm:px-8 md:min-h-[min(calc(100dvh-4.25rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 md:short:pt-10 print:min-h-0 print:pt-8">
       <div className="order-1 md:col-span-7 md:row-start-1 md:self-center md:pb-12 md:short:pb-6">
-        <p className="hero-fade hero-fade--lead mb-5 flex flex-wrap gap-x-3 text-sm md:short:mb-3">
+        <p className="hero-fade hero-fade--lead mb-4 flex flex-wrap gap-x-3 text-sm md:mb-5 md:short:mb-3">
           <span className="font-medium text-fg">{profile.name}</span>
           <span className="text-fg-muted">{profile.role}</span>
         </p>
@@ -39,7 +40,7 @@ export function Hero() {
         <p
           lang="ja"
           style={{ "--k": 0 } as CSSProperties}
-          className="hero-fade mt-6 font-jp text-lg font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase] md:short:mt-4"
+          className="hero-fade mt-5 font-jp text-lg font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase] md:mt-6 md:short:mt-4"
         >
           {profile.jp}
         </p>
@@ -48,7 +49,7 @@ export function Hero() {
           <span className="mark-ai font-medium text-fg">{profile.taglineEmphasis}</span>
           {after}
         </p>
-        <div style={{ "--k": 2 } as CSSProperties} className="hero-fade mt-9 flex flex-wrap items-center gap-3 md:short:mt-6 print:hidden">
+        <div style={{ "--k": 2 } as CSSProperties} className="hero-fade mt-7 flex flex-wrap items-center gap-3 md:mt-9 md:short:mt-6 print:hidden">
           <a
             href="#work"
             className="inline-flex h-11 items-center gap-2 rounded-control bg-accent px-5 text-sm font-medium text-accent-ink transition-transform hover:brightness-105 active:scale-[0.98]"
@@ -80,7 +81,7 @@ export function Hero() {
       <RunGate
         as="ol"
         label="How a project moves"
-        className="rail order-3 mb-10 mt-6 flex flex-wrap items-start gap-x-1 gap-y-2 font-jp text-sm text-fg-faint md:order-none md:col-span-12 md:row-start-2 md:mb-0 md:mt-0 md:grid md:grid-cols-5 md:gap-x-0 md:border-t"
+        className="rail order-3 mb-10 mt-6 flex flex-wrap max-md:border-t max-md:pt-4 items-start gap-x-1 gap-y-2 font-jp text-sm text-fg-faint md:order-none md:col-span-12 md:row-start-2 md:mb-0 md:mt-0 md:grid md:grid-cols-5 md:gap-x-0 md:border-t"
       >
         {profile.pipeline.map((step, i) => (
           <li
@@ -103,8 +104,8 @@ export function Hero() {
         ))}
       </RunGate>
 
-      <div className="relative order-2 max-md:mt-8 md:order-none md:col-span-5 md:col-start-8 md:row-start-1 md:flex md:flex-col md:items-end md:justify-end md:self-end">
-        <RunPanel className="mx-auto mb-6 w-full max-w-sm md:mx-0 md:max-w-portrait md:max-xl:short:hidden xl:absolute xl:-left-24 xl:bottom-3 xl:z-10 xl:mb-0 xl:w-[21.5rem] xl:max-w-none" />
+      <div className="relative order-2 max-md:mt-6 md:order-none md:col-span-5 md:col-start-8 md:row-start-1 md:flex md:flex-col md:items-end md:justify-end md:self-end">
+        <RunPanel className="mx-auto mb-6 w-full max-w-sm md:mx-0 md:max-w-portrait xl:absolute xl:-left-24 xl:bottom-3 xl:z-10 xl:mb-0 xl:w-[21.5rem] xl:max-w-none" />
         {/* Cut-out portrait: no box. The glow stays inside its own box; the base stands on the rail from md. */}
         <div className="hero-portrait relative mx-auto aspect-[4/5] w-full max-w-portrait-sm [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)] md:mx-0 md:max-w-portrait">
           <div

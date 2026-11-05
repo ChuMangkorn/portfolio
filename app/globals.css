@@ -277,28 +277,36 @@
 
 /* The tagline's key phrase carries an amber marker underneath. At rest it is fully drawn. */
 .mark-ai {
+  white-space: nowrap;
   background-image: linear-gradient(color-mix(in oklab, var(--accent) 32%, transparent), color-mix(in oklab, var(--accent) 32%, transparent));
   background-repeat: no-repeat;
   background-position: 0 92%;
   background-size: 100% var(--mark-h);
 }
 
-/* The rail: a thin amber line travels the five stages and each one lights as the line reaches it. */
-@media (min-width: 48rem) { /* ds-allow-hardcode: md breakpoint */
-  .rail {
-    position: relative;
-  }
-  .rail::after {
-    content: "";
-    position: absolute;
-    top: -1px; /* ds-allow-hardcode: sits on the 1px rail border */
-    left: 0;
-    right: 0;
-    height: 2px; /* ds-allow-hardcode: line thickness */
-    pointer-events: none;
-    opacity: 0;
-    transform-origin: left;
-    background: linear-gradient(90deg, transparent, var(--accent) 70%, var(--fg));
+/* The rail: a thin amber line travels the five stages and each one lights as the line reaches it. On a phone the rail
+   gets a hairline of its own to travel along. */
+.rail {
+  position: relative;
+}
+.rail::after {
+  content: "";
+  position: absolute;
+  top: -1px; /* ds-allow-hardcode: sits on the 1px rail border */
+  left: 0;
+  right: 0;
+  height: 2px; /* ds-allow-hardcode: line thickness */
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: left;
+  background: linear-gradient(90deg, transparent, var(--accent) 70%, var(--fg));
+}
+
+/* Between md and xl the panel sits above the portrait in the right column. In a window shorter than 58rem it would
+   push the rail off the first screen (measured: the rail ends at 924 px at 1180 wide), so it is dropped there. */
+@media (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 57.99rem) { /* ds-allow-hardcode: md, xl and hero-fit breakpoints */
+  .run-panel {
+    display: none;
   }
 }
 
@@ -361,12 +369,10 @@
   .run[data-run="play"] .pipeline-step {
     animation: step-lit var(--dur-pipeline) ease-in-out calc(var(--run-lead) + var(--i, 0) * var(--run-unit)) 1 both;
   }
-  @media (min-width: 48rem) { /* ds-allow-hardcode: md breakpoint */
-    .run[data-run="play"].rail::after {
-      animation:
-        rail-sweep var(--run-rail-dur) linear var(--run-lead) both,
-        rail-fade var(--dur-reveal) ease-out calc(var(--run-lead) + var(--run-rail-dur)) both;
-    }
+  .run[data-run="play"].rail::after {
+    animation:
+      rail-sweep var(--run-rail-dur) linear var(--run-lead) both,
+      rail-fade var(--dur-reveal) ease-out calc(var(--run-lead) + var(--run-rail-dur)) both;
   }
   .run-panel.run[data-run="play"] {
     animation: run-in var(--dur-run) var(--ease-out) var(--run-lead) both;
