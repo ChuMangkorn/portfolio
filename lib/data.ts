@@ -55,7 +55,9 @@ export const buildScores = [5.0, 6.0, 6.5, 6.7, 6.8, 7.0, 7.2, 7.5, 8.0, 8.3];
 export type RunRow = { who: string; what: string; stage: number };
 
 export const run = {
-  title: `AI-built page · ${buildScores.length} review rounds`,
+  title: `Built with AI, reviewed ${buildScores.length} times`,
+  // What the title shortens to when the panel is too narrow to hold it.
+  titleShort: "Built with AI",
   replay: "Replay the run",
   link: { label: "How it was built", href: "#workflow" },
   scoreLabel: "reviewer agent",
@@ -66,9 +68,11 @@ export const run = {
   ] satisfies RunRow[],
 };
 
-/* The strip under the hero: four measurements from the work below it, each linking to the case that holds the evidence.
-   Three are about the AI workflow (a comparison, a defect the reviewer caught, the score) and one is client delivery.
-   A figure written "a to b" reads as before and after. A test ties every figure and label to the case text it comes from. */
+/* The strip under the hero: three measurements from the work below it, each linking to the case that holds the evidence.
+   The first leads and takes two columns: it is the best evidence on the page (an AI model compared with the on-device
+   one, on a real meeting). Then a defect the reviewer caught, then client delivery. The reviewer's score is not repeated
+   here: the hero panel and the chart already show it. A figure written "a to b" reads as before and after. A test ties
+   every figure and label to the case text it comes from. */
 export type Receipt = { figure: string; label: string; where: string; href: string };
 
 export const receipts: Receipt[] = [
@@ -81,12 +85,6 @@ export const receipts: Receipt[] = [
   {
     figure: "28 to 0",
     label: "Blocks hidden with scripts blocked. The reviewer agent caught it in round 8.",
-    where: "how it was built",
-    href: "#workflow",
-  },
-  {
-    figure: "5.0 to 8.3",
-    label: "The reviewer agent's score across 10 rounds on this page.",
     where: "how it was built",
     href: "#workflow",
   },

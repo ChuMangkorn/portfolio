@@ -80,7 +80,8 @@ test("the strip's measurements match the case text they come from", () => {
     assert.ok(c, `a case study has the anchor #${anchor}`);
     return c;
   };
-  const [meetrec, caught, score, finder] = receipts;
+  assert.equal(receipts.length, 3);
+  const [meetrec, caught, finder] = receipts;
   // MeetRec: the figure is the better result, the label states both results with their "about".
   const m = byAnchor("meetrec");
   assert.match(m.outcome, /about 7 of 18/);
@@ -95,9 +96,6 @@ test("the strip's measurements match the case text they come from", () => {
   assert.match(round8.value, /Now 0 of 28/);
   assert.equal(caught.figure, "28 to 0");
   assert.ok(caught.label.includes("round 8"));
-  // The score and the round count come from buildScores, the same list the hero and the chart draw.
-  assert.equal(score.figure, `${buildScores[0].toFixed(1)} to ${buildScores[buildScores.length - 1].toFixed(1)}`);
-  assert.ok(score.label.includes(`${buildScores.length} rounds`));
   // Client delivery: the store finder's lead number.
   const f = byAnchor("store-finder");
   assert.equal(finder.figure, f.metric?.value);

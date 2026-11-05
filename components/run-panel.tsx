@@ -48,8 +48,6 @@ function Done() {
    layout answers to the panel's own width, so it works in a narrow column and in a wide one. The title links to the
    case study that holds the same numbers in full. */
 export function RunPanel({ className = "" }: { className?: string }) {
-  // "AI-built page · 10 review rounds": the second part drops out when the panel is too narrow to hold it.
-  const [titleLead, ...titleRest] = run.title.split(" · ");
   return (
     <RunGate className={`run-panel run-part @container rounded-card border bg-bg-raised px-4 pb-3 pt-2 font-mono text-label @max-[17rem]:text-xs ${className}`}>
       <div className="flex items-center justify-between gap-3 border-b pb-1.5">
@@ -60,8 +58,8 @@ export function RunPanel({ className = "" }: { className?: string }) {
         >
           {/* Two whole labels, one shown at a time. Splitting one label across a text node and an inline span trips the
               label-in-name check (Lighthouse and axe read the visible text as not matching the link's name). */}
-          <span className={titleRest.length > 0 ? "@max-[19rem]:hidden" : undefined}>{run.title}</span>
-          {titleRest.length > 0 && <span className="hidden @max-[19rem]:inline">{titleLead}</span>}
+          <span className="@max-[19rem]:hidden">{run.title}</span>
+          <span className="hidden @max-[19rem]:inline">{run.titleShort}</span>
           <ArrowDownIcon aria-hidden size={12} weight="bold" />
         </a>
         <ReplayButton label={run.replay} />

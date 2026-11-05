@@ -15,7 +15,9 @@ const PORTRAIT_SIZES = "(min-width: 1600px) 550px, (min-width: 768px) 440px, 100
    From md the stages run as a rail under both columns and the portrait stands on its line. The panel sits over the
    portrait's lower left from xl, above the portrait below that, and is dropped between md and xl on a window shorter
    than 58rem (a rule in globals.css), where it would push the rail off the first screen. On a phone it comes straight
-   after the buttons. Under md a small portrait also sits beside the name, because the large one is below the first screen. */
+   after the buttons. Under md the large portrait is not shown at all: a 72 px one sits beside the name instead, because the
+   large one would sit below the first screen as a cropped head and repeat the face. The large one is lazy for the same
+   reason: a browser does not fetch a lazy image that is display:none, so a phone never downloads it. */
 export function Hero() {
   const last = profile.pipeline.length - 1;
   const words = profile.headline.split(" ");
@@ -34,7 +36,7 @@ export function Hero() {
             />
             <Image src={profile.photo} alt="" fill sizes="72px" className="object-cover object-[50%_0%]" />
           </span>
-          <p className="flex flex-col gap-0.5 text-sm md:flex-row md:flex-wrap md:gap-x-3">
+          <p className="flex flex-col gap-0.5 text-sm md:flex-row md:flex-wrap md:gap-x-3 md:text-base">
             <span className="font-medium text-fg">{profile.name}</span>
             <span className="text-fg-muted">
               {roleBefore}
@@ -97,7 +99,7 @@ export function Hero() {
       <RunGate
         as="ol"
         label="How a project moves"
-        className="rail order-3 mb-10 mt-6 flex flex-wrap max-md:border-t max-md:pt-4 items-start gap-x-3 gap-y-2 font-jp text-sm text-fg-faint min-[22.4rem]:gap-x-1 md:order-none md:col-span-12 md:row-start-2 md:mb-0 md:mt-0 md:grid md:grid-cols-5 md:gap-x-0 md:border-t"
+        className="rail order-3 mb-10 mt-6 flex flex-wrap max-md:border-t max-md:pt-4 items-start gap-x-3 gap-y-2 font-jp text-sm text-fg-muted min-[22.4rem]:gap-x-1 md:order-none md:col-span-12 md:row-start-2 md:mb-0 md:mt-0 md:grid md:grid-cols-5 md:gap-x-0 md:border-t"
       >
         {profile.pipeline.map((step, i) => (
           <li
@@ -123,7 +125,7 @@ export function Hero() {
       <div className="relative order-2 max-md:mt-6 md:order-none md:col-span-5 md:col-start-8 md:row-start-1 md:flex md:flex-col md:items-end md:justify-end md:self-end">
         <RunPanel className="mx-auto mb-6 w-full max-w-sm md:mx-0 md:max-w-portrait xl:absolute xl:-left-24 xl:bottom-3 xl:z-10 xl:mb-0 xl:w-[21.5rem] xl:max-w-none" />
         {/* Cut-out portrait: no box. The glow stays inside its own box; the base stands on the rail from md. */}
-        <div className="hero-portrait relative mx-auto aspect-[4/5] w-full max-w-portrait-sm [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)] md:mx-0 md:max-w-portrait">
+        <div className="hero-portrait relative mx-auto hidden aspect-[4/5] w-full max-w-portrait-sm [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)] md:mx-0 md:block md:max-w-portrait">
           <div
             aria-hidden
             className="hero-glow absolute inset-0 bg-[radial-gradient(ellipse_closest-side_at_50%_42%,color-mix(in_oklab,var(--accent)_38%,transparent)_0%,transparent_100%)]"
@@ -132,7 +134,6 @@ export function Hero() {
             src={profile.photo}
             alt={`Portrait of ${profile.name}`}
             fill
-            priority
             sizes={PORTRAIT_SIZES}
             className="object-contain object-bottom max-md:[mask-image:linear-gradient(to_top,transparent,black_16%)]"
           />
