@@ -88,7 +88,7 @@ export function Hero() {
             fill
             priority
             sizes={PORTRAIT_SIZES}
-            className="object-contain object-bottom grayscale contrast-110 max-md:[mask-image:linear-gradient(to_top,transparent,black_16%)]"
+            className="object-contain object-bottom max-md:[mask-image:linear-gradient(to_top,transparent,black_16%)]"
           />
         </div>
       </div>
