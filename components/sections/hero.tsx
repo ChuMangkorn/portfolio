@@ -47,7 +47,7 @@ export function Hero() {
         </div>
         <ol aria-label="How a project moves" className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-1 font-jp text-sm text-fg-faint">
           {profile.pipeline.map((step, i) => (
-            <li key={step} className="flex items-center gap-2 whitespace-nowrap">
+            <li key={step} className="pipeline-step flex items-center gap-2 whitespace-nowrap" style={{ animationDelay: `${i * 0.7}s` }}>
               {i > 0 && (
                 <span aria-hidden className="text-accent">
                   {"\u2192"}
@@ -64,7 +64,7 @@ export function Hero() {
         <div className="relative mx-auto aspect-[4/5] w-full max-w-portrait">
           <div
             aria-hidden
-            className="absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_40%,color-mix(in_oklab,var(--accent)_40%,transparent)_0%,transparent_65%)]"
+            className="glow-breathe absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_40%,color-mix(in_oklab,var(--accent)_40%,transparent)_0%,transparent_65%)]"
           />
           <Image
             src={profile.photo}

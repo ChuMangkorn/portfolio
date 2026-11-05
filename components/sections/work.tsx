@@ -2,6 +2,8 @@ import Image from "next/image";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { caseStudies, type CaseStudy } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
+import { CountUp } from "@/components/count-up";
+import { StaggerPre } from "@/components/stagger-pre";
 
 // Half the container above the md breakpoint, full width below it.
 const VISUAL_SIZES = "(min-width: 768px) 50vw, 100vw"; // ds-allow-hardcode
@@ -16,7 +18,7 @@ function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
           width={c.image.width}
           height={c.image.height}
           sizes={VISUAL_SIZES}
-          className="h-auto w-full brightness-90"
+          className="drift h-auto w-full brightness-90"
         />
       </div>
     );
@@ -24,9 +26,7 @@ function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
   if (c.excerpt) {
     return (
       <figure className="flex h-full flex-col justify-center rounded-card border bg-bg-tint p-5 md:p-8">
-        <pre tabIndex={0} className={`overflow-x-auto whitespace-pre max-md:[mask-image:linear-gradient(to_right,black_82%,transparent)] font-mono leading-relaxed text-fg-muted ${large ? "text-sm" : "text-xs"}`}>
-          {c.excerpt.lines.join("\n")}
-        </pre>
+        <StaggerPre lines={c.excerpt.lines} className={`overflow-x-auto whitespace-pre max-md:[mask-image:linear-gradient(to_right,black_82%,transparent)] font-mono leading-relaxed text-fg-muted ${large ? "text-sm" : "text-xs"}`} />
         <figcaption className="mt-3 text-xs text-fg-faint">{c.excerpt.caption}</figcaption>
       </figure>
     );
@@ -98,7 +98,7 @@ export function Work() {
                         <Title c={c} lead={i === 0} />
                         {c.metric && (
                           <p className="mt-4 flex items-baseline gap-3">
-                            <span className="font-mono text-4xl tracking-tight text-accent">{c.metric.value}</span>
+                            <CountUp value={c.metric.value} className="font-mono text-4xl tracking-tight text-accent" />
                             <span className="text-sm text-fg-muted">{c.metric.label}</span>
                           </p>
                         )}
