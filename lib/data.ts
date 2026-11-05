@@ -133,7 +133,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
         { label: "every commit", value: "type check, lint, 6 content tests, no looping motion" },
-        { label: "whole page", value: "about 630 KB over the wire" },
+        { label: "whole page", value: "about 680 KB over the wire, fonts included" },
       ],
       caption:
         "Rebuilt in one day, in small commits. I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks. A separate reviewer agent, fresh each round, scored the rendered page, and I stopped when the rest needed material only I can supply.",

@@ -32,9 +32,9 @@ These scores are an AI reviewer's judgement. They are shown to document the loop
 
 Measured on the finished build:
 
-- Lighthouse: 100 accessibility, 100 best practices, 100 SEO
+- Lighthouse, mobile and desktop: 100 accessibility, 100 best practices, 100 SEO
 - axe-core: 0 WCAG 2.2 A/AA violations
-- about 630 KB per page load; largest paint 71 ms and no layout shift on a local run
+- about 680 KB per page load, of which 360 KB is fonts; largest paint 44 to 72 ms and layout shift under 0.002 on a local run with no network delay
 
 ## Decisions worth reading
 
