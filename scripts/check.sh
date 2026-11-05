@@ -39,7 +39,8 @@ for gate in verify_states verify_target_size verify_responsive verify_overflow v
   echo "== $gate"
   node "$KIT/gate.mjs" "$gate.mjs" .gates/preview.html | tail -2
 done
-for f in $(git ls-files 'app/*' 'components/*' 'lib/*' | grep -E '\.(tsx|ts|css)$'); do
+for f in $(git ls-files --cached --others --exclude-standard -- 'app/*' 'components/*' 'lib/*' | grep -E '\.(tsx|ts|css)$'); do
+  [ -f "$f" ] || continue # deleted in the working tree but not yet committed
   node "$KIT/gate.mjs" lint_hardcodes.py "$f" >/dev/null
 done
 echo '{"session_id":"x","cwd":"'"$PWD"'","stop_hook_active":false}' | node "$(dirname "$KIT")/hooks/stop-require-measurement.mjs"

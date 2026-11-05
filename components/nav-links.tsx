@@ -37,7 +37,7 @@ export function NavLinks({ links }: { links: NavLink[] }) {
           <Link
             href={l.href}
             aria-current={current === l.href.slice(1) ? "location" : undefined}
-            className="inline-flex min-h-11 items-center transition-colors hover:text-fg aria-[current=location]:text-fg"
+            className="inline-flex min-h-11 items-center transition-colors hover:text-fg aria-[current=location]:text-accent"
           >
             {l.label}
           </Link>

@@ -52,15 +52,15 @@ export function Hero() {
               className="pipeline-step flex items-center gap-2 whitespace-nowrap"
               style={{ animationDelay: `${i * 0.5}s` }}
             >
-              {i > 0 && (
+              <span className="flex flex-col leading-tight">
+                <span lang="ja">{step.ja}</span>
+                <span className="text-label">{step.en}</span>
+              </span>
+              {i < profile.pipeline.length - 1 && (
                 <span aria-hidden className="text-accent">
                   {"\u2192"}
                 </span>
               )}
-              <span className="flex flex-col leading-tight">
-                <span lang="ja">{step.ja}</span>
-                <span className="text-xs">{step.en}</span>
-              </span>
             </li>
           ))}
         </ol>
@@ -71,7 +71,7 @@ export function Hero() {
         <div className="relative mx-auto aspect-[4/5] w-full max-w-portrait-sm [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)] md:max-w-portrait">
           <div
             aria-hidden
-            className="absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_40%,color-mix(in_oklab,var(--accent)_40%,transparent)_0%,transparent_65%)]"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_closest-side_at_50%_42%,color-mix(in_oklab,var(--accent)_38%,transparent)_0%,transparent_100%)]"
           />
           <Image
             src={profile.photo}

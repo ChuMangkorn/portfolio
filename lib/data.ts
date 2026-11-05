@@ -55,7 +55,7 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    title: "Shopify store for a Japanese D2C cosmetics brand",
+    title: "Online store with a nationwide store finder",
     client: "Japanese D2C cosmetics brand",
     problem:
       "The brand needed its online store, a nationwide store finder, and seasonal bundle campaigns, maintained by me alone for a Japanese-speaking client.",
@@ -82,7 +82,7 @@ export const caseStudies: CaseStudy[] = [
     title: "An AI engineering workflow that runs my day",
     client: "Personal tooling",
     problem:
-      "Agent tools are only useful if they are reliable. I wanted a setup where the agent knows the client history, follows my rules, and checks its own work.",
+      "Agent tools are only useful if they are reliable. I wanted a setup where the agent knows the client history, follows my rules, and checks its own work. In plain words: one AI assistant does the work, another reviews it, and I decide what ships.",
     work: [
       "Task harness that routes work to the right tool and sub-agent",
       "Persistent project memory across sessions",
@@ -100,7 +100,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "bug or slow", value: "diagnose first, then a second debugger" },
         { label: "new feature", value: "brainstorm, plan, tdd, code review" },
         { label: "check a page", value: "playwright, PC 1440 and SP 390 shots" },
-        { label: "shopify store", value: "staging first, production on sign-off" },
+        { label: "shopify store", value: "staging first, production on approval" },
         { label: "client history", value: "loaded from project memory every session" },
         { label: "before it ships", value: "an independent review agent reads the diff" },
         { label: "anything external", value: "ask first" },
@@ -123,9 +123,9 @@ export const caseStudies: CaseStudy[] = [
     personal: true,
     image: {
       src: "/work-meetrec.png",
-      alt: "MeetRec subtitle window showing Japanese speech translated to Thai in real time",
+      alt: "MeetRec live subtitle window: each Japanese line from the meeting with its Thai translation below it",
       width: 1186,
-      height: 520,
+      height: 665,
       label: "live subtitles",
     },
   },
@@ -165,7 +165,7 @@ export const experience = [
     location: "Bangkok",
     role: "Software Engineer / Bridge SE",
     summary:
-      "Japanese client work end to end: Shopify, landing pages, WordPress, tracking, QA, and client communication in Japanese.",
+      "The bridge between Japanese clients and the delivery team, owning the work end to end: Shopify, landing pages, WordPress, tracking, QA, and client communication in Japanese.",
   },
   {
     period: "2022 - 2025",
