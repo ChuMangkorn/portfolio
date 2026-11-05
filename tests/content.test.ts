@@ -49,7 +49,7 @@ test("exactly four case studies, each complete and anonymized", () => {
 
 test("experience is real and newest first", () => {
   assert.equal(experience[0].company, "Piala Partner");
-  assert.ok(experience[0].period.startsWith("2025"));
+  assert.ok(experience[0].period.includes("2025"));
   assert.ok(experience.some((e) => e.company.includes("Honda")));
 });
 

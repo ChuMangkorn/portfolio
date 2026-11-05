@@ -1,3 +1,4 @@
+import { ArrowDownIcon } from "@phosphor-icons/react/dist/ssr";
 import { about } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 
@@ -13,6 +14,13 @@ export function About() {
             {about.paragraphs.map((p) => (
               <p key={p}>{p}</p>
             ))}
+            <a
+              href={about.proofLink.href}
+              className="inline-flex min-h-11 items-center gap-2 text-base text-fg underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
+            >
+              {about.proofLink.label}
+              <ArrowDownIcon size={16} />
+            </a>
           </div>
         </Reveal>
         <Reveal delay={0.1} className="md:col-span-5">

@@ -11,7 +11,7 @@ const notoJp = Noto_Sans_JP({ variable: "--font-noto-jp", subsets: ["latin"], we
 const displaySerif = Instrument_Serif({ variable: "--font-display-serif", subsets: ["latin"], weight: "400" });
 
 const description =
-  "Software engineer in Bangkok. Japanese client brief to shipped product: Shopify, landing pages, tracking, and media, driven by an AI workflow.";
+  "Software engineer in Bangkok. Japanese client briefs to delivery: Shopify, landing pages, WordPress and tracking, using AI agents I run and review.";
 
 const title = `${profile.name}, ${profile.title} in ${profile.city}`;
 

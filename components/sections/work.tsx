@@ -4,6 +4,7 @@ import { caseStudies, type CaseStudy } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
 import { StaggerRows } from "@/components/stagger-rows";
+import { ScoreChart } from "@/components/score-chart";
 
 // Half the container at the lg breakpoint and above, full width below it.
 const VISUAL_SIZES = "(min-width: 1024px) 50vw, 100vw"; // ds-allow-hardcode
@@ -35,6 +36,47 @@ function Visual({ c }: { c: CaseStudy }) {
           sizes={VISUAL_SIZES}
           className="h-auto w-full"
         />
+        {c.image.note && <figcaption className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">{c.image.note}</figcaption>}
+      </figure>
+    );
+  }
+  if (c.proof) {
+    const p = c.proof;
+    return (
+      <figure className="flex flex-col overflow-hidden rounded-card bg-bg-tint">
+        <figcaption className="flex items-center justify-between gap-4 border-b px-5 py-1 font-mono text-label text-fg-faint sm:px-8">
+          <span>{p.title}</span>
+          {c.link && (
+            <a
+              href={c.link}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap text-fg-muted transition-colors hover:text-accent"
+            >
+              Source
+              <ArrowUpRightIcon size={14} />
+            </a>
+          )}
+        </figcaption>
+        <div className="space-y-6 p-5 sm:p-8">
+          <div>
+            <p className="mb-3 font-mono text-label text-fg-faint">{p.caughtTitle}</p>
+            <dl className="space-y-3 text-sm leading-relaxed">
+              {p.caught.map((r) => (
+                <div key={r.label} className="grid gap-0.5 sm:grid-cols-[6rem_1fr] sm:gap-4">
+                  <dt className="font-mono text-fg-faint">{r.label}</dt>
+                  <dd className="text-fg">{r.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div className="border-t pt-6">
+            <p className="mb-3 font-mono text-label text-fg-faint">{p.chartTitle}</p>
+            <ScoreChart scores={p.scores} label={p.chartTitle} />
+          </div>
+          <StaggerRows rows={p.checks} caret={false} className="space-y-3 border-t pt-6 font-mono text-sm leading-relaxed" />
+        </div>
+        <figcaption className="border-t px-5 py-3 text-label leading-relaxed text-fg-faint sm:px-8">{p.caption}</figcaption>
       </figure>
     );
   }
@@ -55,7 +97,7 @@ function Visual({ c }: { c: CaseStudy }) {
 function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   return (
     <h3 className={`mt-2 font-display font-normal leading-tight tracking-normal ${lead ? "text-4xl" : "text-3xl"}`}>
-      {c.link ? (
+      {c.link && !c.proof ? (
         <a href={c.link} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1 hover:text-accent">
           {c.title}
           <ArrowUpRightIcon size={20} className="mt-1.5 shrink-0" />
@@ -122,7 +164,7 @@ export function Work() {
     <section id="work" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Work I have shipped</h2>
+          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Selected work</h2>
           <p className="mt-3 max-w-[60ch] text-fg-muted">
             Client names are withheld. I can walk through any of this in detail.
           </p>
@@ -134,7 +176,7 @@ export function Work() {
             return (
               <Reveal key={c.title} delay={i * 0.06}>
                 {/* Two columns from lg. Below that the card is one column so tablets keep readable measures. */}
-                <article className="flex flex-col rounded-card border bg-bg-raised p-6 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10">
+                <article id={c.anchor} className="flex scroll-mt-24 flex-col rounded-card border bg-bg-raised p-6 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10">
                   <div className="flex max-w-[34rem] flex-col lg:col-span-5 lg:max-w-none">
                     <p className="text-sm text-fg-faint">{c.client}</p>
                     <Title c={c} lead={lead} />

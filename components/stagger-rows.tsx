@@ -5,14 +5,14 @@ import type { ExcerptRow } from "@/lib/data";
 import { armReveal } from "@/lib/reveal";
 
 /* The caret sits in a no-wrap span with the final word, so it can never wrap onto a line of its own. */
-function LastWords({ value }: { value: string }) {
+function LastWords({ value, caret }: { value: string; caret: boolean }) {
   const cut = value.lastIndexOf(" ") + 1;
   return (
     <>
       {value.slice(0, cut)}
       <span className="whitespace-nowrap">
         {value.slice(cut)}
-        <span aria-hidden className="caret" />
+        {caret && <span aria-hidden className="caret" />}
       </span>
     </>
   );
@@ -20,7 +20,7 @@ function LastWords({ value }: { value: string }) {
 
 /* Label and value rows that appear one after another as the block scrolls into view. Stacked on narrow screens so
    nothing is cut off. The timing lives in globals.css; each row only says which place in the order it holds. */
-export function StaggerRows({ rows, className }: { rows: ExcerptRow[]; className?: string }) {
+export function StaggerRows({ rows, className, caret = true }: { rows: ExcerptRow[]; className?: string; caret?: boolean }) {
   return (
     <dl ref={armReveal} className={className} style={{ "--rows": rows.length } as CSSProperties}>
       {rows.map((row, i) => (
@@ -31,7 +31,7 @@ export function StaggerRows({ rows, className }: { rows: ExcerptRow[]; className
           className="grid gap-0.5 sm:grid-cols-[11rem_1fr] sm:gap-6"
         >
           <dt className="text-fg-faint">{row.label}</dt>
-          <dd className="text-fg-muted">{i === rows.length - 1 ? <LastWords value={row.value} /> : row.value}</dd>
+          <dd className="text-fg-muted">{i === rows.length - 1 ? <LastWords value={row.value} caret={caret} /> : row.value}</dd>
         </div>
       ))}
     </dl>

@@ -2,7 +2,7 @@ import { education, experience } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 
 // Below sm the date sits above the role so the role gets the full width.
-const ROW = "grid gap-1 sm:grid-cols-[7rem_1fr] sm:gap-4";
+const ROW = "grid gap-1 sm:grid-cols-[11rem_1fr] sm:gap-4";
 const DATE = "whitespace-nowrap font-mono text-label text-fg-faint sm:pt-1";
 
 export function Experience() {

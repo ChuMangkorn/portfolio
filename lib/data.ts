@@ -15,8 +15,8 @@ export const profile = {
     { ja: "納品", en: "Deliver" },
   ],
   tagline:
-    "I take a Japanese client brief and ship the product myself: code, design, and media, in one AI\u2011driven workflow.",
-  jp: "日本語での要件ヒアリングから納品まで、一人で対応します。",
+    "I take Japanese client briefs to delivery: Shopify, landing pages, WordPress and tracking, using AI agents I run and review.",
+  jp: "日本語での要件ヒアリングから納品まで、一貫して担当します。",
   email: "chu.mangkorn@gmail.com",
   github: "https://github.com/ChuMangkorn",
   linkedin: "https://linkedin.com/in/chulaprungrueang-mangkorn",
@@ -24,20 +24,33 @@ export const profile = {
 };
 
 export const about = {
+  proofLink: { label: "See how this page was built", href: "#workflow" },
   paragraphs: [
-    "At a Bangkok agency serving Japanese clients, I am the person between the client and the result. I read the brief in Japanese, decide what to build, build it, test it, and report back in Japanese.",
-    "Most of my output goes through an AI agent workflow I built myself: a task harness, project memory, review agents, and browser automation. It lets one person cover work that used to need a small team.",
+    "I work at a Bangkok agency for Japanese clients. A request arrives in Japanese; I work out what is being asked, build it, test it, and report back in Japanese.",
+    "Most of my output goes through an AI agent workflow I set up and run: a task harness, notes that carry between sessions, review agents, and browser automation. I review what it produces before anything goes out.",
   ],
   ledger: [
     { key: "Brief language", value: "Japanese, JLPT N3" },
-    { key: "Building for the web", value: "Since 2019" },
+    { key: "Web work", value: "2019 to 2022, 2025 to now" },
     { key: "Daily stack", value: "Shopify, WordPress, Tailwind" },
     { key: "Tests", value: "Jest and Playwright in CI" },
-    { key: "Based in", value: "Bangkok" },
+    { key: "Based in", value: "Bangkok (UTC+7)" },
   ],
 };
 
 export type ExcerptRow = { label: string; value: string };
+
+/* Evidence about this page's own build. Every number is taken from the repository history, the reviewer reports or a
+   measurement run on the finished build. Update them when they change (see CODING_STANDARDS.md). */
+export type BuildProof = {
+  title: string;
+  caughtTitle: string;
+  caught: ExcerptRow[];
+  chartTitle: string;
+  scores: number[];
+  checks: ExcerptRow[];
+  caption: string;
+};
 
 export type CaseStudy = {
   title: string;
@@ -47,9 +60,11 @@ export type CaseStudy = {
   outcome: string;
   stack: string[];
   personal: boolean;
+  anchor?: string;
   link?: string;
-  image?: { src: string; alt: string; width: number; height: number; label: string };
+  image?: { src: string; alt: string; width: number; height: number; label: string; note?: string };
   excerpt?: { title: string; caption: string; rows: ExcerptRow[] };
+  proof?: BuildProof;
   metric?: { value: string; label: string };
 };
 
@@ -58,7 +73,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Online store with a nationwide store finder",
     client: "Japanese D2C cosmetics brand",
     problem:
-      "The brand sells online and through drugstores across Japan. It needed shoppers to find a nearby shelf, seasonal bundles to launch on schedule, and one person to own all of it for a Japanese\u2011speaking client.",
+      "The brand sells online and through drugstores across Japan. It needed shoppers to find a nearby shelf, seasonal bundles to launch on schedule, and one person to own all of it for a Japanese‑speaking client.",
     work: [
       "Migrated 40+ products and variants from the client master sheet",
       "Built a searchable directory of drugstore locations with chain and prefecture filters",
@@ -66,23 +81,24 @@ export const caseStudies: CaseStudy[] = [
       "Shipped bundle campaign pages, shipping rules for remote islands, and a staging to production release flow",
     ],
     outcome:
-      "Every release goes to a staging theme first, then to production on a date agreed with the client.",
+      "The list grew from 61 locations in the first build to over 300 as chains were added. Every release goes to a staging theme first, then to production on a date agreed with the client.",
     stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
     personal: false,
-    metric: { value: "300+", label: "locations, searchable by chain and prefecture" },
+    metric: { value: "300+", label: "locations today, searchable by chain and prefecture" },
     image: {
       src: "/work-storefinder.png",
-      alt: "Store finder with chain and prefecture filters and a list of drugstore locations",
+      alt: "Early build of the store finder with chain and prefecture filters and a list of drugstore locations",
       width: 780,
       height: 440,
       label: "store finder",
+      note: "Early build with 61 locations. The live list has since grown past 300.",
     },
   },
   {
     title: "An AI engineering workflow that runs my day",
     client: "Personal tooling",
     problem:
-      "Agent tools are only useful if they are reliable. I wanted a setup where the agent knows the client history, follows my rules, and checks its own work. In plain words: one AI assistant does the work, another reviews it, and I decide what ships.",
+      "I wanted an AI setup I could trust with real work. It keeps notes between sessions, follows my rules, and a second agent reviews everything before it goes out. I make the final call.",
     work: [
       "A task harness that sends each job to the right tool or agent",
       "Persistent project memory across sessions",
@@ -90,21 +106,37 @@ export const caseStudies: CaseStudy[] = [
       "Browser, Photoshop, and Premiere driven from the same workflow",
     ],
     outcome:
-      "I cover requirements, code, QA, images, and video for several clients at once.",
+      "This page is the evidence: rebuilt in one day and reviewed ten times by a separate agent that found real defects, listed here with their fixes. Lighthouse scores it 100 for accessibility, best practices and SEO.",
     stack: ["Claude Code", "MCP", "Playwright", "Node.js"],
     personal: true,
-    excerpt: {
-      title: "task routing",
-      caption: "This is how every task enters my day",
-      rows: [
-        { label: "bug or slow", value: "diagnose first, then a second debugger" },
-        { label: "new feature", value: "brainstorm, plan, tdd, code review" },
-        { label: "check a page", value: "playwright, PC 1440 and SP 390 shots" },
-        { label: "shopify store", value: "staging first, production on approval" },
-        { label: "client history", value: "loaded from project memory every session" },
-        { label: "before it ships", value: "an independent review agent reads the diff" },
-        { label: "anything external", value: "ask first" },
+    anchor: "workflow",
+    proof: {
+      title: "this page, built by the workflow",
+      caughtTitle: "What the reviewer caught",
+      caught: [
+        {
+          label: "round 8",
+          value: "Every section below the first screen stayed invisible until JavaScript loaded: 28 of 28 blocks hidden with scripts blocked. Now 0 of 28.",
+        },
+        {
+          label: "round 9",
+          value: "On a tablet held upright the workflow table was 92 px wide and one value wrapped onto six lines. Now 374 px.",
+        },
+        {
+          label: "round 10",
+          value: "In a 625 px tall laptop window the process rail sat below the fold. Now it fits.",
+        },
       ],
+      chartTitle: "Reviewer's score out of 10, by round",
+      scores: [5.0, 6.0, 6.5, 6.7, 6.8, 7.0, 7.2, 7.5, 8.0, 8.3],
+      checks: [
+        { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
+        { label: "axe-core", value: "0 WCAG 2.2 violations" },
+        { label: "every commit", value: "type check, lint, 6 content tests, no looping motion" },
+        { label: "whole page", value: "about 630 KB over the wire" },
+      ],
+      caption:
+        "Rebuilt in one day, in small commits. I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks. A separate reviewer agent, fresh each round, scored the rendered page, and I stopped when the rest needed material only I can supply.",
     },
   },
   {
@@ -118,8 +150,8 @@ export const caseStudies: CaseStudy[] = [
       "Produces a structured summary and action items after the call",
     ],
     outcome:
-      "Used in real client meetings. Thai transcription quality was tested and tuned on actual recordings.",
-    stack: ["Swift", "macOS", "Apple Speech", "Claude API"],
+      "Tested on a real 90 second meeting segment: Apple's on-device translation kept the meaning in about 7 of 18 sentences, Claude's in about 16 of 18. The app shows the quick one first, then swaps in the better one. A private-meeting switch keeps translation on the device and asks before any summary leaves it.",
+    stack: ["Swift", "SwiftUI", "ScreenCaptureKit", "Apple Speech", "Claude"],
     personal: true,
     image: {
       src: "/work-meetrec.png",
@@ -141,7 +173,7 @@ export const caseStudies: CaseStudy[] = [
       "Prepared image and video assets with Photoshop and Premiere",
     ],
     outcome:
-      "Pages ship within days of the brief, mobile and desktop checked side by side before every handover.",
+      "Every page is checked on desktop and phone, with tracking confirmed intact, before it goes to the client.",
     stack: ["Tailwind CSS", "GTM", "GA4", "Photoshop", "Premiere"],
     personal: false,
     excerpt: {
@@ -160,30 +192,30 @@ export const caseStudies: CaseStudy[] = [
 
 export const experience = [
   {
-    period: "2025 - Present",
+    period: "Aug 2025 to now",
     company: "Piala Partner",
     location: "Bangkok",
-    role: "Software Engineer / Bridge\u00a0SE",
+    role: "Software Engineer / Bridge SE",
     summary:
-      "The bridge between Japanese clients and the delivery team, owning the work end to end: Shopify, landing pages, WordPress, tracking, QA, and client communication in Japanese.",
+      "Bridge SE means the engineer between a Japanese client and the team. I run each request from the Japanese brief to delivery: Shopify, landing pages, WordPress, tracking, QA, and the client conversation in Japanese.",
   },
   {
-    period: "2022 - 2025",
+    period: "2022 to 2025",
     company: "",
     location: "Japan",
     role: "Language study",
     summary: "Lived in Japan, studied Japanese, built side projects.",
   },
   {
-    period: "2021 - 2022",
+    period: "Mar 2021 to Mar 2022",
     company: "SAIJAI SOFT",
     location: "Chiang Mai",
     role: "Full-stack Engineer (contract)",
     summary:
-      "University research platform: Next.js and NestJS, real\u2011time chat with Socket.IO, scheduled jobs, PostgreSQL.",
+      "University research platform: Next.js and NestJS, real‑time chat with Socket.IO, scheduled jobs, PostgreSQL.",
   },
   {
-    period: "2020",
+    period: "Mar 2020 to Nov 2020",
     company: "TecTony",
     location: "Thailand",
     role: "Full-stack Engineer (contract)",
@@ -191,7 +223,7 @@ export const experience = [
       "Gold savings service on LINE LIFF: Vue 3 front end, Node and Express API, Omise payments, MongoDB.",
   },
   {
-    period: "2019 - 2020",
+    period: "Jun 2019 to Feb 2020",
     company: "Honda Automobile (Thailand)",
     location: "",
     role: "Software Engineer Intern",
@@ -202,12 +234,12 @@ export const experience = [
 export const education = {
   school: "Rajamangala University of Technology Lanna",
   degree: "B.Sc. Computer Information Systems",
-  period: "2015 - 2020",
+  period: "2015 to 2020",
 };
 
 export const contact = {
   heading: "Looking for a new role.",
-  body: "Open to engineering roles in Thailand or with international teams. Japanese\u2011speaking environments welcome.",
+  body: "Open to engineering roles in Thailand, at Japanese-owned companies, or with international teams.",
   cta: "Email me",
   cvLabel: "Request CV",
 };
