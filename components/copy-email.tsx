@@ -30,12 +30,14 @@ export function CopyEmail({ email }: { email: string }) {
     <button
       type="button"
       onClick={copy}
-      aria-label={`Copy email address ${email}`}
       className="group flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-accent"
     >
       <span className="min-w-0">
         <span className="block text-sm text-fg-faint">Email</span>
-        <span className="mt-1 block break-words font-mono text-base tracking-tight text-fg group-hover:text-accent">{email}</span>
+        <span className="mt-1 block break-words font-mono text-base tracking-tight text-fg group-hover:text-accent">
+          {email}
+          <span className="sr-only">, copy to clipboard</span>
+        </span>
       </span>
       <span className="flex shrink-0 items-center gap-2 text-sm text-fg-muted print:hidden">
         <span role="status" aria-live="polite">
