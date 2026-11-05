@@ -31,13 +31,13 @@ export function NavLinks({ links }: { links: NavLink[] }) {
   }, [links]);
 
   return (
-    <ul className="flex items-center gap-2 text-xs text-fg-muted sm:gap-6 sm:text-sm">
+    <ul className="flex flex-wrap items-center gap-x-2 text-xs text-fg-muted sm:gap-x-6 sm:text-sm">
       {links.map((l) => (
         <li key={l.href}>
           <Link
             href={l.href}
             aria-current={current === l.href.slice(1) ? "location" : undefined}
-            className="inline-flex min-h-11 items-center transition-colors hover:text-fg aria-[current=location]:text-accent"
+            className="inline-flex min-h-11 items-center underline-offset-8 transition-colors hover:text-fg aria-[current=location]:text-accent aria-[current=location]:underline aria-[current=location]:decoration-accent"
           >
             {l.label}
           </Link>

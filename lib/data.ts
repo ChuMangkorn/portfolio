@@ -8,7 +8,7 @@ export const profile = {
   role: "Software Engineer, Bangkok",
   headline: "One engineer, end to end.",
   pipeline: [
-    { ja: "要件ヒアリング", en: "Brief, in Japanese" },
+    { ja: "要件ヒアリング", en: "Japanese brief" },
     { ja: "設計", en: "Design" },
     { ja: "実装", en: "Build" },
     { ja: "QA", en: "Test" },
@@ -61,7 +61,7 @@ export const caseStudies: CaseStudy[] = [
       "The brand needed its online store, a nationwide store finder, and seasonal bundle campaigns, maintained by me alone for a Japanese-speaking client.",
     work: [
       "Migrated 40+ products and variants from the client master sheet",
-      "Built a store finder covering 300+ drugstore locations with prefecture sort",
+      "Built a searchable directory of drugstore locations with chain and prefecture filters",
       "Wrote Jest and Playwright tests for the finder and wired them into CI",
       "Shipped bundle campaign pages, shipping rules for remote islands, and a staging to production release flow",
     ],
@@ -84,7 +84,7 @@ export const caseStudies: CaseStudy[] = [
     problem:
       "Agent tools are only useful if they are reliable. I wanted a setup where the agent knows the client history, follows my rules, and checks its own work. In plain words: one AI assistant does the work, another reviews it, and I decide what ships.",
     work: [
-      "Task harness that routes work to the right tool and sub-agent",
+      "A task harness that sends each job to the right tool or agent",
       "Persistent project memory across sessions",
       "Independent review agents before anything ships",
       "Browser, Photoshop, and Premiere driven from the same workflow",
@@ -163,7 +163,7 @@ export const experience = [
     period: "2025 - Present",
     company: "Piala Partner",
     location: "Bangkok",
-    role: "Software Engineer / Bridge SE",
+    role: "Software Engineer / Bridge\u00a0SE",
     summary:
       "The bridge between Japanese clients and the delivery team, owning the work end to end: Shopify, landing pages, WordPress, tracking, QA, and client communication in Japanese.",
   },

@@ -5,48 +5,47 @@ import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
 import { StaggerRows } from "@/components/stagger-rows";
 
-// Half the container above the md breakpoint, full width below it.
-const VISUAL_SIZES = "(min-width: 768px) 50vw, 100vw"; // ds-allow-hardcode
+// Half the container at the lg breakpoint and above, full width below it.
+const VISUAL_SIZES = "(min-width: 1024px) 50vw, 100vw"; // ds-allow-hardcode
 
 function Visual({ c }: { c: CaseStudy }) {
   if (c.image) {
     return (
       <figure className="overflow-hidden rounded-card bg-bg-tint">
-        <figcaption className="flex items-center justify-between gap-4 border-b px-4 py-2.5 font-mono text-label text-fg-faint md:px-5">
-          {c.image.label}
+        <figcaption className="flex items-center justify-between gap-4 border-b px-4 py-1 font-mono text-label text-fg-faint sm:px-5">
+          <span className="whitespace-nowrap">{c.image.label}</span>
           {/* On a phone the capture is drawn small; the full file opens in a tab where it can be pinched. */}
           <a
             href={c.image.src}
             target="_blank"
             rel="noreferrer"
-            aria-label={`Open the ${c.image.label} capture at full size`}
-            className="inline-flex min-h-11 items-center gap-1 text-fg-muted transition-colors hover:text-accent"
+            aria-label={`Open full size: ${c.image.label} capture`}
+            className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap text-fg-muted transition-colors hover:text-accent"
           >
-            Open full size
+            <span className="sm:hidden">Full size</span>
+            <span className="hidden sm:inline">Open full size</span>
             <ArrowUpRightIcon size={14} />
           </a>
         </figcaption>
-        <div className="p-3 md:p-4">
-          <Image
-            src={c.image.src}
-            alt={c.image.alt}
-            width={c.image.width}
-            height={c.image.height}
-            sizes={VISUAL_SIZES}
-            className="h-auto w-full rounded-control"
-          />
-        </div>
+        <Image
+          src={c.image.src}
+          alt={c.image.alt}
+          width={c.image.width}
+          height={c.image.height}
+          sizes={VISUAL_SIZES}
+          className="h-auto w-full"
+        />
       </figure>
     );
   }
   if (c.excerpt) {
     return (
       <figure className="flex flex-col overflow-hidden rounded-card bg-bg-tint">
-        <div className="border-b px-5 py-3 font-mono text-label text-fg-faint md:px-8">{c.excerpt.title}</div>
-        <div className="p-5 md:p-8">
-          <StaggerRows rows={c.excerpt.rows} className="space-y-3 font-mono text-sm leading-relaxed md:space-y-4 md:text-base" />
+        <div className="border-b px-5 py-3 font-mono text-label text-fg-faint sm:px-8">{c.excerpt.title}</div>
+        <div className="p-5 sm:p-8">
+          <StaggerRows rows={c.excerpt.rows} className="space-y-3 font-mono text-sm leading-relaxed sm:text-base lg:space-y-4" />
         </div>
-        <figcaption className="border-t px-5 py-3 text-label text-fg-faint md:px-8">{c.excerpt.caption}</figcaption>
+        <figcaption className="border-t px-5 py-3 text-label text-fg-faint sm:px-8">{c.excerpt.caption}</figcaption>
       </figure>
     );
   }
@@ -68,12 +67,23 @@ function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   );
 }
 
+/* The labels are plain text, not headings: twelve one-word headings would crowd the page outline. */
 function Block({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mt-6">
-      <h4 className="mb-2 font-mono text-label text-fg-faint">{label}</h4>
+      <p className="mb-2 break-after-avoid font-mono text-label text-fg-faint">{label}</p>
       {children}
     </div>
+  );
+}
+
+function Metric({ c, className = "", size }: { c: CaseStudy; className?: string; size: string }) {
+  if (!c.metric) return null;
+  return (
+    <p className={`flex items-baseline gap-3 ${className}`}>
+      <CountUp value={c.metric.value} className={`font-mono tracking-tight text-accent ${size}`} />
+      <span className="text-sm text-fg-muted">{c.metric.label}</span>
+    </p>
   );
 }
 
@@ -98,7 +108,9 @@ function Details({ c }: { c: CaseStudy }) {
       </Block>
       <ul className="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-6 font-mono text-label text-fg-faint">
         {c.stack.map((s) => (
-          <li key={s}>{s}</li>
+          <li key={s} className="whitespace-nowrap">
+            {s}
+          </li>
         ))}
       </ul>
     </>
@@ -117,32 +129,33 @@ export function Work() {
         </Reveal>
 
         <div className="mt-12 space-y-5">
-          {caseStudies.map((c, i) => (
-            <Reveal key={c.title} delay={i * 0.06}>
-              <article className="flex flex-col rounded-card border bg-bg-raised p-6 sm:p-8 md:grid md:grid-cols-12 md:gap-10">
-                <div className="flex flex-col md:col-span-5">
-                  <p className="text-sm text-fg-faint">{c.client}</p>
-                  <Title c={c} lead={i === 0} />
-                  {c.metric && (
-                    <p className="mt-4 flex items-baseline gap-3">
-                      <CountUp value={c.metric.value} className="font-mono text-4xl tracking-tight text-accent" />
-                      <span className="text-sm text-fg-muted">{c.metric.label}</span>
-                    </p>
-                  )}
-                  <div className="flex flex-1 flex-col">
-                    <Details c={c} />
+          {caseStudies.map((c, i) => {
+            const lead = i === 0;
+            return (
+              <Reveal key={c.title} delay={i * 0.06}>
+                {/* Two columns from lg. Below that the card is one column so tablets keep readable measures. */}
+                <article className="flex flex-col rounded-card border bg-bg-raised p-6 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10">
+                  <div className="flex max-w-[68ch] flex-col lg:col-span-5 lg:max-w-none">
+                    <p className="text-sm text-fg-faint">{c.client}</p>
+                    <Title c={c} lead={lead} />
+                    {/* The lead card shows its number large under the capture from lg; below that it sits here. */}
+                    <Metric c={c} size="text-4xl" className={`mt-4 ${lead ? "lg:hidden" : ""}`} />
+                    <div className="flex flex-1 flex-col">
+                      <Details c={c} />
+                    </div>
                   </div>
-                </div>
-                <div
-                  className={`mt-6 md:sticky md:top-24 md:col-span-7 md:mt-0 md:self-start ${
-                    c.image ? "max-md:order-first max-md:mb-5 max-md:mt-0" : ""
-                  } ${i % 2 === 1 ? "md:order-first" : ""}`}
-                >
-                  <Visual c={c} />
-                </div>
-              </article>
-            </Reveal>
-          ))}
+                  <div
+                    className={`mt-6 lg:top-24 lg:col-span-7 lg:mt-0 lg:self-start lg:[@media(min-height:46rem)]:sticky ${
+                      c.image ? "max-lg:order-first max-lg:mb-5 max-lg:mt-0" : ""
+                    } ${i % 2 === 1 ? "lg:order-first" : ""}`}
+                  >
+                    <Visual c={c} />
+                    {lead && <Metric c={c} size="text-7xl" className="mt-6 hidden lg:flex" />}
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

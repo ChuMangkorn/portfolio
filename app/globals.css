@@ -52,6 +52,9 @@
   --font-jp: var(--font-noto-jp);
   --text-label: 0.8125rem;
   --text-label--line-height: 1.5;
+  /* Fluid headline: 60px on a phone, 118px at 1440, capped at 120px. */
+  --text-hero: clamp(3.75rem, 2rem + 6vw, 7.5rem);
+  --text-hero--line-height: 0.98;
   --container-portrait: var(--portrait);
   --container-portrait-sm: var(--portrait-sm);
   --font-display: var(--font-display-serif), Georgia, serif;
@@ -217,8 +220,9 @@
   section {
     break-inside: auto;
   }
-  /* Keep a section heading with what follows it. */
+  /* Keep a heading with what follows it. */
   h2,
+  h3,
   #work > div > div:first-child {
     break-after: avoid;
   }

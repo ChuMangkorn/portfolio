@@ -28,7 +28,7 @@ export function StaggerRows({ rows, className }: { rows: ExcerptRow[]; className
           key={row.label}
           data-row
           style={{ "--i": i } as CSSProperties}
-          className="grid gap-0.5 md:grid-cols-[11rem_1fr] md:gap-6"
+          className="grid gap-0.5 sm:grid-cols-[11rem_1fr] sm:gap-6"
         >
           <dt className="text-fg-faint">{row.label}</dt>
           <dd className="text-fg-muted">{i === rows.length - 1 ? <LastWords value={row.value} /> : row.value}</dd>

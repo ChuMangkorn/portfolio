@@ -5,15 +5,18 @@ import { profile } from "@/lib/data";
 // Must match --portrait in globals.css and the md breakpoint.
 const PORTRAIT_SIZES = "(min-width: 768px) 440px, 100vw"; // ds-allow-hardcode
 
-/* The hero is above the fold, so it renders without a reveal animation. */
+/* The hero is above the fold, so it renders without a reveal animation.
+   From md the five stages run as a rail under both columns and the portrait stands on its line. */
 export function Hero() {
+  const last = profile.pipeline.length - 1;
   return (
-    <section className="mx-auto grid max-w-6xl grid-cols-1 items-end gap-12 px-5 pb-20 pt-16 sm:px-8 md:min-h-[calc(100dvh-4rem)] md:grid-cols-12 md:pb-0 md:pt-20 print:min-h-0 print:pb-0 print:pt-8">
-      <div className="self-center md:col-span-7 md:pb-24">
-        <p className="mb-5 text-sm text-fg-muted">{profile.role}</p>
-        <h1 className="font-display text-6xl leading-[0.98] tracking-normal [word-spacing:0.06em] [text-wrap:balance] sm:text-7xl lg:text-8xl">
-          {profile.headline}
-        </h1>
+    <section className="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-16 sm:px-8 md:min-h-[min(calc(100dvh-4rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 print:min-h-0 print:pt-8">
+      <div className="order-1 md:col-span-7 md:row-start-1 md:self-center md:pb-12">
+        <p className="mb-5 flex flex-wrap gap-x-3 text-sm">
+          <span className="font-medium text-fg">{profile.name}</span>
+          <span className="text-fg-muted">{profile.role}</span>
+        </p>
+        <h1 className="font-display text-hero tracking-normal [word-spacing:0.06em] [text-wrap:balance]">{profile.headline}</h1>
         <p lang="ja" className="mt-6 font-jp text-base font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase]">
           {profile.jp}
         </p>
@@ -45,29 +48,35 @@ export function Hero() {
             <LinkedinLogoIcon size={20} />
           </a>
         </div>
-        <ol aria-label="How a project moves" className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-1 font-jp text-sm text-fg-faint">
-          {profile.pipeline.map((step, i) => (
-            <li
-              key={step.ja}
-              className="pipeline-step flex items-center gap-2 whitespace-nowrap"
-              style={{ animationDelay: `${i * 0.5}s` }}
-            >
-              <span className="flex flex-col leading-tight">
-                <span lang="ja">{step.ja}</span>
-                <span className="text-label">{step.en}</span>
-              </span>
-              {i < profile.pipeline.length - 1 && (
-                <span aria-hidden className="text-accent">
-                  {"\u2192"}
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
       </div>
 
-      <div className="md:col-span-5 md:flex md:justify-end">
-        {/* Cut-out portrait: no box. The glow sits behind the head and the shoulders land on the section edge. */}
+      <ol
+        aria-label="How a project moves"
+        className="order-2 mt-10 flex flex-wrap items-start gap-x-1 gap-y-2 font-jp text-sm text-fg-faint md:order-none md:col-span-12 md:row-start-2 md:mt-0 md:grid md:grid-cols-5 md:gap-x-0 md:border-t"
+      >
+        {profile.pipeline.map((step, i) => (
+          <li
+            key={step.ja}
+            className="pipeline-step relative flex items-start gap-1 whitespace-nowrap md:justify-between md:py-5 md:pr-4 md:before:absolute md:before:-top-px md:before:left-0 md:before:h-0.5 md:before:w-10 md:before:bg-accent"
+            style={{ animationDelay: `${i * 0.5}s` }}
+          >
+            <span className="flex flex-col leading-tight">
+              <span lang="ja" className="text-label md:text-base lg:text-xl">
+                {step.ja}
+              </span>
+              <span className="text-xs md:mt-1 md:text-label">{step.en}</span>
+            </span>
+            {i < last && (
+              <span aria-hidden className="text-accent lg:text-xl">
+                {"→"}
+              </span>
+            )}
+          </li>
+        ))}
+      </ol>
+
+      <div className="order-3 md:order-none md:col-span-5 md:col-start-8 md:row-start-1 md:flex md:justify-end md:self-end">
+        {/* Cut-out portrait: no box. The glow stays inside its own box; the base stands on the rail from md. */}
         <div className="relative mx-auto aspect-[4/5] w-full max-w-portrait-sm [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)] md:max-w-portrait">
           <div
             aria-hidden
@@ -79,7 +88,7 @@ export function Hero() {
             fill
             priority
             sizes={PORTRAIT_SIZES}
-            className="object-contain object-bottom grayscale contrast-110 [mask-image:linear-gradient(to_top,transparent,black_16%)]"
+            className="object-contain object-bottom grayscale contrast-110 max-md:[mask-image:linear-gradient(to_top,transparent,black_16%)]"
           />
         </div>
       </div>

@@ -3,22 +3,26 @@
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react/dist/ssr";
 import { useEffect, useState } from "react";
 
+type Status = "idle" | "copied" | "failed";
+const MESSAGE: Record<Status, string> = { idle: "", copied: "Copied", failed: "Select it to copy" };
+
 /* A row that copies the address. The status text is announced to screen readers through the live region. */
 export function CopyEmail({ email }: { email: string }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
   useEffect(() => {
-    if (!copied) return;
-    const timer = setTimeout(() => setCopied(false), 2000);
+    if (status === "idle") return;
+    const timer = setTimeout(() => setStatus("idle"), 2400);
     return () => clearTimeout(timer);
-  }, [copied]);
+  }, [status]);
 
   async function copy() {
     try {
       await navigator.clipboard.writeText(email);
-      setCopied(true);
+      setStatus("copied");
     } catch {
-      // Clipboard access can be refused; the address stays visible and selectable on the page.
+      // Clipboard access can be refused. The address stays visible on the page, so say so instead of failing silently.
+      setStatus("failed");
     }
   }
 
@@ -35,9 +39,9 @@ export function CopyEmail({ email }: { email: string }) {
       </span>
       <span className="flex shrink-0 items-center gap-2 text-sm text-fg-muted print:hidden">
         <span role="status" aria-live="polite">
-          {copied ? "Copied" : ""}
+          {MESSAGE[status]}
         </span>
-        {copied ? <CheckIcon size={20} weight="bold" /> : <CopyIcon size={20} />}
+        {status === "copied" ? <CheckIcon size={20} weight="bold" /> : <CopyIcon size={20} />}
       </span>
     </button>
   );
