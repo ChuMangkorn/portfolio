@@ -18,7 +18,7 @@ export function Nav() {
         <ul className="flex items-center gap-2 text-xs text-fg-muted sm:gap-6 sm:text-sm">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="inline-flex min-h-6 items-center py-2 transition-colors hover:text-fg">
+              <Link href={l.href} className="inline-flex min-h-11 items-center transition-colors hover:text-fg">
                 {l.label}
               </Link>
             </li>

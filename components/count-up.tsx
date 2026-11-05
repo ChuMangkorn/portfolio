@@ -2,6 +2,7 @@
 
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { EASE_OUT } from "@/lib/motion";
 
 /* Counts up to a value like "300+" once it scrolls into view. The final text is the initial render, so it is correct without JS. */
 export function CountUp({ value, className }: { value: string; className?: string }) {
@@ -12,23 +13,24 @@ export function CountUp({ value, className }: { value: string; className?: strin
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const reduce = useReducedMotion();
-  const [n, setN] = useState(target);
+  const [shown, setShown] = useState(target);
 
   useEffect(() => {
     if (!hasNumber || reduce || !inView) return;
-    setN(0);
+    setShown(0);
     const controls = animate(0, target, {
       duration: 1.4,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => setN(Math.round(v)),
+      ease: EASE_OUT,
+      onUpdate: (v) => setShown(Math.round(v)),
     });
     return () => controls.stop();
   }, [inView, reduce, target, hasNumber]);
 
   return (
-    <span ref={ref} className={className} aria-label={value}>
+    <span ref={ref} className={className}>
+      <span className="sr-only">{value}</span>
       <span aria-hidden>
-        {n}
+        {shown}
         {suffix}
       </span>
     </span>

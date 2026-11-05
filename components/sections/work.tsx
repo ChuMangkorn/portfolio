@@ -11,16 +11,19 @@ const VISUAL_SIZES = "(min-width: 768px) 50vw, 100vw"; // ds-allow-hardcode
 function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
   if (c.image) {
     return (
-      <div className="overflow-hidden rounded-card border bg-bg-tint">
-        <Image
-          src={c.image.src}
-          alt={c.image.alt}
-          width={c.image.width}
-          height={c.image.height}
-          sizes={VISUAL_SIZES}
-          className="h-auto w-full brightness-95"
-        />
-      </div>
+      <figure className="overflow-hidden rounded-card border bg-bg-tint">
+        <div className="border-b px-4 py-2.5 font-mono text-xs text-fg-faint md:px-5">{c.image.label}</div>
+        <div className="p-3 md:p-4">
+          <Image
+            src={c.image.src}
+            alt={c.image.alt}
+            width={c.image.width}
+            height={c.image.height}
+            sizes={VISUAL_SIZES}
+            className="h-auto w-full rounded-control"
+          />
+        </div>
+      </figure>
     );
   }
   if (c.excerpt) {
@@ -81,7 +84,7 @@ export function Work() {
     <section id="work" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="font-display text-4xl tracking-tight md:text-6xl">Work I have shipped</h2>
+          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Work I have shipped</h2>
           <p className="mt-3 max-w-[60ch] text-fg-muted">
             Client names are left out on purpose. Ask me about any of these in an interview.
           </p>
@@ -113,7 +116,7 @@ export function Work() {
                           <Details c={c} />
                         </div>
                       </div>
-                      <div className="mb-6 max-md:order-first md:col-span-7 md:mb-0">
+                      <div className="mb-6 max-md:order-first md:col-span-7 md:mb-0 md:self-center">
                         <Visual c={c} large />
                       </div>
                     </>

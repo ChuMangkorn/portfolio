@@ -11,7 +11,7 @@ export function Hero() {
     <section className="mx-auto grid max-w-6xl grid-cols-1 items-end gap-12 px-5 pb-20 pt-16 sm:px-8 md:min-h-[calc(100dvh-4rem)] md:grid-cols-12 md:pb-0 md:pt-20">
       <div className="self-center md:col-span-7 md:pb-24">
         <p className="mb-5 text-sm text-fg-muted">{profile.role}</p>
-        <h1 className="font-display text-6xl leading-[0.98] tracking-tight [text-wrap:balance] sm:text-7xl lg:text-8xl">
+        <h1 className="font-display text-6xl leading-[0.98] tracking-normal [word-spacing:0.06em] [text-wrap:balance] sm:text-7xl lg:text-8xl">
           {profile.headline}
         </h1>
         <p lang="ja" className="mt-6 font-jp text-base font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase]">
@@ -59,7 +59,7 @@ export function Hero() {
               )}
               <span className="flex flex-col leading-tight">
                 <span lang="ja">{step.ja}</span>
-                {step.en !== step.ja && <span className="text-xs">{step.en}</span>}
+                <span className="text-xs">{step.en}</span>
               </span>
             </li>
           ))}

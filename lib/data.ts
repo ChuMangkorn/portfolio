@@ -26,15 +26,16 @@ export const about = {
     "At a Bangkok agency serving Japanese clients, I am the person between the client and the result. I read the brief in Japanese, decide what to build, build it, test it, and report back in Japanese.",
     "Most of my output goes through an AI agent workflow I built myself: a task harness, project memory, review agents, and browser automation. It lets one person cover work that used to need a small team.",
   ],
-  lead: { value: "1", label: "engineer from the Japanese brief to the shipped result" },
   ledger: [
     { key: "Brief language", value: "Japanese, JLPT N3" },
     { key: "Building for the web", value: "Since 2019" },
-    { key: "Daily stack", value: "Shopify, Next.js, Tailwind" },
+    { key: "Daily stack", value: "Shopify, WordPress, Tailwind" },
     { key: "Tests", value: "Jest and Playwright in CI" },
     { key: "Based in", value: "Bangkok" },
   ],
 };
+
+export type ExcerptRow = { label: string; value: string };
 
 export type CaseStudy = {
   title: string;
@@ -45,8 +46,8 @@ export type CaseStudy = {
   stack: string[];
   personal: boolean;
   link?: string;
-  image?: { src: string; alt: string; width: number; height: number };
-  excerpt?: { title: string; caption: string; rows: { label: string; value: string }[] };
+  image?: { src: string; alt: string; width: number; height: number; label: string };
+  excerpt?: { title: string; caption: string; rows: ExcerptRow[] };
   metric?: { value: string; label: string };
 };
 
@@ -72,6 +73,7 @@ export const caseStudies: CaseStudy[] = [
       alt: "Store finder with chain and prefecture filters and a list of drugstore locations",
       width: 780,
       height: 440,
+      label: "store finder",
     },
   },
   {
@@ -122,6 +124,7 @@ export const caseStudies: CaseStudy[] = [
       alt: "MeetRec subtitle window showing Japanese speech translated to Thai in real time",
       width: 1186,
       height: 520,
+      label: "live subtitles",
     },
   },
   {
@@ -146,7 +149,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "viewports", value: "PC 1440 and SP 390" },
         { label: "tracking", value: "GTM, GA4, pixels intact" },
         { label: "copy", value: "Japanese lines as supplied" },
-        { label: "assets", value: "exported from the supplied Photoshop files" },
+        { label: "assets", value: "images and video prepared in Photoshop and Premiere" },
         { label: "release", value: "staging, then production" },
       ],
     },
