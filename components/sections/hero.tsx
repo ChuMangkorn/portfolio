@@ -11,7 +11,7 @@ export function Hero() {
     <section className="mx-auto grid max-w-6xl grid-cols-1 items-end gap-12 px-5 pb-20 pt-16 sm:px-8 md:min-h-[calc(100dvh-4rem)] md:grid-cols-12 md:pb-0 md:pt-20">
       <div className="self-center md:col-span-7 md:pb-24">
         <p className="mb-5 text-sm text-fg-muted">{profile.role}</p>
-        <h1 className="text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 className="font-display text-6xl leading-[0.98] tracking-tight [text-wrap:balance] sm:text-7xl lg:text-8xl">
           {profile.headline}
         </h1>
         <p lang="ja" className="mt-6 font-jp text-base font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase]">
@@ -47,13 +47,20 @@ export function Hero() {
         </div>
         <ol aria-label="How a project moves" className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-1 font-jp text-sm text-fg-faint">
           {profile.pipeline.map((step, i) => (
-            <li key={step} className="pipeline-step flex items-center gap-2 whitespace-nowrap" style={{ animationDelay: `${i * 0.7}s` }}>
+            <li
+              key={step.ja}
+              className="pipeline-step flex items-center gap-2 whitespace-nowrap"
+              style={{ animationDelay: `${i * 0.5}s` }}
+            >
               {i > 0 && (
                 <span aria-hidden className="text-accent">
                   {"\u2192"}
                 </span>
               )}
-              {step}
+              <span className="flex flex-col leading-tight">
+                <span lang="ja">{step.ja}</span>
+                {step.en !== step.ja && <span className="text-xs">{step.en}</span>}
+              </span>
             </li>
           ))}
         </ol>
@@ -61,10 +68,10 @@ export function Hero() {
 
       <div className="md:col-span-5 md:flex md:justify-end">
         {/* Cut-out portrait: no box. The glow sits behind the head and the shoulders land on the section edge. */}
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-portrait">
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-portrait-sm [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)] md:max-w-portrait">
           <div
             aria-hidden
-            className="glow-breathe absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_40%,color-mix(in_oklab,var(--accent)_40%,transparent)_0%,transparent_65%)]"
+            className="absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_40%,color-mix(in_oklab,var(--accent)_40%,transparent)_0%,transparent_65%)]"
           />
           <Image
             src={profile.photo}

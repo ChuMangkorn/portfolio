@@ -6,10 +6,10 @@ const cvMail = `mailto:${profile.email}?subject=${encodeURIComponent("CV request
 
 export function Contact() {
   return (
-    <section id="contact" className="border-t bg-bg-raised">
+    <section id="contact" className="border-t bg-bg-tint">
       <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32">
         <Reveal>
-          <h2 className="max-w-[20ch] text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
+          <h2 className="font-display max-w-[20ch] text-5xl leading-[1.02] tracking-tight md:text-7xl">
             {contact.heading}
           </h2>
           <p className="mt-6 max-w-[52ch] text-lg leading-relaxed text-fg-muted">{contact.body}</p>

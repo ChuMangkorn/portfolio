@@ -3,10 +3,10 @@ import { Reveal } from "@/components/reveal";
 
 export function Experience() {
   return (
-    <section id="experience" className="border-t">
+    <section id="experience" className="border-t bg-bg-raised">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Where I have worked</h2>
+          <h2 className="font-display text-4xl tracking-tight md:text-6xl">Where I have worked</h2>
         </Reveal>
 
         <ol className="mt-12 max-w-3xl space-y-8">

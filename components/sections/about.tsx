@@ -4,8 +4,11 @@ import { Reveal } from "@/components/reveal";
 export function About() {
   return (
     <section id="about" className="border-t">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-5 py-20 sm:px-8 md:grid-cols-12 md:gap-12 md:py-28">
-        <Reveal className="md:col-span-7">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-5 py-20 sm:px-8 md:grid-cols-12 md:gap-x-12 md:gap-y-12 md:py-28">
+        <Reveal className="md:col-span-12">
+          <h2 className="font-display text-4xl tracking-tight md:text-6xl">About</h2>
+        </Reveal>
+        <Reveal delay={0.05} className="md:col-span-7">
           <div className="max-w-[62ch] space-y-5 text-lg leading-relaxed text-fg-muted">
             {about.paragraphs.map((p) => (
               <p key={p}>{p}</p>
@@ -15,7 +18,7 @@ export function About() {
         <Reveal delay={0.1} className="md:col-span-5">
           <div className="flex flex-col-reverse">
             <p className="mt-2 text-sm text-fg-muted">{about.lead.label}</p>
-            <p className="font-mono text-6xl tracking-tight text-fg md:text-7xl">{about.lead.value}</p>
+            <p className="font-display text-7xl leading-none tracking-tight text-accent md:text-8xl">{about.lead.value}</p>
           </div>
           <dl className="mt-8 divide-y divide-line border-y">
             {about.ledger.map((row) => (

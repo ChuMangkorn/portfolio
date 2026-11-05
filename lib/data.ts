@@ -5,7 +5,13 @@ export const profile = {
   shortName: "Mangkorn",
   role: "Software Engineer, Bangkok",
   headline: "One engineer, end to end.",
-  pipeline: ["要件ヒアリング (JA)", "設計", "実装", "QA", "納品"],
+  pipeline: [
+    { ja: "要件ヒアリング", en: "Brief, in Japanese" },
+    { ja: "設計", en: "Design" },
+    { ja: "実装", en: "Build" },
+    { ja: "QA", en: "Test" },
+    { ja: "納品", en: "Deliver" },
+  ],
   tagline:
     "I take a Japanese client brief and ship the product myself: code, design, and media, in one AI-driven workflow.",
   jp: "日本語での要件ヒアリングから納品まで、一人で対応します。",
@@ -20,12 +26,12 @@ export const about = {
     "At a Bangkok agency serving Japanese clients, I am the person between the client and the result. I read the brief in Japanese, decide what to build, build it, test it, and report back in Japanese.",
     "Most of my output goes through an AI agent workflow I built myself: a task harness, project memory, review agents, and browser automation. It lets one person cover work that used to need a small team.",
   ],
-  lead: { value: "1", label: "person on the client's engineering side" },
+  lead: { value: "1", label: "engineer from the Japanese brief to the shipped result" },
   ledger: [
     { key: "Brief language", value: "Japanese, JLPT N3" },
-    { key: "Store finder", value: "300+ locations" },
-    { key: "Migrated", value: "40+ products" },
-    { key: "Building for the web", value: "5+ years" },
+    { key: "Building for the web", value: "Since 2019" },
+    { key: "Daily stack", value: "Shopify, Next.js, Tailwind" },
+    { key: "Tests", value: "Jest and Playwright in CI" },
     { key: "Based in", value: "Bangkok" },
   ],
 };
@@ -40,7 +46,7 @@ export type CaseStudy = {
   personal: boolean;
   link?: string;
   image?: { src: string; alt: string; width: number; height: number };
-  excerpt?: { caption: string; lines: string[] };
+  excerpt?: { title: string; caption: string; rows: { label: string; value: string }[] };
   metric?: { value: string; label: string };
 };
 
@@ -84,13 +90,16 @@ export const caseStudies: CaseStudy[] = [
     stack: ["Claude Code", "MCP", "Playwright", "Node.js"],
     personal: true,
     excerpt: {
+      title: "task routing",
       caption: "This is how every task enters my day",
-      lines: [
-        "bug or slow         diagnose first, then a second debugger",
-        "new feature         brainstorm, plan, tdd, code review",
-        "check a page        playwright, PC 1440 and SP 390 shots",
-        "shopify store       staging first, production on sign-off",
-        "anything external   ask first",
+      rows: [
+        { label: "bug or slow", value: "diagnose first, then a second debugger" },
+        { label: "new feature", value: "brainstorm, plan, tdd, code review" },
+        { label: "check a page", value: "playwright, PC 1440 and SP 390 shots" },
+        { label: "shopify store", value: "staging first, production on sign-off" },
+        { label: "client history", value: "loaded from project memory every session" },
+        { label: "before it ships", value: "an independent review agent reads the diff" },
+        { label: "anything external", value: "ask first" },
       ],
     },
   },
@@ -131,12 +140,14 @@ export const caseStudies: CaseStudy[] = [
     stack: ["Tailwind CSS", "GTM", "GA4", "Photoshop", "Premiere"],
     personal: false,
     excerpt: {
-      caption: "Handover check, run before every page goes to the client",
-      lines: [
-        "viewports   PC 1440 and SP 390",
-        "tracking    GTM, GA4, pixels intact",
-        "copy        Japanese lines as supplied",
-        "release     staging, then production",
+      title: "handover check",
+      caption: "Run before every page goes to the client",
+      rows: [
+        { label: "viewports", value: "PC 1440 and SP 390" },
+        { label: "tracking", value: "GTM, GA4, pixels intact" },
+        { label: "copy", value: "Japanese lines as supplied" },
+        { label: "assets", value: "exported from the supplied Photoshop files" },
+        { label: "release", value: "staging, then production" },
       ],
     },
   },

@@ -3,7 +3,7 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { caseStudies, type CaseStudy } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
-import { StaggerPre } from "@/components/stagger-pre";
+import { StaggerRows } from "@/components/stagger-rows";
 
 // Half the container above the md breakpoint, full width below it.
 const VISUAL_SIZES = "(min-width: 768px) 50vw, 100vw"; // ds-allow-hardcode
@@ -18,16 +18,22 @@ function Visual({ c, large = false }: { c: CaseStudy; large?: boolean }) {
           width={c.image.width}
           height={c.image.height}
           sizes={VISUAL_SIZES}
-          className="drift h-auto w-full brightness-90"
+          className="h-auto w-full brightness-95"
         />
       </div>
     );
   }
   if (c.excerpt) {
     return (
-      <figure className="flex h-full flex-col justify-center rounded-card border bg-bg-tint p-5 md:p-8">
-        <StaggerPre lines={c.excerpt.lines} className={`overflow-x-auto whitespace-pre max-md:[mask-image:linear-gradient(to_right,black_82%,transparent)] font-mono leading-relaxed text-fg-muted ${large ? "text-sm" : "text-xs"}`} />
-        <figcaption className="mt-3 text-xs text-fg-faint">{c.excerpt.caption}</figcaption>
+      <figure className="flex h-full flex-col overflow-hidden rounded-card border bg-bg-tint">
+        <div className="border-b px-5 py-3 font-mono text-xs text-fg-faint md:px-8">{c.excerpt.title}</div>
+        <div className="flex flex-1 flex-col justify-center p-5 md:p-8">
+          <StaggerRows
+            rows={c.excerpt.rows}
+            className={`space-y-4 font-mono leading-relaxed ${large ? "text-base" : "text-sm"}`}
+          />
+        </div>
+        <figcaption className="border-t px-5 py-3 text-xs text-fg-faint md:px-8">{c.excerpt.caption}</figcaption>
       </figure>
     );
   }
@@ -75,7 +81,7 @@ export function Work() {
     <section id="work" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Work I have shipped</h2>
+          <h2 className="font-display text-4xl tracking-tight md:text-6xl">Work I have shipped</h2>
           <p className="mt-3 max-w-[60ch] text-fg-muted">
             Client names are left out on purpose. Ask me about any of these in an interview.
           </p>
@@ -107,7 +113,7 @@ export function Work() {
                           <Details c={c} />
                         </div>
                       </div>
-                      <div className="mt-6 md:col-span-7 md:mt-0">
+                      <div className="mb-6 max-md:order-first md:col-span-7 md:mb-0">
                         <Visual c={c} large />
                       </div>
                     </>
