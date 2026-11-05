@@ -166,7 +166,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
         { label: "every commit", value: "type check, lint, 9 content tests, no looping motion" },
-        { label: "whole page", value: "about 360 KB over the wire, fonts included" },
+        { label: "whole page", value: "about 400 KB over the wire, fonts included" },
       ],
       caption:
         "Rebuilt in one day, in small commits. I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks. A separate reviewer agent, fresh each round, scored the rendered page, and I stopped when the rest needed material only I can supply.",
@@ -190,12 +190,12 @@ export const caseStudies: CaseStudy[] = [
     anchor: "store-finder",
     metric: { value: "300+", label: "locations today, searchable by chain and prefecture" },
     image: {
-      src: "/work-storefinder.png",
-      alt: "Early build of the store finder with chain and prefecture filters and a list of drugstore locations",
-      width: 780,
-      height: 440,
+      src: "/work-store-finder-phone.png",
+      alt: "The store finder on a phone after a search for Yokohama: three filters, a count of eight, a clear-filters link, and result cards from different drugstore chains, each with a chain tag, address and phone number",
+      width: 1392,
+      height: 2298,
       label: "store finder",
-      note: "Early build with 61 locations. The live list has since grown past 300.",
+      note: "Rendered at phone width from the production section and its store list as of October 2026 (304 stores, six chains). Searching Yokohama returns eight stores from four chains.",
     },
   },
   {
@@ -214,11 +214,12 @@ export const caseStudies: CaseStudy[] = [
     personal: true,
     anchor: "meetrec",
     image: {
-      src: "/work-meetrec.png",
+      src: "/work-meetrec-window.png",
       alt: "MeetRec live subtitle window: each Japanese line from the meeting with its Thai translation below it",
-      width: 1186,
-      height: 665,
+      width: 1290,
+      height: 776,
       label: "live subtitles",
+      note: "The live window during a meeting. Each Japanese line is grey with its Thai translation in white; the amber chip is a misheard term the app corrected.",
     },
   },
   {

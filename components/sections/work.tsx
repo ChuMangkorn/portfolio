@@ -34,7 +34,7 @@ function Visual({ c }: { c: CaseStudy }) {
           width={c.image.width}
           height={c.image.height}
           sizes={VISUAL_SIZES}
-          className="h-auto w-full"
+          className={`h-auto w-full ${c.image.height > c.image.width ? "mx-auto max-w-[24rem]" : ""}`}
         />
         {c.image.note && <figcaption className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">{c.image.note}</figcaption>}
       </figure>
