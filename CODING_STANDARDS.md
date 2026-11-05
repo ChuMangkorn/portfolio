@@ -5,6 +5,7 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 ## Content
 
 - Every claim in `lib/data.ts` traces to another line in that file or to something the owner has said. Facts the owner has not supplied (availability, notice period, links to private work) are asked for, never filled in.
+- The build log in `lib/data.ts` (`proof`) states numbers about this page: reviewer scores, check results, size. Each one must come from the git history, a reviewer report or a measurement of the finished build. Change the number when the build changes, and never round up.
 - Case studies never name clients (docs/adr/0001-anonymized-case-studies.md). Real names live only in the gitignored `tests/banned.local.txt`.
 
 ## Motion
