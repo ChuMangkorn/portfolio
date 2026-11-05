@@ -206,6 +206,14 @@
   figure {
     break-inside: avoid;
   }
+  /* Browsers split block flow cleanly but not grids, so each card prints as one column. */
+  article {
+    display: block !important;
+  }
+  article > div {
+    position: static !important;
+    margin-top: 1rem;
+  }
   section {
     break-inside: auto;
   }
