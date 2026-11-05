@@ -9,13 +9,14 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 
 ## Motion
 
-- Entrance animation uses `EASE_OUT` from `lib/motion.ts`.
+- Entrance timing and easing are tokens in `globals.css` (`--dur-reveal`, `--dur-row`, `--ease-out`). `lib/reveal.ts` arms blocks only after the reader's first scroll, so a page that never scrolls still shows everything.
 - Motion is finite and under five seconds in total. `npm run check:motion` rejects looping animation.
 - Content stays visible without JS and under reduced motion: animated elements carry `data-reveal`.
 
 ## Type
 
 - Display type (`font-display`) carries h1, h2 and case-study titles. Body and role lines use the sans.
+- Viewport height matters as much as width: the `short` and `tall` variants (46rem) tune the hero and the sticky visuals. A new hero element must keep the stage rail above the fold on a 1366x625 window.
 
 ## Release
 

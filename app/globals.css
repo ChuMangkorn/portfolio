@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Viewport-height variants. `short` (under 50rem, a typical laptop window) tightens the hero so the stage rail stays above
+   the fold. `tall` (from 46rem) is where a sticky visual fits on screen. */
+@custom-variant short (@media (max-height: 50rem)); /* ds-allow-hardcode: breakpoint */
+@custom-variant tall (@media (min-height: 46rem)); /* ds-allow-hardcode: breakpoint */
+
 /* Dark theme, locked at page level (decided during design interview). */
 :root {
   color-scheme: dark;
@@ -52,10 +57,10 @@
   --font-jp: var(--font-noto-jp);
   --text-label: 0.8125rem;
   --text-label--line-height: 1.5;
-  /* Fluid headline: 60px on a phone, 118px at 1440, capped at 120px. */
-  --text-hero: clamp(3.75rem, 2rem + 6vw, 7.5rem);
+  /* Fluid headline: 60px on a phone, 118px at 1440x900, capped at 120px, and smaller on short windows so the hero still fits. */
+  --text-hero: clamp(3.75rem, min(2rem + 6vw, 15vh), 7.5rem);
   --text-hero--line-height: 0.98;
-  --container-portrait: var(--portrait);
+  --container-portrait: min(var(--portrait), 56vh);
   --container-portrait-sm: var(--portrait-sm);
   --font-display: var(--font-display-serif), Georgia, serif;
 }

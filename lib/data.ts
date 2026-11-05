@@ -15,7 +15,7 @@ export const profile = {
     { ja: "納品", en: "Deliver" },
   ],
   tagline:
-    "I take a Japanese client brief and ship the product myself: code, design, and media, in one AI-driven workflow.",
+    "I take a Japanese client brief and ship the product myself: code, design, and media, in one AI\u2011driven workflow.",
   jp: "日本語での要件ヒアリングから納品まで、一人で対応します。",
   email: "chu.mangkorn@gmail.com",
   github: "https://github.com/ChuMangkorn",
@@ -58,7 +58,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Online store with a nationwide store finder",
     client: "Japanese D2C cosmetics brand",
     problem:
-      "The brand needed its online store, a nationwide store finder, and seasonal bundle campaigns, maintained by me alone for a Japanese-speaking client.",
+      "The brand sells online and through drugstores across Japan. It needed shoppers to find a nearby shelf, seasonal bundles to launch on schedule, and one person to own all of it for a Japanese\u2011speaking client.",
     work: [
       "Migrated 40+ products and variants from the client master sheet",
       "Built a searchable directory of drugstore locations with chain and prefecture filters",
@@ -69,7 +69,7 @@ export const caseStudies: CaseStudy[] = [
       "Every release goes to a staging theme first, then to production on a date agreed with the client.",
     stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
     personal: false,
-    metric: { value: "300+", label: "store locations in one searchable finder" },
+    metric: { value: "300+", label: "locations, searchable by chain and prefecture" },
     image: {
       src: "/work-storefinder.png",
       alt: "Store finder with chain and prefecture filters and a list of drugstore locations",
@@ -180,7 +180,7 @@ export const experience = [
     location: "Chiang Mai",
     role: "Full-stack Engineer (contract)",
     summary:
-      "University research platform: Next.js and NestJS, real-time chat with Socket.IO, scheduled jobs, PostgreSQL.",
+      "University research platform: Next.js and NestJS, real\u2011time chat with Socket.IO, scheduled jobs, PostgreSQL.",
   },
   {
     period: "2020",
@@ -207,7 +207,7 @@ export const education = {
 
 export const contact = {
   heading: "Looking for a new role.",
-  body: "Open to engineering roles in Thailand or with international teams. Japanese-speaking environments welcome.",
+  body: "Open to engineering roles in Thailand or with international teams. Japanese\u2011speaking environments welcome.",
   cta: "Email me",
   cvLabel: "Request CV",
 };

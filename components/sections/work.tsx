@@ -135,7 +135,7 @@ export function Work() {
               <Reveal key={c.title} delay={i * 0.06}>
                 {/* Two columns from lg. Below that the card is one column so tablets keep readable measures. */}
                 <article className="flex flex-col rounded-card border bg-bg-raised p-6 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10">
-                  <div className="flex max-w-[68ch] flex-col lg:col-span-5 lg:max-w-none">
+                  <div className="flex max-w-[34rem] flex-col lg:col-span-5 lg:max-w-none">
                     <p className="text-sm text-fg-faint">{c.client}</p>
                     <Title c={c} lead={lead} />
                     {/* The lead card shows its number large under the capture from lg; below that it sits here. */}
@@ -145,7 +145,7 @@ export function Work() {
                     </div>
                   </div>
                   <div
-                    className={`mt-6 lg:top-24 lg:col-span-7 lg:mt-0 lg:self-start lg:[@media(min-height:46rem)]:sticky ${
+                    className={`mt-6 lg:top-24 lg:col-span-7 lg:mt-0 lg:self-start lg:tall:sticky ${
                       c.image ? "max-lg:order-first max-lg:mb-5 max-lg:mt-0" : ""
                     } ${i % 2 === 1 ? "lg:order-first" : ""}`}
                   >

@@ -6,6 +6,25 @@ import { Reveal } from "@/components/reveal";
 const cvMail = `mailto:${profile.email}?subject=${encodeURIComponent("CV request")}`;
 const bare = (url: string) => url.replace(/^https?:\/\//, "");
 
+/* Offers a line break after each slash, so a long address never splits inside a word. */
+function Breakable({ text }: { text: string }) {
+  const parts = text.split("/");
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={part + i}>
+          {part}
+          {i < parts.length - 1 && (
+            <>
+              /<wbr />
+            </>
+          )}
+        </span>
+      ))}
+    </>
+  );
+}
+
 const profiles = [
   { label: "LinkedIn", href: profile.linkedin },
   { label: "GitHub", href: profile.github },
@@ -54,7 +73,7 @@ export function Contact() {
                     <span className="min-w-0">
                       <span className="block text-sm text-fg-faint">{p.label}</span>
                       <span className="mt-1 block break-words font-mono text-base tracking-tight text-fg group-hover:text-accent">
-                        {bare(p.href)}
+                        <Breakable text={bare(p.href)} />
                       </span>
                     </span>
                     <ArrowUpRightIcon size={20} className="shrink-0 text-fg-muted group-hover:text-accent" />

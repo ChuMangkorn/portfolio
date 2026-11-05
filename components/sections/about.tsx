@@ -9,7 +9,7 @@ export function About() {
           <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">About</h2>
         </Reveal>
         <Reveal delay={0.05} className="md:col-span-7">
-          <div className="max-w-[62ch] space-y-5 text-lg leading-relaxed text-fg-muted">
+          <div className="max-w-[36rem] space-y-5 text-lg leading-relaxed text-fg-muted">
             {about.paragraphs.map((p) => (
               <p key={p}>{p}</p>
             ))}

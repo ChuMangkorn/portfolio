@@ -10,18 +10,18 @@ const PORTRAIT_SIZES = "(min-width: 768px) 440px, 100vw"; // ds-allow-hardcode
 export function Hero() {
   const last = profile.pipeline.length - 1;
   return (
-    <section className="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-16 sm:px-8 md:min-h-[min(calc(100dvh-4rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 print:min-h-0 print:pt-8">
-      <div className="order-1 md:col-span-7 md:row-start-1 md:self-center md:pb-12">
-        <p className="mb-5 flex flex-wrap gap-x-3 text-sm">
+    <section className="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-16 sm:px-8 md:min-h-[min(calc(100dvh-4.25rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 md:short:pt-10 print:min-h-0 print:pt-8">
+      <div className="order-1 md:col-span-7 md:row-start-1 md:self-center md:pb-12 md:short:pb-6">
+        <p className="mb-5 flex flex-wrap gap-x-3 text-sm md:short:mb-3">
           <span className="font-medium text-fg">{profile.name}</span>
           <span className="text-fg-muted">{profile.role}</span>
         </p>
         <h1 className="font-display text-hero tracking-normal [word-spacing:0.06em] [text-wrap:balance]">{profile.headline}</h1>
-        <p lang="ja" className="mt-6 font-jp text-base font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase]">
+        <p lang="ja" className="mt-6 font-jp text-lg font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase] md:short:mt-4">
           {profile.jp}
         </p>
         <p className="mt-3 max-w-[48ch] text-lg leading-relaxed text-fg-muted">{profile.tagline}</p>
-        <div className="mt-9 flex flex-wrap items-center gap-3 print:hidden">
+        <div className="mt-9 flex flex-wrap items-center gap-3 md:short:mt-6 print:hidden">
           <a
             href="#work"
             className="inline-flex h-11 items-center gap-2 rounded-control bg-accent px-5 text-sm font-medium text-accent-ink transition-transform hover:brightness-105 active:scale-[0.98]"
@@ -57,7 +57,7 @@ export function Hero() {
         {profile.pipeline.map((step, i) => (
           <li
             key={step.ja}
-            className="pipeline-step relative flex items-start gap-1 whitespace-nowrap md:justify-between md:py-5 md:pr-4 md:before:absolute md:before:-top-px md:before:left-0 md:before:h-0.5 md:before:w-10 md:before:bg-accent"
+            className="pipeline-step relative flex items-start gap-1 whitespace-nowrap md:justify-between md:py-5 md:short:py-3 md:pr-4 md:before:absolute md:before:-top-px md:before:left-0 md:before:h-0.5 md:before:w-10 md:before:bg-accent"
             style={{ animationDelay: `${i * 0.5}s` }}
           >
             <span className="flex flex-col leading-tight">
@@ -67,7 +67,7 @@ export function Hero() {
               <span className="text-xs md:mt-1 md:text-label">{step.en}</span>
             </span>
             {i < last && (
-              <span aria-hidden className="text-accent lg:text-xl">
+              <span aria-hidden className="text-accent max-[22.4rem]:hidden md:max-lg:hidden lg:text-xl">
                 {"→"}
               </span>
             )}

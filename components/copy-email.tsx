@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 type Status = "idle" | "copied" | "failed";
 const MESSAGE: Record<Status, string> = { idle: "", copied: "Copied", failed: "Select it to copy" };
 
-/* A row that copies the address. The status text is announced to screen readers through the live region. */
+/* A row that copies the address. The outcome is shown on the button and announced from a live region beside it,
+   because a live region inside a button is announced unreliably. */
 export function CopyEmail({ email }: { email: string }) {
   const [status, setStatus] = useState<Status>("idle");
 
@@ -27,24 +28,27 @@ export function CopyEmail({ email }: { email: string }) {
   }
 
   return (
-    <button
-      type="button"
-      onClick={copy}
-      className="group flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-accent"
-    >
-      <span className="min-w-0">
-        <span className="block text-sm text-fg-faint">Email</span>
-        <span className="mt-1 block break-words font-mono text-base tracking-tight text-fg group-hover:text-accent">
-          {email}
-          <span className="sr-only">, copy to clipboard</span>
+    <>
+      <button
+        type="button"
+        onClick={copy}
+        className="group flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-accent"
+      >
+        <span className="min-w-0">
+          <span className="block text-sm text-fg-faint">Email</span>
+          <span className="mt-1 block break-words font-mono text-base tracking-tight text-fg group-hover:text-accent">
+            {email}
+            <span className="sr-only">, copy to clipboard</span>
+          </span>
         </span>
-      </span>
-      <span className="flex shrink-0 items-center gap-2 text-sm text-fg-muted print:hidden">
-        <span role="status" aria-live="polite">
+        <span aria-hidden className="flex shrink-0 items-center gap-2 text-sm text-fg-muted print:hidden">
           {MESSAGE[status]}
+          {status === "copied" ? <CheckIcon size={20} weight="bold" /> : <CopyIcon size={20} />}
         </span>
-        {status === "copied" ? <CheckIcon size={20} weight="bold" /> : <CopyIcon size={20} />}
+      </button>
+      <span role="status" aria-live="polite" className="sr-only">
+        {MESSAGE[status]}
       </span>
-    </button>
+    </>
   );
 }
