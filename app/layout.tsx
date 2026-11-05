@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
+import { SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -12,16 +13,21 @@ const displaySerif = Instrument_Serif({ variable: "--font-display-serif", subset
 const description =
   "Software engineer in Bangkok. Japanese client brief to shipped product: Shopify, landing pages, tracking, and media, driven by an AI workflow.";
 
+const title = `${profile.name}, ${profile.title} in ${profile.city}`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mangkorn.vercel.app"),
-  title: `${profile.shortName}, Software Engineer`,
+  metadataBase: new URL(SITE_URL),
+  title,
   description,
-  openGraph: {
-    title: `${profile.name}, Software Engineer`,
-    description,
-    type: "website",
-    images: [{ url: "/profile-cutout.png", width: 813, height: 1024 }],
-  },
+  alternates: { canonical: "/" },
+  openGraph: { title, description, type: "website", url: "/" },
+  twitter: { card: "summary_large_image", title, description },
+};
+
+// The address bar on mobile takes the page colour. It must be a literal and equals --bg.
+export const viewport: Viewport = {
+  themeColor: "#0d0d10", // ds-allow-hardcode: meta tag cannot read a CSS variable
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

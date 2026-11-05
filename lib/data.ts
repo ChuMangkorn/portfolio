@@ -3,6 +3,8 @@
 export const profile = {
   name: "Mangkorn Chulaprungrueang",
   shortName: "Mangkorn",
+  title: "Software Engineer",
+  city: "Bangkok",
   role: "Software Engineer, Bangkok",
   headline: "One engineer, end to end.",
   pipeline: [

@@ -16,3 +16,9 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 ## Type
 
 - Display type (`font-display`) carries h1, h2 and case-study titles. Body and role lines use the sans.
+
+## Release
+
+- `lib/site.ts` is the only place the public address is written. Change it there if the Vercel project name differs.
+- `app/opengraph-image.jpg` (also copied to `twitter-image.jpg`) embeds the headline, the Japanese line and the portrait. Re-render it from the live page at 1200x630 whenever any of those change. `npm run check` enforces the size and the tags, not the content.
+- The portrait is shown in monochrome (`grayscale` in `hero.tsx`, same in the preview image). Remove both together to go back to colour.

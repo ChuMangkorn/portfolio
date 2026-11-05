@@ -17,6 +17,8 @@ SERVER=$!
 trap 'kill $SERVER 2>/dev/null || true' EXIT
 for _ in $(seq 1 30); do curl -sf "localhost:$PORT" >/dev/null && break; sleep 1; done
 
+curl -s "localhost:$PORT" | node scripts/check-meta.mjs "http://localhost:$PORT"
+
 # The gates open the snapshot as a file, so its stylesheets must be inlined or the page renders unstyled.
 mkdir -p .gates
 PORT=$PORT python3 - <<'PY'
@@ -33,7 +35,7 @@ PY
 # Receipts go to the plugin data dir, keyed by file hash, which is where the stop hook looks.
 export CLAUDE_PLUGIN_DATA="$HOME/.claude/plugins/data/ux-ui-agent-skills-ux-ui-agent-skills"
 unset CLAUDE_SESSION_ID
-for gate in verify_states verify_target_size verify_responsive verify_overflow verify_reduced_motion; do
+for gate in verify_states verify_target_size verify_responsive verify_overflow verify_reduced_motion axe_audit slop_tells taste_audit; do
   echo "== $gate"
   node "$KIT/gate.mjs" "$gate.mjs" .gates/preview.html | tail -2
 done

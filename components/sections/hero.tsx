@@ -3,12 +3,12 @@ import { ArrowDownIcon, GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons
 import { profile } from "@/lib/data";
 
 // Must match --portrait in globals.css and the md breakpoint.
-const PORTRAIT_SIZES = "(min-width: 768px) 380px, 100vw"; // ds-allow-hardcode
+const PORTRAIT_SIZES = "(min-width: 768px) 440px, 100vw"; // ds-allow-hardcode
 
 /* The hero is above the fold, so it renders without a reveal animation. */
 export function Hero() {
   return (
-    <section className="mx-auto grid max-w-6xl grid-cols-1 items-end gap-12 px-5 pb-20 pt-16 sm:px-8 md:min-h-[calc(100dvh-4rem)] md:grid-cols-12 md:pb-0 md:pt-20">
+    <section className="mx-auto grid max-w-6xl grid-cols-1 items-end gap-12 px-5 pb-20 pt-16 sm:px-8 md:min-h-[calc(100dvh-4rem)] md:grid-cols-12 md:pb-0 md:pt-20 print:min-h-0 print:pb-0 print:pt-8">
       <div className="self-center md:col-span-7 md:pb-24">
         <p className="mb-5 text-sm text-fg-muted">{profile.role}</p>
         <h1 className="font-display text-6xl leading-[0.98] tracking-normal [word-spacing:0.06em] [text-wrap:balance] sm:text-7xl lg:text-8xl">
@@ -18,7 +18,7 @@ export function Hero() {
           {profile.jp}
         </p>
         <p className="mt-3 max-w-[48ch] text-lg leading-relaxed text-fg-muted">{profile.tagline}</p>
-        <div className="mt-9 flex flex-wrap items-center gap-3">
+        <div className="mt-9 flex flex-wrap items-center gap-3 print:hidden">
           <a
             href="#work"
             className="inline-flex h-11 items-center gap-2 rounded-control bg-accent px-5 text-sm font-medium text-accent-ink transition-transform hover:brightness-105 active:scale-[0.98]"
@@ -79,7 +79,7 @@ export function Hero() {
             fill
             priority
             sizes={PORTRAIT_SIZES}
-            className="object-contain object-bottom [mask-image:linear-gradient(to_top,transparent,black_16%)]"
+            className="object-contain object-bottom grayscale contrast-110 [mask-image:linear-gradient(to_top,transparent,black_16%)]"
           />
         </div>
       </div>

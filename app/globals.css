@@ -15,10 +15,18 @@
   --radius-sm: 6px;
   --radius: 12px;
   --radius-lg: 20px;
-  --portrait: 380px;
+  --portrait: 440px;
   --portrait-sm: 15rem;
   --dur-pipeline: 1.6s;
   --dur-caret: 1.1s;
+  --print-bg: #ffffff;
+  --print-fg: #111114;
+  --print-muted: #3b3b44;
+  --print-faint: #55555f;
+  --print-line: #cfcfd6;
+  --print-tint: #f3f3f5;
+  --print-accent: #7a4e00;
+  --print-accent-ink: #111114;
 }
 
 @theme inline {
@@ -130,5 +138,45 @@
   .pipeline-step,
   .caret {
     animation: none !important;
+  }
+}
+
+/* Printing and saving as PDF: ink colours (backgrounds are off by default), everything visible, no chrome. */
+@page {
+  margin: 14mm;
+}
+@media print {
+  :root {
+    color-scheme: light;
+    --bg: var(--print-bg);
+    --bg-raised: var(--print-bg);
+    --bg-tint: var(--print-tint);
+    --fg: var(--print-fg);
+    --fg-muted: var(--print-muted);
+    --fg-faint: var(--print-faint);
+    --line: var(--print-line);
+    --accent: var(--print-accent);
+    --accent-ink: var(--print-accent-ink);
+  }
+  /* A4 is about 700px wide, so scale the rem base down; the two-column layouts then have room. */
+  html {
+    font-size: 11px; /* ds-allow-hardcode: print base size */
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  article,
+  li,
+  figure {
+    break-inside: avoid;
+  }
+  section {
+    break-inside: auto;
+  }
+  /* Keep a section heading with what follows it. */
+  h2,
+  #work > div > div:first-child {
+    break-after: avoid;
   }
 }
