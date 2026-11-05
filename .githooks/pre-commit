@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Fast checks on every commit. The full render gates live in scripts/check.sh.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+npm run -s check:fast
