@@ -16,6 +16,8 @@ export const profile = {
   ],
   tagline:
     "I take Japanese client briefs to delivery: Shopify, landing pages, WordPress and tracking, using AI agents I run and review.",
+  // The phrase inside the tagline that the hero highlights: the part a hiring reader should not miss.
+  taglineEmphasis: "AI agents",
   jp: "日本語での要件ヒアリングから納品まで、一貫して担当します。",
   email: "chu.mangkorn@gmail.com",
   github: "https://github.com/ChuMangkorn",
@@ -36,6 +38,27 @@ export const about = {
     { key: "Tests", value: "Jest and Playwright in CI" },
     { key: "Based in", value: "Bangkok (UTC+7)" },
   ],
+};
+
+/* The reviewer's score for each round of this page's build. The hero run and the case study chart both draw from it,
+   so the two can never disagree. */
+export const buildScores = [5.0, 6.0, 6.5, 6.7, 6.8, 7.0, 7.2, 7.5, 8.0, 8.3];
+
+/* The run: a short scripted replay of how this page was made, played once in the hero. Every line is true of this build.
+   `stage` is the index in profile.pipeline where the amber line is when that line completes, so the panel and the rail
+   share one clock. The reviewer's score has no row of its own: it is the large number, drawn from buildScores. */
+export type RunRow = { who: string; what: string; stage: number };
+
+export const run = {
+  title: "ai workflow · this page",
+  replay: "Replay the run",
+  link: { label: "How it was built", href: "#workflow" },
+  scoreLabel: "reviewer agent",
+  rows: [
+    { who: "builder", what: "writes code", stage: 2 },
+    { who: "tests", what: "lint, axe", stage: 3 },
+    { who: "me", what: "final call", stage: 4 },
+  ] satisfies RunRow[],
 };
 
 export type ExcerptRow = { label: string; value: string };
@@ -128,12 +151,12 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
       chartTitle: "Reviewer's score out of 10, by round",
-      scores: [5.0, 6.0, 6.5, 6.7, 6.8, 7.0, 7.2, 7.5, 8.0, 8.3],
+      scores: buildScores,
       checks: [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
-        { label: "every commit", value: "type check, lint, 6 content tests, no looping motion" },
-        { label: "whole page", value: "about 680 KB over the wire, fonts included" },
+        { label: "every commit", value: "type check, lint, 7 content tests, no looping motion" },
+        { label: "whole page", value: "about 360 KB over the wire, fonts included" },
       ],
       caption:
         "Rebuilt in one day, in small commits. I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks. A separate reviewer agent, fresh each round, scored the rendered page, and I stopped when the rest needed material only I can supply.",

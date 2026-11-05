@@ -10,7 +10,7 @@ export function Experience() {
     <section id="experience" className="border-t bg-bg-raised">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:grid md:grid-cols-12 md:gap-12 md:py-28">
         <Reveal className="md:col-span-4">
-          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Where I have worked</h2>
+          <h2 className="section-tick font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Where I have worked</h2>
         </Reveal>
 
         <ol className="mt-12 space-y-8 md:col-span-8 md:mt-0">

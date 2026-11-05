@@ -28,17 +28,19 @@ These scores are an AI reviewer's judgement. They are shown to document the loop
 - content tests: no client names, no placeholder text, no inflated language level, no dashes
 - a motion rule: nothing on the page loops (WCAG 2.2.2)
 
-`npm run check` is the full local pipeline and needs the design-check plugin I use with Claude Code. It adds a production build, share-card and metadata checks (preview image, icons, JSON-LD, robots, sitemap, 404), contrast, target size, overflow and reduced-motion checks on a rendered snapshot, axe-core, and writes receipts that a hook reads before the agent may call work finished.
+`npm run check` is the full local pipeline and needs the design-check plugin I use with Claude Code. It adds a production build, share-card and metadata checks (preview image, icons, JSON-LD, robots, sitemap, 404), contrast, target size, overflow and reduced-motion checks on a rendered snapshot, axe-core, and writes receipts that a hook reads before the agent may call work finished. Two checks run in a real browser against the build: the hero run must end within 4.5 seconds, no animation may play longer than 5, and nothing may start by itself under reduced motion; and every Japanese character on the page must be in the cut-down font.
 
 Measured on the finished build:
 
 - Lighthouse, mobile and desktop: 100 accessibility, 100 best practices, 100 SEO
 - axe-core: 0 WCAG 2.2 A/AA violations
-- about 680 KB per page load, of which 360 KB is fonts; largest paint 44 to 72 ms and layout shift under 0.002 on a local run with no network delay
+- about 360 KB per page load, of which 96 KB is fonts (the Japanese font is cut down to the 30 characters the page uses); largest paint under 100 ms and layout shift under 0.002 on a local run with no network delay
+- the hero run, a scripted opening that replays how the page was built, ends at 4.0 seconds, then everything rests
 
 ## Decisions worth reading
 
 - [`docs/adr/0001-anonymized-case-studies.md`](docs/adr/0001-anonymized-case-studies.md): why no client is ever named
+- [`docs/adr/0002-impact-from-one-run-not-loops.md`](docs/adr/0002-impact-from-one-run-not-loops.md): why the first screen gets one scripted run instead of loops, WebGL or a scroll library
 - [`CODING_STANDARDS.md`](CODING_STANDARDS.md): the judgement calls a check cannot make
 - [`GLOSSARY.md`](GLOSSARY.md): the vocabulary the content uses
 - [`AGENTS.md`](AGENTS.md): what the agent reads before it touches the code

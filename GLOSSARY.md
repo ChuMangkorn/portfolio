@@ -21,6 +21,14 @@ A short, verifiable fact that supports the positioning: a JLPT level, a number o
 **Workflow**
 The AI-agent engineering setup the author built and uses daily (harness, skills, memory, review agents). Treated as a case study in its own right because it is the strongest evidence for the positioning.
 
+## Motion
+
+**The run**
+The hero's one scripted opening, about four seconds long: the headline lands word by word, an amber line travels the five stages, and a four-line panel replays how this page was built while the reviewer's score steps through the real review rounds. It plays once, then rests, and can be replayed. See ADR-0002.
+
+**Resting state**
+What an animated element looks like when no animation is running: the finished page. Every keyframe describes only where an element starts, so a reader with no script, no scrolling or reduced motion lands here directly.
+
 ## Language
 
 **Primary language**

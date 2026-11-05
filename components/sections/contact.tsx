@@ -36,7 +36,7 @@ export function Contact() {
       <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32">
         <div className="grid grid-cols-1 gap-14 md:grid-cols-12 md:gap-12">
           <Reveal className="md:col-span-7">
-            <h2 className="font-display text-5xl leading-[1.02] tracking-normal [word-spacing:0.06em] md:text-7xl">
+            <h2 className="section-tick font-display text-5xl leading-[1.02] tracking-normal [word-spacing:0.06em] md:text-7xl">
               {contact.heading}
             </h2>
             <p className="mt-6 max-w-[52ch] text-lg leading-relaxed text-fg-muted">{contact.body}</p>

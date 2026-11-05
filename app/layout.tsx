@@ -1,12 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif, Noto_Sans_JP } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { profile } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const notoJp = Noto_Sans_JP({ variable: "--font-noto-jp", subsets: ["latin"], weight: ["400", "500"] });
+// Noto Sans JP cut down to the glyphs the page uses (about 30 KB instead of about 260 KB of slices).
+// Regenerate with scripts/subset-jp-font.mjs when Japanese copy changes; npm run check fails if a character is missing.
+const notoJp = localFont({ src: "./fonts/noto-sans-jp-subset.woff2", variable: "--font-noto-jp", weight: "400 500", display: "swap" });
 
 const displaySerif = Instrument_Serif({ variable: "--font-display-serif", subsets: ["latin"], weight: "400" });
 
@@ -40,6 +43,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
+        {/* Fills as the reader scrolls, in browsers that can tie an animation to scroll position. Hidden elsewhere. */}
+        <div aria-hidden className="scroll-progress print:hidden" />
         {children}
       </body>
     </html>

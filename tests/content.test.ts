@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { profile, about, caseStudies, experience, contact } from "../lib/data.ts";
+import { profile, about, caseStudies, experience, contact, run, buildScores } from "../lib/data.ts";
 
 // Generic rules live here. Real client names live in tests/banned.local.txt,
 // which is gitignored so the repo itself never contains them (docs/adr/0001).
@@ -19,7 +19,7 @@ function walk(v: unknown, path = "root"): string[] {
   return [];
 }
 
-const ALL = walk({ profile, about, caseStudies, experience, contact });
+const ALL = walk({ profile, about, caseStudies, experience, contact, run });
 
 test("no client names, placeholders, inflated JLPT level, or dashes", () => {
   for (const s of ALL) {
@@ -56,4 +56,16 @@ test("experience is real and newest first", () => {
 test("hero copy obeys the hero rules", () => {
   assert.ok(profile.tagline.split(/\s+/).length <= 20, "subtext over 20 words");
   assert.ok(profile.jp.length > 0);
+  assert.equal(profile.tagline.split(profile.taglineEmphasis).length, 2, "the highlighted phrase appears once in the tagline");
+});
+
+test("the hero run and the case study tell the same story", () => {
+  const study = caseStudies.find((c) => c.proof);
+  assert.ok(study?.proof, "the workflow case study carries the build proof");
+  assert.deepEqual(study.proof.scores, buildScores, "the run and the chart must draw from the same scores");
+  assert.ok(buildScores.every((s) => s >= 0 && s <= 10), "scores are out of 10");
+  assert.equal(run.link.href, `#${study.anchor}`, "the run links to the case study that holds the numbers");
+  for (const row of run.rows) {
+    assert.ok(Number.isInteger(row.stage) && row.stage >= 0 && row.stage < profile.pipeline.length, `run row "${row.who}" names a real stage`);
+  }
 });

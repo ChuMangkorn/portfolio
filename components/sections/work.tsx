@@ -72,7 +72,9 @@ function Visual({ c }: { c: CaseStudy }) {
           </div>
           <div className="border-t pt-6">
             <p className="mb-3 font-mono text-label text-fg-faint">{p.chartTitle}</p>
-            <ScoreChart scores={p.scores} label={p.chartTitle} />
+            <Reveal>
+              <ScoreChart scores={p.scores} label={p.chartTitle} />
+            </Reveal>
           </div>
           <StaggerRows rows={p.checks} caret={false} className="space-y-3 border-t pt-6 font-mono text-sm leading-relaxed" />
         </div>
@@ -164,7 +166,7 @@ export function Work() {
     <section id="work" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Selected work</h2>
+          <h2 className="section-tick font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Selected work</h2>
           <p className="mt-3 max-w-[60ch] text-fg-muted">
             Client names are withheld. I can walk through any of this in detail.
           </p>
@@ -176,7 +178,10 @@ export function Work() {
             return (
               <Reveal key={c.title} delay={i * 0.06}>
                 {/* Two columns from lg. Below that the card is one column so tablets keep readable measures. */}
-                <article id={c.anchor} className="flex scroll-mt-24 flex-col rounded-card border bg-bg-raised p-6 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10">
+                <article
+                  id={c.anchor}
+                  className="flex scroll-mt-24 flex-col rounded-card border bg-bg-raised p-6 transition-colors hover:border-accent/40 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10"
+                >
                   <div className="flex max-w-[34rem] flex-col lg:col-span-5 lg:max-w-none">
                     <p className="text-sm text-fg-faint">{c.client}</p>
                     <Title c={c} lead={lead} />
