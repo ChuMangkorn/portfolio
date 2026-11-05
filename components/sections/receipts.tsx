@@ -34,7 +34,6 @@ export function Receipts() {
                   href={r.href}
                   className="group flex h-full flex-col p-4 transition-colors hover:bg-bg-tint focus-visible:-outline-offset-4 sm:p-5"
                 >
-                  <span aria-hidden className="mb-4 block h-0.5 w-10 bg-accent" />
                   <span className={`font-mono leading-none text-fg ${i === 0 ? "text-5xl" : "text-score"}`}>
                     <Figure value={r.figure} />
                   </span>

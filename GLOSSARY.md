@@ -21,6 +21,9 @@ A short, verifiable fact that supports the positioning: a JLPT level, a number o
 **Measured strip**
 The three measurements directly under the hero, each linking to the case study that holds the evidence: an AI model compared with the on-device one on a real meeting (16 of 18 against 7 of 18), a defect the reviewer agent caught (28 blocks hidden, then 0), and client delivery (300+ store locations). The first leads and takes two columns. It never repeats the reviewer's score, which the hero panel and the chart already show. A content test ties every figure and label to the sentence it comes from. NN/g's eye tracking puts 74% of reading time in the first two screenfuls, so this is where a proof point is read.
 
+**Reviewer's own words**
+The openable excerpt of a reviewer agent's report, under a row of "what the reviewer caught". It is the evidence behind that row's claim, so it is cut only for formatting and a screenshot reference, and its source line says it is an excerpt.
+
 **Workflow**
 The AI-agent engineering setup the author built and uses daily (harness, skills, memory, review agents). Treated as a case study in its own right because it is the strongest evidence for the positioning.
 

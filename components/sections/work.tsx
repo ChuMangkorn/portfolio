@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
-import { caseStudies, type CaseStudy } from "@/lib/data";
+import { ArrowUpRightIcon, CaretRightIcon } from "@phosphor-icons/react/dist/ssr";
+import { caseStudies, type CaseStudy, type CaughtRow, type Comparison } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
 import { StaggerRows } from "@/components/stagger-rows";
@@ -8,6 +8,53 @@ import { ScoreChart } from "@/components/score-chart";
 
 // Half the container at the lg breakpoint and above, full width below it.
 const VISUAL_SIZES = "(min-width: 1024px) 50vw, 100vw"; // ds-allow-hardcode
+
+/* The reviewer's own words behind a claim, closed until opened so the card stays short. It is a native disclosure, so
+   the keyboard and screen reader behaviour come with it. */
+function Quote({ quote }: { quote: NonNullable<CaughtRow["quote"]> }) {
+  return (
+    <details className="group mt-1">
+      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-control font-mono text-label text-fg-muted transition-colors hover:text-accent [&::-webkit-details-marker]:hidden">
+        <CaretRightIcon aria-hidden size={12} weight="bold" className="transition-transform group-open:rotate-90" />
+        Read the reviewer&rsquo;s own words
+      </summary>
+      <blockquote className="mb-2 mt-1 border-l-2 border-fg-faint pl-4">
+        <p className="leading-relaxed text-fg-muted">{quote.text}</p>
+        <footer className="mt-2 text-label leading-relaxed text-fg-faint">{quote.source}</footer>
+      </blockquote>
+    </details>
+  );
+}
+
+/* Two results from one test drawn on one zero-based scale, each bar labelled with its own numbers, so nothing rests on
+   colour. The better result is amber and the other grey; the text stays in text colours. The bars grow from the left
+   when the block arrives. */
+function CompareBars({ data }: { data: Comparison }) {
+  const best = Math.max(...data.rows.map((r) => r.got / r.of));
+  return (
+    <figure className="mt-5 rounded-card bg-bg-tint px-5 py-4 sm:px-8">
+      <p className="mb-3 font-mono text-label text-fg-faint">{data.title}</p>
+      <Reveal>
+        <ul className="space-y-4">
+          {data.rows.map((r, i) => (
+            <li key={r.label}>
+              <p className="flex flex-wrap items-baseline justify-between gap-x-4 text-sm">
+                <span className="text-fg">{r.label}</span> <span className="font-mono text-fg-muted">about {r.got} of {r.of}</span>
+              </p>
+              <div aria-hidden className="mt-1.5 h-2 bg-line">
+                <div
+                  className={`cmp-bar h-full rounded-r-[0.25rem] [print-color-adjust:exact] ${r.got / r.of === best ? "bg-accent" : "bg-fg-faint"}`}
+                  style={{ width: `${(r.got / r.of) * 100}%`, "--i": i } as React.CSSProperties}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+      <figcaption className="mt-3 text-label leading-relaxed text-fg-faint">{data.caption}</figcaption>
+    </figure>
+  );
+}
 
 function Visual({ c }: { c: CaseStudy }) {
   if (c.image) {
@@ -65,7 +112,10 @@ function Visual({ c }: { c: CaseStudy }) {
               {p.caught.map((r) => (
                 <div key={r.label} className="grid gap-0.5 sm:grid-cols-[6rem_1fr] sm:gap-4">
                   <dt className="font-mono text-fg-faint">{r.label}</dt>
-                  <dd className="text-fg">{r.value}</dd>
+                  <dd className="text-fg">
+                    {r.value}
+                    {r.quote && <Quote quote={r.quote} />}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -141,7 +191,7 @@ function Details({ c }: { c: CaseStudy }) {
         <ul className="space-y-2 leading-relaxed text-fg">
           {c.work.map((w) => (
             <li key={w} className="flex gap-3">
-              <span aria-hidden className="mt-[0.7rem] h-0.5 w-3 shrink-0 bg-accent" />
+              <span aria-hidden className="mt-[0.7rem] h-0.5 w-3 shrink-0 bg-fg-faint" />
               {w}
             </li>
           ))}
@@ -180,7 +230,7 @@ export function Work() {
                 {/* Two columns from lg. Below that the card is one column so tablets keep readable measures. */}
                 <article
                   id={c.anchor}
-                  className="flex scroll-mt-24 flex-col rounded-card border bg-bg-raised p-6 transition-colors hover:border-accent/40 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10"
+                  className="flex scroll-mt-24 flex-col rounded-card border bg-bg-raised p-5 transition-colors hover:border-accent/40 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10"
                 >
                   <div className="flex max-w-[34rem] flex-col lg:col-span-5 lg:max-w-none">
                     <p className="text-sm text-fg-faint">{c.client}</p>
@@ -197,6 +247,7 @@ export function Work() {
                     } ${i % 2 === 1 ? "lg:order-first" : ""}`}
                   >
                     <Visual c={c} />
+                    {c.comparison && <CompareBars data={c.comparison} />}
                     {lead && <Metric c={c} size="text-7xl" className="mt-6 hidden lg:flex" />}
                   </div>
                 </article>

@@ -6,6 +6,7 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 
 - Every claim in `lib/data.ts` traces to another line in that file or to something the owner has said. Facts the owner has not supplied (availability, notice period, links to private work) are asked for, never filled in.
 - The build log in `lib/data.ts` (`proof`) states numbers about this page: reviewer scores, check results, size. Each one must come from the git history, a reviewer report or a measurement of the finished build. Change the number when the build changes, and never round up.
+- A quotation shown as the reviewer's own words is an excerpt of a real report: only formatting and a screenshot reference may be removed, its source line says so, and a test ties it to the row it sits under. Never paraphrase inside the quote marks.
 - Case studies never name clients (docs/adr/0001-anonymized-case-studies.md). Real names live only in the gitignored `tests/banned.local.txt`.
 
 ## Motion
@@ -20,6 +21,7 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 ## Accessibility
 
 - A link's visible label is one whole run of text. Splitting it across a text node and an inline span (to hide the tail in a narrow container, say) makes Lighthouse's label-in-name audit fail even when the `aria-label` starts with the same words; show one of two whole labels instead. `scripts/check-label-in-name.mjs` runs that rule on the served page, because the design kit's axe gate leaves it out.
+- A `<details>` disclosure prints open (`details::details-content` in the print block of `globals.css`): the page on paper is the finished page, with nothing left to click.
 - A focus ring must stay visible: inside a container that clips (`overflow-hidden`), draw it inward with `focus-visible:-outline-offset-4`.
 - On screen the root font size is set in percentages of the reader's own default, never in pixels (print sets its own). The page must not scroll sideways at 150% default text on any width, or at 200% from a 390 px phone up; `scripts/check-text-size.mjs` sets the default text size through the browser protocol and measures it. A 320 to 360 px phone at 200% is a known gap: the card padding is in rem and takes most of the width.
 

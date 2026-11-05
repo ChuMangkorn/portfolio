@@ -535,6 +535,15 @@
   opacity: 0;
 }
 
+/* The comparison bars under the MeetRec window grow from the left in the same way, in order. */
+.cmp-bar {
+  transform-origin: left;
+  transition: transform var(--dur-bar) var(--ease-out) calc(var(--i, 0) * var(--bar-step) + var(--reveal-delay, 0s));
+}
+[data-pending] .cmp-bar {
+  transform: scaleX(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-word,
   .hero-fade,
@@ -551,6 +560,7 @@
   }
   .score-bar,
   .score-label,
+  .cmp-bar,
   .section-tick::before,
   .exp-fill {
     transition: none !important;
@@ -584,6 +594,10 @@
     opacity: 1 !important;
     transform: none !important;
   }
+  /* A closed disclosure prints its text too: the page on paper is the finished page, with nothing left to click. */
+  details::details-content {
+    content-visibility: visible;
+  }
   /* The run is for the screen: print the finished page, whatever moment the print dialog caught. */
   .hero-word,
   .hero-fade,
@@ -608,7 +622,8 @@
     opacity: 1 !important;
     transform: none !important;
   }
-  .score-bar {
+  .score-bar,
+  .cmp-bar {
     transform: none !important;
   }
   .score-label {

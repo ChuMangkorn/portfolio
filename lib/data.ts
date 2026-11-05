@@ -98,12 +98,19 @@ export const receipts: Receipt[] = [
 
 export type ExcerptRow = { label: string; value: string };
 
+/* A row of what the reviewer caught. `quote` is the reviewer's own text for that round, so the claim can be read
+   instead of taken on trust: an excerpt, with only formatting and a screenshot reference removed. */
+export type CaughtRow = ExcerptRow & { quote?: { text: string; source: string } };
+
+/* A comparison drawn as bars, from numbers the case study states in words. A test keeps the two in step. */
+export type Comparison = { title: string; rows: { label: string; got: number; of: number }[]; caption: string };
+
 /* Evidence about this page's own build. Every number is taken from the repository history, the reviewer reports or a
    measurement run on the finished build. Update them when they change (see CODING_STANDARDS.md). */
 export type BuildProof = {
   title: string;
   caughtTitle: string;
-  caught: ExcerptRow[];
+  caught: CaughtRow[];
   chartTitle: string;
   scores: number[];
   checks: ExcerptRow[];
@@ -122,6 +129,7 @@ export type CaseStudy = {
   link?: string;
   image?: { src: string; alt: string; width: number; height: number; label: string; note?: string };
   excerpt?: { title: string; caption: string; rows: ExcerptRow[] };
+  comparison?: Comparison;
   proof?: BuildProof;
   metric?: { value: string; label: string };
 };
@@ -150,6 +158,10 @@ export const caseStudies: CaseStudy[] = [
         {
           label: "round 8",
           value: "Every section below the first screen stayed invisible until JavaScript loaded: 28 of 28 blocks hidden with scripts blocked. Now 0 of 28.",
+          quote: {
+            text: "Everything below the hero is invisible until JavaScript hydrates, and the audits did not see it. All 28 reveal wrappers are server-rendered with opacity:0 (reveal.tsx:25, stagger-rows.tsx:30). With only the 9 script requests aborted, 28 of 28 stayed hidden and About and Work rendered as empty panels [screenshot omitted]. axe checked 28 contrast nodes on the gate snapshot and on the unscrolled live page, against 156 once everything was revealed. When revealed it reports 0 violations, so the accessibility claim holds. The method was blind to 82% of it.",
+            source: "Reviewer agent, round 8, finding 3. An excerpt of its report: the markdown backticks and a screenshot name are removed, nothing else is changed.",
+          },
         },
         {
           label: "round 9",
@@ -165,7 +177,7 @@ export const caseStudies: CaseStudy[] = [
       checks: [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
-        { label: "every commit", value: "type check, lint, 9 content tests, no looping motion" },
+        { label: "every commit", value: "type check, lint, 11 content tests, no looping motion" },
         { label: "whole page", value: "about 400 KB over the wire, fonts included" },
       ],
       caption:
@@ -213,6 +225,14 @@ export const caseStudies: CaseStudy[] = [
     stack: ["Swift", "SwiftUI", "ScreenCaptureKit", "Apple Speech", "Claude"],
     personal: true,
     anchor: "meetrec",
+    comparison: {
+      title: "translation quality",
+      rows: [
+        { label: "Claude", got: 16, of: 18 },
+        { label: "On-device translation", got: 7, of: 18 },
+      ],
+      caption: "Sentences that kept their meaning in one real 90 second meeting segment. Both counts are approximate.",
+    },
     image: {
       src: "/work-meetrec-window.png",
       alt: "MeetRec live subtitle window: each Japanese line from the meeting with its Thai translation below it",

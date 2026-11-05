@@ -106,6 +106,25 @@ test("the strip's measurements match the case text they come from", () => {
   for (const r of receipts) assert.ok(caseStudies.some((c) => `#${c.anchor}` === r.href), `${r.where} links to a case study`);
 });
 
+test("the reviewer's quoted words back the round they sit under", () => {
+  const round8 = caseStudies.find((c) => c.proof)?.proof?.caught.find((r) => r.label === "round 8");
+  assert.ok(round8?.quote, "round 8 carries the reviewer's own words");
+  assert.match(round8.quote.text, /28 of 28/, "the quote holds the number the summary row states");
+  assert.ok(round8.quote.source.includes("round 8"), "the source line names the round");
+  assert.ok(round8.quote.source.includes("excerpt"), "the source line says it is an excerpt");
+});
+
+test("the MeetRec bars draw the numbers its case text states", () => {
+  const m = caseStudies.find((c) => c.anchor === "meetrec");
+  assert.ok(m?.comparison, "the MeetRec case carries the comparison");
+  assert.equal(m.comparison.rows.length, 2);
+  for (const r of m.comparison.rows) {
+    assert.ok(r.got >= 0 && r.got <= r.of, `${r.label}: the count is within the total`);
+    assert.match(m.outcome, new RegExp(`about ${r.got} of ${r.of}`), `${r.label}: "about ${r.got} of ${r.of}" is in the case text`);
+  }
+  assert.equal(new Set(m.comparison.rows.map((r) => r.of)).size, 1, "both rows are out of the same total, so one scale is honest");
+});
+
 test("the build proof counts the content tests that exist", () => {
   const source = readFileSync(new URL("./content.test.ts", import.meta.url), "utf8");
   const count = (source.match(/^test\(/gm) ?? []).length;
