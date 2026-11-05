@@ -21,7 +21,7 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 
 - A link's visible label is one whole run of text. Splitting it across a text node and an inline span (to hide the tail in a narrow container, say) makes Lighthouse's label-in-name audit fail even when the `aria-label` starts with the same words; show one of two whole labels instead. `scripts/check-label-in-name.mjs` runs that rule on the served page, because the design kit's axe gate leaves it out.
 - A focus ring must stay visible: inside a container that clips (`overflow-hidden`), draw it inward with `focus-visible:-outline-offset-4`.
-- The root font size is set in percentages of the reader's own default, never in pixels.
+- On screen the root font size is set in percentages of the reader's own default, never in pixels (print sets its own). The page must not scroll sideways at 150% default text on any width, or at 200% from a 390 px phone up; `scripts/check-text-size.mjs` sets the default text size through the browser protocol and measures it. A 320 to 360 px phone at 200% is a known gap: the card padding is in rem and takes most of the width.
 
 ## Type
 

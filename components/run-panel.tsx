@@ -50,11 +50,11 @@ function Done() {
 export function RunPanel({ className = "" }: { className?: string }) {
   return (
     <RunGate className={`run-panel run-part @container rounded-card border bg-bg-raised px-4 pb-3 pt-2 font-mono text-label @max-[17rem]:text-xs ${className}`}>
-      <div className="flex items-center justify-between gap-3 border-b pb-1.5">
+      <div className="flex items-center justify-between gap-3 border-b pb-1.5 @max-[19rem]:flex-wrap @max-[19rem]:gap-y-0">
         <a
           href={run.link.href}
           aria-label={`${run.title}, ${run.link.label.toLowerCase()}`}
-          className="-my-2.5 inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap text-fg-muted transition-colors hover:text-accent"
+          className="-my-2.5 inline-flex min-h-11 items-center gap-1.5 text-fg-muted transition-colors hover:text-accent @min-[19rem]:whitespace-nowrap"
         >
           {/* Two whole labels, one shown at a time. Splitting one label across a text node and an inline span trips the
               label-in-name check (Lighthouse and axe read the visible text as not matching the link's name). */}

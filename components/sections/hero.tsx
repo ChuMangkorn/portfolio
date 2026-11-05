@@ -26,7 +26,7 @@ export function Hero() {
   return (
     <section className="hero-recede mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-9 sm:px-8 md:min-h-[min(calc(100dvh-4.25rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 md:short:pt-10 print:min-h-0 print:pt-8">
       <div className="order-1 md:col-span-7 md:row-start-1 md:self-center md:pb-12 md:short:pb-6">
-        <div className="hero-fade hero-fade--lead mb-5 flex items-center gap-4 md:mb-5 md:short:mb-3">
+        <div className="hero-fade hero-fade--lead mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 md:mb-5 md:short:mb-3">
           {/* On a phone the large portrait sits below the first screen, so the face is here as well. It is lazy on purpose:
               a browser does not fetch a lazy image that is display:none, so a wide screen never downloads it. */}
           <span className="relative block h-[4.5rem] w-[4.5rem] shrink-0 overflow-hidden rounded-full border-2 border-accent/50 bg-bg-raised md:hidden">
@@ -36,7 +36,7 @@ export function Hero() {
             />
             <Image src={profile.photo} alt="" fill sizes="72px" className="object-cover object-[50%_0%]" />
           </span>
-          <p className="flex flex-col gap-0.5 text-sm md:flex-row md:flex-wrap md:gap-x-3 md:text-base">
+          <p className="flex min-w-0 flex-col gap-0.5 text-sm [overflow-wrap:anywhere] md:flex-row md:flex-wrap md:gap-x-3 md:text-base">
             <span className="font-medium text-fg">{profile.name}</span>
             <span className="text-fg-muted">
               {roleBefore}

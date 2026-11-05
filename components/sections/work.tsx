@@ -13,15 +13,15 @@ function Visual({ c }: { c: CaseStudy }) {
   if (c.image) {
     return (
       <figure className="overflow-hidden rounded-card bg-bg-tint">
-        <figcaption className="flex items-center justify-between gap-4 border-b px-4 py-1 font-mono text-label text-fg-faint sm:px-5">
-          <span className="whitespace-nowrap">{c.image.label}</span>
+        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-4 py-1 font-mono text-label text-fg-faint sm:px-5">
+          <span>{c.image.label}</span>
           {/* On a phone the capture is drawn small; the full file opens in a tab where it can be pinched. */}
           <a
             href={c.image.src}
             target="_blank"
             rel="noreferrer"
             aria-label={`Open full size: ${c.image.label} capture`}
-            className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap text-fg-muted transition-colors hover:text-accent"
+            className="inline-flex min-h-11 items-center gap-1 text-fg-muted transition-colors hover:text-accent focus-visible:-outline-offset-4"
           >
             <span className="sm:hidden">Full size</span>
             <span className="hidden sm:inline">Open full size</span>
@@ -44,14 +44,14 @@ function Visual({ c }: { c: CaseStudy }) {
     const p = c.proof;
     return (
       <figure className="flex flex-col overflow-hidden rounded-card bg-bg-tint">
-        <figcaption className="flex items-center justify-between gap-4 border-b px-5 py-1 font-mono text-label text-fg-faint sm:px-8">
+        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-5 py-1 font-mono text-label text-fg-faint sm:px-8">
           <span>{p.title}</span>
           {c.link && (
             <a
               href={c.link}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap text-fg-muted transition-colors hover:text-accent"
+              className="inline-flex min-h-11 items-center gap-1 text-fg-muted transition-colors hover:text-accent focus-visible:-outline-offset-4"
             >
               Source
               <ArrowUpRightIcon size={14} />
@@ -124,7 +124,7 @@ function Block({ label, children }: { label: string; children: React.ReactNode }
 function Metric({ c, className = "", size }: { c: CaseStudy; className?: string; size: string }) {
   if (!c.metric) return null;
   return (
-    <p className={`flex items-baseline gap-3 ${className}`}>
+    <p className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 ${className}`}>
       <CountUp value={c.metric.value} className={`font-mono tracking-tight text-accent ${size}`} />
       <span className="text-sm text-fg-muted">{c.metric.label}</span>
     </p>

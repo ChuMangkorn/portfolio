@@ -99,15 +99,16 @@ test("the strip's measurements match the case text they come from", () => {
   // Client delivery: the store finder's lead number.
   const f = byAnchor("store-finder");
   assert.equal(finder.figure, f.metric?.value);
-  // Every cell links to a case that exists.
-  for (const r of receipts) {
-    assert.ok(r.href.startsWith("#") && caseStudies.some((c) => `#${c.anchor}` === r.href), `${r.where} links to a case study`);
-  }
+  // Every cell links to the case that holds its evidence, and nowhere else.
+  assert.equal(meetrec.href, "#meetrec");
+  assert.equal(caught.href, `#${w.anchor}`);
+  assert.equal(finder.href, "#store-finder");
+  for (const r of receipts) assert.ok(caseStudies.some((c) => `#${c.anchor}` === r.href), `${r.where} links to a case study`);
 });
 
 test("the build proof counts the content tests that exist", () => {
   const source = readFileSync(new URL("./content.test.ts", import.meta.url), "utf8");
   const count = (source.match(/^test\(/gm) ?? []).length;
   const checks = caseStudies.find((c) => c.proof)?.proof?.checks.find((c) => c.label === "every commit");
-  assert.ok(checks?.value.includes(`${count} content tests`), `the proof says ${checks?.value}, but there are ${count} tests`);
+  assert.match(checks?.value ?? "", new RegExp(`\\b${count} content tests`), `the proof says ${checks?.value}, but there are ${count} tests`);
 });

@@ -26,7 +26,7 @@ export function About() {
         <Reveal delay={0.1} className="md:col-span-5">
           <dl className="divide-y divide-line border-y">
             {about.ledger.map((row) => (
-              <div key={row.key} className="flex items-baseline justify-between gap-6 py-3">
+              <div key={row.key} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3">
                 <dt className="text-sm text-fg-muted">{row.key}</dt>
                 <dd className="text-right font-mono text-sm text-fg">{row.value}</dd>
               </div>

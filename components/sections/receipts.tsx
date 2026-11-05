@@ -1,17 +1,17 @@
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { receipts } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 
 /* A figure written "a to b" is a before and after: the first number stays plain, the arrow and the result are marked.
-   Screen readers get the words, the eye gets the arrow. */
+   Screen readers get the words, the eye gets the arrow. The arrow is an icon because the mono font has no arrow glyph and
+   a fallback font draws it too wide. */
 function Figure({ value }: { value: string }) {
   const [from, to] = value.split(" to ");
   if (to === undefined) return <>{value}</>;
   return (
     <>
       {from}
-      <span aria-hidden className="mx-[0.3em] text-accent">
-        {"→"}
-      </span>
+      <ArrowRightIcon aria-hidden weight="bold" size="0.6em" className="mx-[0.35em] inline-block text-accent" />
       <span className="sr-only"> to </span>
       <span className="text-accent">{to}</span>
     </>

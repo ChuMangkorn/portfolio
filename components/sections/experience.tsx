@@ -3,7 +3,7 @@ import { Reveal } from "@/components/reveal";
 
 // Below sm the date sits above the role so the role gets the full width.
 const ROW = "grid gap-1 max-sm:pl-7 sm:grid-cols-[11rem_1fr] sm:gap-x-8";
-const DATE = "whitespace-nowrap font-mono text-label text-fg-faint sm:pt-1";
+const DATE = "font-mono text-label text-fg-faint sm:whitespace-nowrap sm:pt-1";
 
 export function Experience() {
   return (
