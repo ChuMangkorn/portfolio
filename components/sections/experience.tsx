@@ -1,4 +1,4 @@
-import { education, experience } from "@/lib/data";
+import { education, experience, facts } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 
 // Below sm the date sits above the role so the role gets the full width.
@@ -10,7 +10,16 @@ export function Experience() {
     <section id="experience" className="border-t bg-bg-raised">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:grid md:grid-cols-12 md:gap-12 md:py-28">
         <Reveal className="md:col-span-4">
-          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Where I have worked</h2>
+          <h2 className="font-display text-4xl md:text-6xl">Where I have worked</h2>
+          <p className="mb-3 mt-10 text-label font-medium text-fg-faint">At a glance</p>
+          <dl className="divide-y divide-line border-y">
+            {facts.ledger.map((row) => (
+              <div key={row.key} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3">
+                <dt className="text-sm text-fg-muted">{row.key}</dt>
+                <dd className="text-right text-sm text-fg">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
         </Reveal>
 
         <ol className="exp-rail mt-12 space-y-8 [--exp-x:0.3rem] sm:[--exp-x:12rem] md:col-span-8 md:mt-0">

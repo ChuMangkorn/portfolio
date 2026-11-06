@@ -51,7 +51,7 @@ export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; labe
           </ol>
         </div>
         <span />
-        <div className="mt-1 flex justify-between font-mono text-label text-fg-faint">
+        <div className="mt-1 flex justify-between text-label font-medium text-fg-faint">
           <span>
             <span className="hidden @min-[11rem]:inline">round </span>1
           </span>

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
-import { profile, about, caseStudies, experience, contact, run, buildScores, receipts } from "../lib/data.ts";
+import { profile, facts, caseStudies, experience, contact, run, buildScores, receipts } from "../lib/data.ts";
 
 // Generic rules live here. Real client names live in tests/banned.local.txt,
 // which is gitignored so the repo itself never contains them (docs/adr/0001).
@@ -20,7 +20,7 @@ function walk(v: unknown, path = "root"): string[] {
   return [];
 }
 
-const ALL = walk({ profile, about, caseStudies, experience, contact, run, receipts });
+const ALL = walk({ profile, facts, caseStudies, experience, contact, run, receipts });
 
 test("no client names, placeholders, inflated JLPT level, or dashes", () => {
   for (const s of ALL) {

@@ -30,10 +30,6 @@ export function Hero() {
           {/* On a phone the large portrait sits below the first screen, so the face is here as well. It is lazy on purpose:
               a browser does not fetch a lazy image that is display:none, so a wide screen never downloads it. */}
           <span className="relative block h-[4.5rem] w-[4.5rem] shrink-0 overflow-hidden rounded-full border-2 border-accent/50 bg-bg-raised md:hidden">
-            <span
-              aria-hidden
-              className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,color-mix(in_oklab,var(--accent)_34%,transparent)_0%,transparent_75%)]"
-            />
             <Image src={profile.photo} alt="" fill sizes="72px" className="object-cover object-[50%_0%]" />
           </span>
           <p className="flex min-w-0 flex-col gap-0.5 text-sm [overflow-wrap:anywhere] md:flex-row md:flex-wrap md:gap-x-3 md:text-base">
@@ -45,7 +41,7 @@ export function Hero() {
             </span>
           </p>
         </div>
-        <h1 className="font-display text-hero tracking-normal [word-spacing:0.06em] [text-wrap:balance]">
+        <h1 className="font-display text-hero [letter-spacing:-0.035em] [text-wrap:balance]">
           {words.map((word, i) => (
             <Fragment key={i}>
               {i > 0 && " "}
@@ -67,11 +63,11 @@ export function Hero() {
               {phrase}
             </Fragment>
           ))}
-          <span lang="en" className="ml-2 whitespace-nowrap font-mono text-sm font-normal text-fg-muted">
+          <span lang="en" className="ml-2 whitespace-nowrap text-sm font-medium text-fg-muted">
             {profile.jlpt}
           </span>
         </p>
-        <p style={{ "--k": 1 } as CSSProperties} className="hero-fade mt-3 max-w-[48ch] text-lg leading-relaxed text-fg-muted">
+        <p style={{ "--k": 1 } as CSSProperties} className="hero-fade mt-3 max-w-[56ch] text-lg leading-relaxed text-fg-muted">
           {before}
           <span className="mark-ai font-medium text-fg">{profile.taglineEmphasis}</span>
           {after}
@@ -135,12 +131,8 @@ export function Hero() {
 
       <div className="relative order-2 max-md:mt-6 md:order-none md:col-span-5 md:col-start-8 md:row-start-1 md:flex md:flex-col md:items-end md:justify-end md:self-end">
         <RunPanel className="mx-auto mb-6 w-full max-w-sm md:mx-0 md:max-w-portrait xl:absolute xl:-left-24 xl:bottom-3 xl:z-10 xl:mb-0 xl:w-[21.5rem] xl:max-w-none" />
-        {/* Cut-out portrait: no box. The glow stays inside its own box; the base stands on the rail from md. */}
+        {/* Cut-out portrait: no box and no glow; the base stands on the rail from md. */}
         <div className="hero-portrait relative mx-auto hidden aspect-[4/5] w-full max-w-portrait-sm [mask-image:linear-gradient(to_right,transparent,black_18%,black_82%,transparent)] md:mx-0 md:block md:max-w-portrait">
-          <div
-            aria-hidden
-            className="hero-glow absolute inset-0 bg-[radial-gradient(ellipse_closest-side_at_50%_42%,color-mix(in_oklab,var(--accent)_38%,transparent)_0%,transparent_100%)]"
-          />
           <Image
             src={profile.photo}
             alt={`Portrait of ${profile.name}`}

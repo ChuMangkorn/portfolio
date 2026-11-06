@@ -5,8 +5,10 @@ import { Reveal } from "@/components/reveal";
 import { StaggerRows } from "@/components/stagger-rows";
 import { ScoreChart } from "@/components/score-chart";
 
-// Half the container at the lg breakpoint and above, full width below it.
+// Half the container at the lg breakpoint and above, full width below it. A wide capture runs the card's full width, at
+// most 60rem of it.
 const VISUAL_SIZES = "(min-width: 1024px) 50vw, 100vw"; // ds-allow-hardcode
+const WIDE_SIZES = "(min-width: 1024px) 960px, 100vw"; // ds-allow-hardcode
 
 /* Every card breaks a word that is longer than its box instead of overflowing it, and keeps its side padding in step
    with the screen rather than with the text size (--card-x), so a reader who enlarges the default text still gets the
@@ -19,7 +21,7 @@ const CARD = "scroll-mt-24 rounded-card border bg-bg-raised px-(--card-x) py-5 t
 function Quote({ quote }: { quote: NonNullable<CaughtRow["quote"]> }) {
   return (
     <details className="group mt-1">
-      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-control font-mono text-label text-fg underline decoration-accent underline-offset-4 transition-colors hover:text-accent [&::-webkit-details-marker]:hidden">
+      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-control text-label font-medium text-fg underline decoration-accent underline-offset-4 transition-colors hover:text-accent [&::-webkit-details-marker]:hidden">
         <CaretRightIcon aria-hidden size={12} weight="bold" className="transition-transform group-open:rotate-90" />
         Read the reviewer&rsquo;s own words
       </summary>
@@ -40,13 +42,13 @@ function CompareBars({ data }: { data: Comparison }) {
   const best = Math.max(...data.rows.map((r) => r.got / r.of));
   return (
     <figure className="mt-5 rounded-card bg-bg-tint px-(--card-x) py-4 sm:px-8">
-      <p className="mb-3 font-mono text-label text-fg-faint">{data.title}</p>
+      <p className="mb-3 text-label font-medium text-fg-faint">{data.title}</p>
       <Reveal>
         <ul className="space-y-4">
           {data.rows.map((r, i) => (
             <li key={r.label}>
               <p className="flex flex-wrap items-baseline justify-between gap-x-4 text-sm">
-                <span className="text-fg">{r.label}</span> <span className="font-mono text-fg-muted">about {r.got} of {r.of}</span>
+                <span className="text-fg">{r.label}</span> <span className="tabular-nums text-fg-muted">about {r.got} of {r.of}</span>
               </p>
               <div aria-hidden className="mt-1.5 h-2 bg-line">
                 <div
@@ -65,11 +67,11 @@ function CompareBars({ data }: { data: Comparison }) {
 
 /* The picture or the evidence panel of a case. A figure holds one caption, the line on top; a note under a picture is a
    plain paragraph. */
-function Visual({ c }: { c: CaseStudy }) {
+function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
   if (c.image) {
     return (
       <figure className="overflow-hidden rounded-card bg-bg-tint">
-        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-4 py-1 font-mono text-label text-fg-faint sm:px-5">
+        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-4 py-1 text-label font-medium text-fg-faint sm:px-5">
           <span>{c.image.label}</span>
           {/* On a phone the capture is drawn small; the full file opens in a tab where it can be pinched. */}
           <a
@@ -89,8 +91,8 @@ function Visual({ c }: { c: CaseStudy }) {
           alt={c.image.alt}
           width={c.image.width}
           height={c.image.height}
-          sizes={VISUAL_SIZES}
-          className={`h-auto w-full ${c.image.height > c.image.width ? "mx-auto max-w-[24rem]" : ""}`}
+          sizes={wide ? WIDE_SIZES : VISUAL_SIZES}
+          className={`h-auto w-full ${c.image.height > c.image.width ? "mx-auto max-w-[24rem]" : wide ? "mx-auto max-w-[60rem]" : ""}`}
         />
         {c.image.note && <p className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">{c.image.note}</p>}
       </figure>
@@ -100,7 +102,7 @@ function Visual({ c }: { c: CaseStudy }) {
     const p = c.proof;
     return (
       <figure className="flex flex-col overflow-hidden rounded-card bg-bg-tint">
-        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-(--card-x) py-1 font-mono text-label text-fg-faint sm:px-8">
+        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-(--card-x) py-1 text-label font-medium text-fg-faint sm:px-8">
           <span>{p.title}</span>
           {c.link && (
             <a
@@ -116,11 +118,11 @@ function Visual({ c }: { c: CaseStudy }) {
         </figcaption>
         <div className="space-y-6 px-(--card-x) py-5 sm:p-8">
           <div>
-            <p className="mb-3 font-mono text-label text-fg-faint">{p.caughtTitle}</p>
+            <p className="mb-3 text-label font-medium text-fg-faint">{p.caughtTitle}</p>
             <dl className="space-y-3 text-sm leading-relaxed">
               {p.caught.map((r) => (
                 <div key={r.label} className="grid gap-0.5 sm:grid-cols-[6rem_1fr] sm:gap-4">
-                  <dt className="font-mono text-fg-faint">{r.label}</dt>
+                  <dt className="font-medium text-fg-faint">{r.label}</dt>
                   <dd className="text-fg">
                     {r.value}
                     {r.quote && <Quote quote={r.quote} />}
@@ -130,12 +132,12 @@ function Visual({ c }: { c: CaseStudy }) {
             </dl>
           </div>
           <div className="border-t pt-6">
-            <p className="mb-3 font-mono text-label text-fg-faint">{p.chartTitle}</p>
+            <p className="mb-3 text-label font-medium text-fg-faint">{p.chartTitle}</p>
             <Reveal>
               <ScoreChart scores={p.scores} label={p.chartTitle} />
             </Reveal>
           </div>
-          <StaggerRows rows={p.checks} caret={false} className="space-y-3 border-t pt-6 font-mono text-sm leading-relaxed" />
+          <StaggerRows rows={p.checks} caret={false} className="space-y-3 border-t pt-6 text-sm leading-relaxed" />
         </div>
       </figure>
     );
@@ -145,7 +147,7 @@ function Visual({ c }: { c: CaseStudy }) {
 
 function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   return (
-    <h3 className={`mt-2 font-display font-normal leading-tight tracking-normal ${lead ? "text-4xl" : "text-3xl"}`}>
+    <h3 className={`mt-2 font-display leading-tight ${lead ? "text-4xl" : "text-3xl"}`}>
       {c.link && !c.proof ? (
         <a href={c.link} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1 hover:text-accent">
           {c.title}
@@ -162,7 +164,7 @@ function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
 function Block({ label, children, className = "mt-6" }: { label: string; children: React.ReactNode; className?: string }) {
   return (
     <div className={className}>
-      <p className="mb-2 break-after-avoid font-mono text-label text-fg-faint">{label}</p>
+      <p className="mb-2 break-after-avoid text-label font-medium text-fg-faint">{label}</p>
       {children}
     </div>
   );
@@ -230,7 +232,7 @@ function Checklist({ excerpt, className }: { excerpt: NonNullable<CaseStudy["exc
       <ul className="mt-3 space-y-2 leading-relaxed text-fg">
         {excerpt.rows.map((r) => (
           <li key={r.label}>
-            <span className="mr-2 font-mono text-label text-fg-faint">{r.label}</span>
+            <span className="mr-2 text-label font-medium text-fg-faint">{r.label}</span>
             {r.value}
           </li>
         ))}
@@ -299,6 +301,34 @@ function VisualCard({ c, lead, flip }: { c: CaseStudy; lead: boolean; flip: bool
   );
 }
 
+/* A case whose picture is the point and is wider than tall: the capture runs the card's full width, then the text in two
+   columns from lg, with the numbers beside the result they come from. One column below lg, in reading order. */
+function WideCard({ c }: { c: CaseStudy }) {
+  return (
+    <article id={c.anchor} className={`${CARD} flex flex-col`}>
+      <header className="flex max-w-[34rem] flex-col">
+        <p className="text-sm text-fg-faint">{c.client}</p>
+        <Title c={c} />
+        <Metric c={c} size="text-4xl" className="mt-4" />
+      </header>
+      <div className="mt-6">
+        <Visual c={c} wide />
+      </div>
+      <div className="grid max-w-[34rem] lg:max-w-none lg:grid-cols-12 lg:gap-x-10">
+        <div className="lg:col-span-5">
+          <Brief c={c} />
+          <Built c={c} />
+        </div>
+        <div className="lg:col-span-7">
+          <Result c={c} />
+          {c.comparison && <CompareBars data={c.comparison} />}
+        </div>
+      </div>
+      <Stack c={c} />
+    </article>
+  );
+}
+
 /* A case with no picture: the text in three columns from lg (the brief over the result, what was built, then the
    checks), one column below it in reading order. */
 function TextCard({ c }: { c: CaseStudy }) {
@@ -320,23 +350,34 @@ function TextCard({ c }: { c: CaseStudy }) {
   );
 }
 
+type Kind = "split" | "wide" | "text";
+
+/* The shape follows what the case has: a landscape capture runs the full width, a portrait capture or an evidence panel
+   sits beside the text, and a case with neither is text. */
+const kindOf = (c: CaseStudy): Kind => (c.image ? (c.image.width > c.image.height ? "wide" : "split") : c.proof ? "split" : "text");
+
 export function Work() {
   return (
     <section id="work" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Selected work</h2>
+          <h2 className="font-display text-4xl md:text-6xl">Selected work</h2>
           <p className="mt-3 max-w-[60ch] text-fg-muted">
             Client names are withheld. I can walk through any of this in detail.
           </p>
         </Reveal>
 
         <div className="mt-12 space-y-5 sm:space-y-8">
-          {caseStudies.map((c, i) => (
-            <Reveal key={c.title} delay={i * 0.06}>
-              {c.image || c.proof ? <VisualCard c={c} lead={i === 0 || Boolean(c.metric)} flip={i % 2 === 1} /> : <TextCard c={c} />}
-            </Reveal>
-          ))}
+          {caseStudies.map((c, i) => {
+            const kind = kindOf(caseStudies[i]);
+            // Split cards swap sides one after the other, wherever the other shapes fall between them.
+            const flip = kind === "split" && caseStudies.slice(0, i).filter((x) => kindOf(x) === "split").length % 2 === 1;
+            return (
+              <Reveal key={c.title} delay={i * 0.06}>
+                {kind === "split" ? <VisualCard c={c} lead={i === 0 || Boolean(c.metric)} flip={flip} /> : kind === "wide" ? <WideCard c={c} /> : <TextCard c={c} />}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

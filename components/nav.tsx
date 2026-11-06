@@ -2,7 +2,6 @@ import { profile } from "@/lib/data";
 import { NavLinks } from "@/components/nav-links";
 
 const links = [
-  { href: "#about", label: "About" },
   { href: "#work", label: "Work" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact", cta: true },

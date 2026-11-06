@@ -41,8 +41,9 @@ export const profile = {
   photo: "/profile-cutout.png",
 };
 
-export const about = {
-  proofLink: { label: "See how this page was built", href: "#workflow" },
+/* The facts a reader looks for first, set beside the career list. The story is in the hero, the work and the list; a
+   paragraph of its own repeated them. */
+export const facts = {
   ledger: [
     { key: "Brief language", value: `Japanese, ${profile.jlpt}` },
     { key: "Web work", value: "2019 to 2022, 2025 to now" },
@@ -156,7 +157,7 @@ export const caseStudies: CaseStudy[] = [
       "Browser, Photoshop, and Premiere driven from the same workflow",
     ],
     outcome:
-      "This page is the evidence: rebuilt in one day and reviewed ten times by a separate agent that found real defects, listed here with their fixes. Lighthouse scores it 100 for accessibility, best practices and SEO.",
+      "This page is the evidence: rebuilt in one day and reviewed ten times by a separate agent that found real defects, listed here with their fixes.",
     stack: ["Claude Code", "MCP", "Playwright", "Node.js"],
     personal: true,
     anchor: "workflow",
@@ -195,32 +196,6 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    title: "Online store with a nationwide store finder",
-    client: "Japanese D2C cosmetics brand",
-    problem:
-      "The brand sells online and through drugstores across Japan. It needed shoppers to find a nearby shelf, seasonal bundles to launch on schedule, and one person to own all of it for a Japanese‑speaking client.",
-    work: [
-      "Migrated 40+ products and variants from the client master sheet",
-      "Built a searchable directory of drugstore locations with chain and prefecture filters",
-      "Wrote Jest and Playwright tests for the finder and wired them into CI",
-      "Shipped bundle campaign pages, shipping rules for remote islands, and a staging to production release flow",
-    ],
-    outcome:
-      "The list grew from 61 locations in the first build to over 300 as chains were added. Every release goes to a staging theme first, then to production on a date agreed with the client.",
-    stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
-    personal: false,
-    anchor: "store-finder",
-    metric: { value: "300+", label: "locations today, searchable by chain and prefecture" },
-    image: {
-      src: "/work-store-finder-phone.png",
-      alt: "The store finder on a phone after a search for Yokohama: three filters, a count of eight, a clear-filters link, and result cards from different drugstore chains, each with a chain tag, address and phone number",
-      width: 1392,
-      height: 2298,
-      label: "store finder",
-      note: "Rendered at phone width from the production section and its store list as of October 2026 (304 stores, six chains). Searching Yokohama returns eight stores from four chains.",
-    },
-  },
-  {
     title: "MeetRec: screen recorder with live translated subtitles",
     client: "Personal project",
     problem:
@@ -250,6 +225,32 @@ export const caseStudies: CaseStudy[] = [
       height: 776,
       label: "live subtitles",
       note: "The live window during a meeting. Each Japanese line is grey with its Thai translation in white; the amber chip is a misheard term the app corrected.",
+    },
+  },
+  {
+    title: "Online store with a nationwide store finder",
+    client: "Japanese D2C cosmetics brand",
+    problem:
+      "The brand sells online and through drugstores across Japan. It needed shoppers to find a nearby shelf, seasonal bundles to launch on schedule, and one person to own all of it for a Japanese‑speaking client.",
+    work: [
+      "Migrated 40+ products and variants from the client master sheet",
+      "Built a searchable directory of drugstore locations with chain and prefecture filters",
+      "Wrote Jest and Playwright tests for the finder and wired them into CI",
+      "Shipped bundle campaign pages, shipping rules for remote islands, and a staging to production release flow",
+    ],
+    outcome:
+      "The list grew from 61 locations in the first build to over 300 as chains were added. Every release goes to a staging theme first, then to production on a date agreed with the client.",
+    stack: ["Shopify", "Liquid", "Jest", "Playwright", "GitHub Actions"],
+    personal: false,
+    anchor: "store-finder",
+    metric: { value: "300+", label: "locations today, searchable by chain and prefecture" },
+    image: {
+      src: "/work-store-finder-phone.png",
+      alt: "The store finder on a phone after a search for Yokohama: three filters, a count of eight, a clear-filters link, and result cards from different drugstore chains, each with a chain tag, address and phone number",
+      width: 1392,
+      height: 2298,
+      label: "store finder",
+      note: "Rendered at phone width from the production section and its store list as of October 2026 (304 stores, six chains). Searching Yokohama returns eight stores from four chains.",
     },
   },
   {

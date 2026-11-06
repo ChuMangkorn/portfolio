@@ -24,7 +24,7 @@ await page.evaluate(async ({ profile, roleBefore, roleAfter }) => {
     el.textContent = content;
     return el;
   };
-  const SANS = "font-family:var(--font-geist-sans),system-ui,sans-serif;";
+  const SANS = "font-family:var(--font-body-sans),system-ui,sans-serif;";
   const INK = "color:#ececf1;";
   const MUTED = "color:#a0a0ab;";
   const AMBER = "#e2a640";
@@ -32,8 +32,6 @@ await page.evaluate(async ({ profile, roleBefore, roleAfter }) => {
   document.body.replaceChildren();
   document.body.style.cssText = "margin:0;background:#0d0d10;width:1200px;height:630px;overflow:hidden;position:relative;";
 
-  const glow = document.createElement("div");
-  glow.style.cssText = `position:absolute;inset:0;background:radial-gradient(ellipse 520px 430px at 80% 40%, rgba(226,166,64,0.34) 0%, rgba(226,166,64,0) 70%);`;
   const photo = document.createElement("img");
   photo.src = profile.photo;
   photo.style.cssText =
@@ -48,7 +46,7 @@ await page.evaluate(async ({ profile, roleBefore, roleAfter }) => {
 
   const middle = document.createElement("div");
   middle.append(
-    text("div", `font-family:var(--font-display-serif),Georgia,serif;font-size:122px;line-height:0.98;${INK}text-wrap:balance;word-spacing:0.06em;`, profile.headline),
+    text("div", `font-family:var(--font-display-sans),system-ui,sans-serif;font-weight:600;letter-spacing:-0.03em;font-size:112px;line-height:0.98;${INK}text-wrap:balance;`, profile.headline),
     Object.assign(text("div", `margin-top:30px;font-family:var(--font-noto-jp),sans-serif;font-weight:500;font-size:25px;line-height:1.5;${INK}word-break:auto-phrase;text-wrap:balance;`, profile.jp), { lang: "ja" }),
   );
 
@@ -59,14 +57,15 @@ await page.evaluate(async ({ profile, roleBefore, roleAfter }) => {
   name.append(bar, document.createTextNode(profile.name));
 
   column.append(role, middle, name);
-  document.body.append(glow, photo, column);
+  document.body.append(photo, column);
 
   await Promise.all([
-    document.fonts.load('122px "Instrument Serif"', profile.headline),
+    // A local font has a generated family name; the page's CSS variable holds it.
+    document.fonts.load(`600 112px ${getComputedStyle(document.documentElement).getPropertyValue("--font-display-sans").split(",")[0].trim()}`, profile.headline),
     document.fonts.load('500 25px "Noto Sans JP"', profile.jp),
-    document.fonts.load('34px "Geist"', profile.role),
-    document.fonts.load('500 34px "Geist"', profile.roleEmphasis),
-    document.fonts.load('500 30px "Geist"', profile.name),
+    document.fonts.load('34px "Hanken Grotesk"', profile.role),
+    document.fonts.load('500 34px "Hanken Grotesk"', profile.roleEmphasis),
+    document.fonts.load('500 30px "Hanken Grotesk"', profile.name),
   ]);
   await document.fonts.ready;
   await photo.decode();

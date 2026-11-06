@@ -1,17 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { profile } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Display: Archivo SemiCondensed at weight 600, one instance cut to printable ASCII (about 8 KB instead of the 90 KB variable
+// font; regenerate with scripts/subset-display-font.mjs). Body: Hanken Grotesk. Figures and code: IBM Plex Mono, for numbers,
+// dates and identifiers only, not for labels.
+const displaySans = localFont({ src: "./fonts/archivo-display-subset.woff2", variable: "--font-display-sans", weight: "600", display: "swap" });
+const bodySans = Hanken_Grotesk({ variable: "--font-body-sans", subsets: ["latin"] });
+const codeMono = IBM_Plex_Mono({ variable: "--font-code-mono", subsets: ["latin"], weight: "400" });
 // Noto Sans JP cut down to the glyphs the page uses (about 30 KB instead of about 260 KB of slices).
 // Regenerate with scripts/subset-jp-font.mjs when Japanese copy changes; npm run check fails if a character is missing.
 const notoJp = localFont({ src: "./fonts/noto-sans-jp-subset.woff2", variable: "--font-noto-jp", weight: "400 500", display: "swap" });
-
-const displaySerif = Instrument_Serif({ variable: "--font-display-serif", subsets: ["latin"], weight: "400" });
 
 const description =
   "Software engineer in Bangkok. Japanese client briefs to delivery: Shopify, landing pages, WordPress and tracking, using AI agents I run and review.";
@@ -35,7 +37,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${notoJp.variable} ${displaySerif.variable} antialiased`}>
+    <html lang="en" className={`${bodySans.variable} ${codeMono.variable} ${notoJp.variable} ${displaySans.variable} antialiased`}>
       <body className="min-h-dvh">
         <a
           href="#main"
@@ -43,8 +45,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
-        {/* Fills as the reader scrolls, in browsers that can tie an animation to scroll position. Hidden elsewhere. */}
-        <div aria-hidden className="scroll-progress print:hidden" />
         {children}
       </body>
     </html>

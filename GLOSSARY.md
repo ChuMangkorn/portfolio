@@ -16,7 +16,7 @@ The one-line claim the whole page proves. Current positioning: *an AI-driven eng
 A featured piece of work told as problem, what was done, and outcome. Client and brand names are never shown (see ADR-0001); the case is described by industry and shape ("Japanese D2C cosmetics brand"). Links appear only when the artifact is public.
 
 **Visual card and text card**
-A case study with a picture or an evidence panel is a visual card: the title over the text in one column, the visual in the other (title, picture, then text on a phone). A case with nothing to show is a text card: the same text in three columns, with its checks as a plain list. A card does not dress a list up as an artefact.
+A case study with a picture or an evidence panel is a visual card: the title over the text in one column, the visual in the other (title, picture, then text on a phone). A case whose capture is wider than tall is a wide card: the capture runs the full width, then the text in two columns. A case with nothing to show is a text card: the same text in three columns, with its checks as a plain list. A card does not dress a list up as an artefact.
 
 **Proof point**
 A short, verifiable fact that supports the positioning: a JLPT level, a number of stores imported, a test suite that runs in CI. Never a self-assessment like "expert" or "can do everything".
@@ -39,7 +39,7 @@ The hero's one scripted opening, about four seconds long: the headline lands wor
 The career list drawn as the hero's rail again: a dot per entry, the current job in amber, and a line whose segments fill with amber as each entry arrives (the same release as the chart bars, so it works in every browser). At rest, with no script and under reduced motion, the line is simply drawn.
 
 **Scroll-linked effect**
-Motion driven by the reader's own scroll position (the progress hairline and the hero's recede). It stops when the reader stops, lives inside `prefers-reduced-motion: no-preference` and `@supports (animation-timeline: view())`, and its resting state is the finished page. Safari's support is partial (see the note in CODING_STANDARDS), so nothing the page needs depends on one.
+Motion driven by the reader's own scroll position (the hero's recede, the page's only one). It stops when the reader stops, lives inside `prefers-reduced-motion: no-preference` and `@supports (animation-timeline: view())`, and its resting state is the finished page. Safari's support is partial (see the note in CODING_STANDARDS), so nothing the page needs depends on one.
 
 **Resting state**
 What an animated element looks like when no animation is running: the finished page. Every keyframe describes only where an element starts, so a reader with no script, no scrolling or reduced motion lands here directly.

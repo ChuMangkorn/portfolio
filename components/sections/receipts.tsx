@@ -26,7 +26,6 @@ export function Receipts() {
     <section aria-label="Measured results" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 md:py-14">
         <Reveal>
-          <p className="mb-3 font-mono text-label text-fg-faint">measured</p>
           <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-card border bg-line sm:grid-cols-2 lg:grid-cols-4">
             {receipts.map((r, i) => (
               <li key={r.href + r.figure} className={`bg-bg-raised ${i === 0 ? "sm:col-span-2" : ""}`}>
@@ -41,7 +40,7 @@ export function Receipts() {
                     <Figure value={r.figure} />
                   </span>
                   <span className="mt-3 text-sm leading-snug text-fg-muted">{r.label}</span>
-                  <span className="mt-auto pt-4 font-mono text-label text-fg-faint transition-colors group-hover:text-accent">{r.where}</span>
+                  <span className="mt-auto pt-4 text-label font-medium text-fg-faint transition-colors group-hover:text-accent">{r.where}</span>
                 </a>
               </li>
             ))}
