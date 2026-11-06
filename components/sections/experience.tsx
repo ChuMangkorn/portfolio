@@ -10,7 +10,7 @@ export function Experience() {
     <section id="experience" className="border-t bg-bg-raised">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:grid md:grid-cols-12 md:gap-12 md:py-28">
         <Reveal className="md:col-span-4">
-          <h2 className="font-display text-4xl md:text-6xl">Where I have worked</h2>
+          <h2 className="font-display text-4xl lg:text-5xl xl:text-6xl">Where I have worked</h2>
           <p className="mb-3 mt-10 text-label font-medium text-fg-faint">At a glance</p>
           <dl className="divide-y divide-line border-y">
             {facts.ledger.map((row) => (

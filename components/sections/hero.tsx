@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties } from "react";
 import Image from "next/image";
-import { ArrowDownIcon, ArrowRightIcon, GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDownIcon, ArrowRightIcon, LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { profile } from "@/lib/data";
 import { RunGate } from "@/components/run-gate";
 import { RunPanel } from "@/components/run-panel";
@@ -80,15 +80,9 @@ export function Hero() {
             See the work
             <ArrowDownIcon size={16} weight="bold" />
           </a>
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-control border text-fg-muted transition-colors hover:border-fg-faint hover:text-fg"
-          >
-            <GithubLogoIcon size={20} />
-          </a>
+          {/* The GitHub icon is not here yet: the profile it leads to has no name, no bio and no pinned repositories, which
+              costs more than the icon earns. It comes back beside this one when the profile is ready (the contact section
+              lists GitHub meanwhile). */}
           <a
             href={profile.linkedin}
             target="_blank"

@@ -119,6 +119,7 @@
   .font-display {
     font-weight: 600; /* ds-allow-hardcode: the one weight of the display face */
     letter-spacing: -0.022em;
+    word-spacing: 0.08em; /* the tight tracking closes the word space of a condensed face up; the headline sets the same */
     overflow-wrap: anywhere; /* a long word breaks instead of widening the page at a larger text size */
   }
 }

@@ -39,7 +39,7 @@ export function NavLinks({ links }: { links: NavLink[] }) {
             aria-current={current === l.href.slice(1) ? "location" : undefined}
             className={
               l.cta
-                ? "inline-flex min-h-11 items-center text-accent transition-colors hover:text-fg min-[24rem]:min-h-9 min-[24rem]:rounded-control min-[24rem]:border min-[24rem]:border-accent/60 min-[24rem]:px-3 min-[24rem]:hover:bg-accent min-[24rem]:hover:text-accent-ink min-[24rem]:aria-[current=location]:bg-accent min-[24rem]:aria-[current=location]:text-accent-ink"
+                ? "inline-flex min-h-11 items-center text-accent transition-colors hover:text-fg min-[24rem]:min-h-9 min-[24rem]:rounded-control min-[24rem]:border min-[24rem]:border-accent/60 min-[24rem]:px-3 min-[24rem]:hover:bg-accent min-[24rem]:hover:text-accent-ink"
                 : "inline-flex min-h-11 items-center underline-offset-8 transition-colors hover:text-fg aria-[current=location]:text-accent aria-[current=location]:underline aria-[current=location]:decoration-accent"
             }
           >

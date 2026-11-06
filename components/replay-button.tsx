@@ -14,7 +14,9 @@ function subscribe(notify: () => void) {
 
 /* Plays the run again for a reader who looked away. It only exists once the page is running in a browser that allows
    motion: there is nothing to replay without script or under reduced motion, and a dead button would be worse than none.
-   The icon is small but the target is 44px; the negative margins keep it from making the panel header taller. */
+   The icon is small but the target is 44px; the negative margins keep it from making the panel header taller, and apply
+   only while the title and the button share one row (the panel is at least 19rem wide). When they wrap onto two rows
+   the margins would pull the rows over each other, as they did at 200% text. */
 export function ReplayButton({ label }: { label: string }) {
   const motionAllowed = useSyncExternalStore(
     subscribe,
@@ -28,7 +30,7 @@ export function ReplayButton({ label }: { label: string }) {
       aria-label={label}
       title={label}
       onClick={() => document.dispatchEvent(new Event(REPLAY_EVENT))}
-      className="-my-3 -mr-3 inline-flex h-11 w-11 items-center justify-center rounded-control text-fg-faint transition-colors hover:text-accent print:hidden"
+      className="-mr-3 ml-auto inline-flex h-11 w-11 items-center justify-center rounded-control text-fg-faint transition-colors hover:text-accent @min-[19rem]:-my-3 print:hidden"
     >
       <ArrowClockwiseIcon size={16} weight="bold" />
     </button>

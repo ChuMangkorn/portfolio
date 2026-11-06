@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
-import { profile, facts, caseStudies, experience, contact, run, buildScores, receipts } from "../lib/data.ts";
+import { profile, facts, caseStudies, experience, contact, run, buildScores, receipts, COMPARE_ANCHOR } from "../lib/data.ts";
 
 // Generic rules live here. Real client names live in tests/banned.local.txt,
 // which is gitignored so the repo itself never contains them (docs/adr/0001).
@@ -94,18 +94,21 @@ test("the strip's measurements match the case text they come from", () => {
   const round8 = w.proof?.caught.find((r) => r.label === "round 8");
   assert.ok(round8, "the workflow case lists round 8");
   assert.match(round8.value, /28 of 28 blocks hidden/);
-  assert.match(round8.value, /Now 0 of 28/);
+  assert.match(round8.value, /Now none are/);
   assert.equal(caught.figure, "28 to 0");
   assert.ok(caught.label.includes("round 8"));
   // Client delivery: the store finder's lead number.
   const f = byAnchor("store-finder");
   assert.equal(finder.figure, f.metric?.value);
   // Every cell links to the case that holds its evidence, and nowhere else.
-  assert.equal(meetrec.href, "#meetrec");
+  assert.equal(meetrec.href, `#${COMPARE_ANCHOR}`, "the MeetRec cell lands on the bars that draw its numbers, not on the capture above them");
+  assert.ok(m.comparison, "the bars the MeetRec cell lands on exist");
   assert.equal(caught.href, `#${w.proof?.anchor}`, "the defect cell lands on the panel that lists it, not on the card's title");
   assert.equal(finder.href, "#store-finder");
   for (const r of receipts) {
-    assert.ok(caseStudies.some((c) => `#${c.anchor}` === r.href || (c.proof && `#${c.proof.anchor}` === r.href)), `${r.where} links to a case study or its evidence`);
+    const lands = (c: (typeof caseStudies)[number]) =>
+      `#${c.anchor}` === r.href || (c.proof && `#${c.proof.anchor}` === r.href) || (c.comparison && `#${COMPARE_ANCHOR}` === r.href);
+    assert.ok(caseStudies.some(lands), `${r.where} links to a case study or its evidence`);
   }
 });
 

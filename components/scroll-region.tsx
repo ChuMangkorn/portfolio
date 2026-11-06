@@ -6,12 +6,24 @@ import { useEffect, useRef } from "react";
    keyboard can scroll it, then loses those attributes whenever its content fits, so a wide screen has no focus stop that
    does nothing and no region that is announced as scrolling. Without script it keeps them, which is the safe side. A region
    that has focus keeps them until it loses it, so widening the window does not throw the reader's place to the top of the
-   page. scripts/check-scroll-region.mjs holds all of this, and finds the box by data-scroll-region. */
-export function ScrollRegion({ label, className, children }: { label: string; className?: string; children: React.ReactNode }) {
+   page. scripts/check-scroll-region.mjs holds all of this, and finds the box by data-scroll-region. `startAt` opens the
+   box part way along what overflows (0 is the left edge, 1 the right), once, so the part that matters is on screen. */
+export function ScrollRegion({
+  label,
+  className,
+  startAt = 0,
+  children,
+}: {
+  label: string;
+  className?: string;
+  startAt?: number;
+  children: React.ReactNode;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (startAt > 0 && el.scrollWidth > el.clientWidth + 1) el.scrollLeft = (el.scrollWidth - el.clientWidth) * startAt;
     const update = () => {
       if (el.scrollWidth > el.clientWidth + 1 || document.activeElement === el) {
         el.tabIndex = 0;
@@ -31,7 +43,7 @@ export function ScrollRegion({ label, className, children }: { label: string; cl
       observer.disconnect();
       el.removeEventListener("blur", update);
     };
-  }, [label]);
+  }, [label, startAt]);
   return (
     <div ref={ref} data-scroll-region="" tabIndex={0} role="region" aria-label={label} className={className}>
       {children}

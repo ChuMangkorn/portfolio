@@ -54,7 +54,7 @@ export function RunPanel({ className = "" }: { className?: string }) {
         <a
           href={run.link.href}
           aria-label={`${run.title}, ${run.link.label.toLowerCase()}`}
-          className="-my-2.5 inline-flex min-h-11 items-center gap-1.5 text-fg-muted transition-colors hover:text-accent @min-[19rem]:whitespace-nowrap"
+          className="inline-flex min-h-11 items-center gap-1.5 text-fg-muted transition-colors hover:text-accent @min-[19rem]:-my-2.5 @min-[19rem]:whitespace-nowrap"
         >
           {/* Two whole labels, one shown at a time. Splitting one label across a text node and an inline span trips the
               label-in-name check (Lighthouse and axe read the visible text as not matching the link's name). */}

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ArrowUpRightIcon, CaretRightIcon } from "@phosphor-icons/react/dist/ssr";
-import { caseStudies, type CaseStudy, type CaughtRow, type Comparison } from "@/lib/data";
+import { caseStudies, COMPARE_ANCHOR, type CaseStudy, type CaughtRow, type Comparison } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 import { StaggerRows } from "@/components/stagger-rows";
 import { ScrollRegion } from "@/components/scroll-region";
@@ -44,7 +44,7 @@ function Quote({ quote }: { quote: NonNullable<CaughtRow["quote"]> }) {
 function CompareBars({ data }: { data: Comparison }) {
   const best = Math.max(...data.rows.map((r) => r.got / r.of));
   return (
-    <figure className="mt-5 rounded-card bg-bg-tint px-(--card-x) py-4 sm:px-8">
+    <figure id={COMPARE_ANCHOR} className="mt-5 scroll-mt-24 rounded-card bg-bg-tint px-(--card-x) py-4 sm:px-8">
       <p className="mb-3 text-label font-medium text-fg-faint">{data.title}</p>
       <Reveal>
         <ul className="space-y-4">
@@ -65,6 +65,19 @@ function CompareBars({ data }: { data: Comparison }) {
       </Reveal>
       <figcaption className="mt-3 text-label leading-relaxed text-fg-faint">{data.caption}</figcaption>
     </figure>
+  );
+}
+
+/* Japanese inside an English note is set in the Japanese face and marked as Japanese, so it is drawn and read aloud as such. */
+function WithJapanese({ text }: { text: string }) {
+  return text.split(/([぀-ヿ一-鿿]+)/).map((part, i) =>
+    i % 2 === 1 ? (
+      <span key={i} lang="ja" className="font-jp">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
   );
 }
 
@@ -95,6 +108,7 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
         </figcaption>
         {wide ? (
           <ScrollRegion
+            startAt={0.22} /* opens on the corrected line and its chip, which sit in the left third of the capture */
             label={`${c.image.label} capture, scrolls sideways on a narrow screen`}
             className="max-sm:overflow-x-auto max-sm:[scrollbar-width:thin] focus-visible:-outline-offset-4"
           >
@@ -119,7 +133,9 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
         )}
         {c.image.note && (
           <p className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">
-            <span className="block max-w-[80ch]">{c.image.note}</span>
+            <span className="block max-w-[80ch]">
+              <WithJapanese text={c.image.note} />
+            </span>
           </p>
         )}
       </figure>
@@ -146,7 +162,7 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
         <div className="space-y-6 px-(--card-x) py-5 sm:p-8">
           <div>
             <p className="mb-3 text-label font-medium text-fg-faint">{p.caughtTitle}</p>
-            <dl className="space-y-3 text-sm leading-relaxed">
+            <dl className="space-y-3 leading-relaxed">
               {p.caught.map((r) => (
                 <div key={r.label} className="grid gap-0.5 sm:grid-cols-[6rem_1fr] sm:gap-4">
                   <dt className="font-medium text-fg-faint">{r.label}</dt>
@@ -164,7 +180,7 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
               <ScoreChart scores={p.scores} label={p.chartTitle} />
             </Reveal>
           </div>
-          <StaggerRows rows={p.checks} caret={false} className="space-y-3 border-t pt-6 text-sm leading-relaxed" />
+          <StaggerRows rows={p.checks} caret={false} className="space-y-3 border-t pt-6 leading-relaxed" />
         </div>
       </figure>
     );
@@ -174,7 +190,7 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
 
 function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   return (
-    <h3 className={`mt-2 font-display leading-tight [text-wrap:wrap] ${lead ? "text-4xl" : "text-3xl"}`}>
+    <h3 className={`mt-2 font-display leading-tight [text-wrap:pretty] text-3xl ${lead ? "sm:text-4xl" : ""}`}>
       {c.link && !c.proof ? (
         <a href={c.link} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1 hover:text-accent">
           {c.title}
@@ -239,9 +255,11 @@ function Result({ c, className }: { c: CaseStudy; className?: string }) {
   );
 }
 
+/* The tools sit under the title, where a reader scanning for a stack finds them, not at the foot of a card that is
+   screens tall on a phone. */
 function Stack({ c }: { c: CaseStudy }) {
   return (
-    <ul className="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-6 font-mono text-label text-fg-faint">
+    <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-label text-fg-muted">
       {c.stack.map((s) => (
         <li key={s} className="whitespace-nowrap">
           {s}
@@ -281,6 +299,7 @@ function VisualCard({ c, lead, flip }: { c: CaseStudy; lead: boolean; flip: bool
     <header className={`flex max-w-[34rem] flex-col lg:col-span-5 lg:row-start-1 lg:max-w-none ${side}`}>
       <p className="text-sm text-fg-faint">{c.client}</p>
       <Title c={c} lead={lead} />
+      <Stack c={c} />
       <Metric c={c} size="text-4xl" className="mt-4" />
     </header>
   );
@@ -305,7 +324,6 @@ function VisualCard({ c, lead, flip }: { c: CaseStudy; lead: boolean; flip: bool
           <p className="leading-relaxed text-fg-muted">{c.proof.process}</p>
         </Block>
       )}
-      <Stack c={c} />
     </div>
   );
   return (
@@ -334,6 +352,7 @@ function WideCard({ c }: { c: CaseStudy }) {
       <header className="flex max-w-[34rem] flex-col">
         <p className="text-sm text-fg-faint">{c.client}</p>
         <Title c={c} lead />
+        <Stack c={c} />
         <Metric c={c} size="text-4xl" className="mt-4" />
       </header>
       <div className="mt-6">
@@ -349,7 +368,6 @@ function WideCard({ c }: { c: CaseStudy }) {
           {c.comparison && <CompareBars data={c.comparison} />}
         </div>
       </div>
-      <Stack c={c} />
     </article>
   );
 }
@@ -362,6 +380,7 @@ function TextCard({ c }: { c: CaseStudy }) {
       <header className="flex max-w-[34rem] flex-col">
         <p className="text-sm text-fg-faint">{c.client}</p>
         <Title c={c} />
+        <Stack c={c} />
         <Metric c={c} size="text-4xl" className="mt-4" />
       </header>
       <div className="mt-6 grid max-w-[34rem] gap-y-6 lg:max-w-none lg:grid-cols-3 lg:gap-x-10">
@@ -370,7 +389,6 @@ function TextCard({ c }: { c: CaseStudy }) {
         <Result c={c} className="lg:col-start-1 lg:row-start-2" />
         {c.excerpt && <Checklist excerpt={c.excerpt} className="lg:col-start-3 lg:row-span-2 lg:row-start-1" />}
       </div>
-      <Stack c={c} />
     </article>
   );
 }

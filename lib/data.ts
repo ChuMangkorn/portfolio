@@ -8,6 +8,10 @@ const jpPhrases = ["日本語での", "要件ヒアリングから", "納品ま�
 // all link to it, so a tap lands on the numbers and not on the card's title.
 export const PROOF_ANCHOR = "workflow-proof";
 
+// The bars that draw MeetRec's two results. The strip's first cell lands on them, not on the capture above them, so the
+// numbers it quotes are on screen when the reader arrives.
+export const COMPARE_ANCHOR = "meetrec-compare";
+
 export const profile = {
   name: "Mangkorn Chulaprungrueang",
   shortName: "Mangkorn",
@@ -68,7 +72,7 @@ export const run = {
   titleShort: "Built with AI",
   replay: "Replay the run",
   link: { label: "How it was built", href: `#${PROOF_ANCHOR}` },
-  scoreLabel: "agent's score",
+  scoreLabel: "review score",
   rows: [
     { who: "builder", what: "writes code", stage: 2 },
     { who: "tests", what: "lint, axe", stage: 3 },
@@ -88,11 +92,11 @@ export const receipts: Receipt[] = [
     figure: "16/18",
     label: "About 16 of 18 sentences kept their meaning with Claude, about 7 of 18 with on-device translation.",
     where: "MeetRec, one 90 second meeting",
-    href: "#meetrec",
+    href: `#${COMPARE_ANCHOR}`,
   },
   {
     figure: "28 to 0",
-    label: "Blocks hidden with scripts blocked. The reviewer agent caught it in round 8.",
+    label: "Sections of the page that stayed blank when scripts were blocked. The reviewer agent caught it in round 8.",
     where: "how it was built",
     href: `#${PROOF_ANCHOR}`,
   },
@@ -174,7 +178,7 @@ export const caseStudies: CaseStudy[] = [
       width: 1290,
       height: 776,
       label: "live subtitles",
-      note: "The live window during a meeting. Each Japanese line is grey with its Thai translation in white; the amber chip is a misheard term the app corrected.",
+      note: "The live window during a meeting. Each Japanese line is grey with its Thai translation in white. At 00:28 speech recognition heard ランニングページ (running page); the amber chip shows the app correcting it to ランディングページ (landing page).",
     },
   },
   {
@@ -200,7 +204,7 @@ export const caseStudies: CaseStudy[] = [
       caught: [
         {
           label: "round 8",
-          value: "Every section below the first screen stayed invisible until JavaScript loaded: 28 of 28 blocks hidden with scripts blocked. Now 0 of 28.",
+          value: "Every section below the first screen stayed invisible until JavaScript loaded: 28 of 28 blocks hidden with scripts blocked. Now none are.",
           quote: {
             text: "Everything below the hero is invisible until JavaScript hydrates, and the audits did not see it. All 28 reveal wrappers are server-rendered with opacity:0 (reveal.tsx:25, stagger-rows.tsx:30). With only the 9 script requests aborted, 28 of 28 stayed hidden and About and Work rendered as empty panels [screenshot omitted]. axe checked 28 contrast nodes on the gate snapshot and on the unscrolled live page, against 156 once everything was revealed. When revealed it reports 0 violations, so the accessibility claim holds. The method was blind to 82% of it.",
             source: "Reviewer agent, round 8, finding 3. An excerpt of its report. The markdown backticks and a screenshot file name are removed and a bracketed note marks where the screenshot was. The wording is its own.",

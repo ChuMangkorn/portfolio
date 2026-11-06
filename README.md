@@ -34,7 +34,7 @@ Measured on the finished build:
 
 - Lighthouse, mobile and desktop: 100 accessibility, 100 best practices, 100 SEO
 - axe-core: 0 WCAG 2.2 A/AA violations
-- about 400 KB per page load (the project images are the heaviest part, about 35 KB each on a desktop), of which 77 KB is fonts (the Japanese font and the display font are each cut down to the glyphs the page uses); largest paint under 100 ms and layout shift under 0.002 on a local run with no network delay
+- about 400 KB per page load (the project images are the heaviest part, about 35 KB each on a desktop), of which 81 KB is fonts (the Japanese font and the display font are each cut down to the glyphs the page uses); largest paint under 100 ms and layout shift under 0.002 on a local run with no network delay
 - the hero run, a scripted opening that replays how the page was built, ends at 4.0 seconds, then everything rests
 
 ## Decisions worth reading

@@ -80,17 +80,18 @@ async function measurePage(page, width, pct) {
   await measure(page, width, pct);
 }
 
-// The cause of the 356 px failure below, checked on its own: a card title with balanced wrapping (the global h3 rule) and a
-// word break anywhere (.font-display). Chromium 145 laid such a title out 541 px wide on a first load at 356 px and 200% text.
-// The design kit's browser (153) does not, so the width sweep cannot see the fault there; a card title says text-wrap: wrap.
+// The cause of the 356 px failure below, checked on its own: a card title with balanced wrapping (the global h3 rule).
+// Chromium 145 laid such a title out 541 px wide on a first load at 356 px and 200% text (a word break anywhere is not
+// needed for it: balance alone does it). The design kit's browser (153) does not, so the width sweep cannot see the fault
+// there. A card title says text-wrap: pretty (or plain wrap); pretty was swept at every width from 320 to 420 px in 145.
 {
   const { context, page } = await openPage(1440, 900, 16, 0);
   const styles = await page.evaluate(() => [...document.querySelectorAll("#work h3")].map((h) => [h.textContent.trim().slice(0, 28), getComputedStyle(h).getPropertyValue("text-wrap-style")]));
   if (styles.length === 0) problems.push("no card titles found in #work, so their wrapping was not checked");
   const unreadable = styles.filter(([, style]) => style === "");
   if (unreadable.length > 0) problems.push("this browser does not report text-wrap-style, so card title wrapping was not checked");
-  const balanced = styles.filter(([, style]) => style !== "" && style !== "auto").map(([text]) => text);
-  if (balanced.length > 0) problems.push(`card titles must use text-wrap: wrap, not balanced wrapping with a word break anywhere (Chromium 145 laid one out 541 px wide): ${balanced.join("; ")}`);
+  const balanced = styles.filter(([, style]) => style !== "" && style !== "auto" && style !== "pretty").map(([text]) => text);
+  if (balanced.length > 0) problems.push(`card titles must use text-wrap: pretty, not balanced wrapping (Chromium 145 laid one out 541 px wide): ${balanced.join("; ")}`);
   await context.close();
 }
 
@@ -125,4 +126,4 @@ if (problems.length > 0) {
   console.error(`check-text-size: FAIL, a larger default text size breaks the page:\n  ${problems.join("\n  ")}`);
   process.exit(1);
 }
-console.log("check-text-size: OK, card titles wrap plainly; no sideways scroll and no text cut off at 150% or 200% text on the sample widths from 320 px, or at 200% on every width from 320 to 420 px");
+console.log("check-text-size: OK, card titles are not balanced; no sideways scroll and no text cut off at 150% or 200% text on the sample widths from 320 px, or at 200% on every width from 320 to 420 px");

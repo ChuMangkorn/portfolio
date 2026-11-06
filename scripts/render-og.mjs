@@ -45,9 +45,15 @@ await page.evaluate(async ({ profile, roleBefore, roleAfter }) => {
   if (roleBefore) role.prepend(document.createTextNode(roleBefore));
 
   const middle = document.createElement("div");
+  const japanese = Object.assign(
+    text("div", `margin-top:30px;font-family:var(--font-noto-jp),sans-serif;font-weight:500;font-size:25px;line-height:1.5;${INK}word-break:auto-phrase;text-wrap:balance;`, profile.jp),
+    { lang: "ja" },
+  );
+  // The level travels with the claim: the page sets it beside the Japanese line, so the card does too.
+  japanese.append(Object.assign(text("span", `${SANS}margin-left:14px;font-size:20px;font-weight:500;white-space:nowrap;${MUTED}`, profile.jlpt), { lang: "en" }));
   middle.append(
     text("div", `font-family:var(--font-display-sans),system-ui,sans-serif;font-weight:600;letter-spacing:-0.03em;font-size:112px;line-height:0.98;${INK}text-wrap:balance;`, profile.headline),
-    Object.assign(text("div", `margin-top:30px;font-family:var(--font-noto-jp),sans-serif;font-weight:500;font-size:25px;line-height:1.5;${INK}word-break:auto-phrase;text-wrap:balance;`, profile.jp), { lang: "ja" }),
+    japanese,
   );
 
   const name = document.createElement("div");
