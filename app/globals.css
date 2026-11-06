@@ -87,7 +87,7 @@
   --font-jp: var(--font-noto-jp);
   --text-label: 0.8125rem;
   --text-label--line-height: 1.5;
-  /* Fluid headline: 60px on a phone, 118px at 1440x900, capped at 120px, and smaller on short windows so the hero still fits.
+  /* Fluid headline: 60px on a phone, 100px at 1440x900, capped at 120px, and smaller on short windows so the hero still fits.
      The floor is also capped at 17vw, so a reader who enlarges the default text size does not push "engineer," off a phone. */
   --text-hero: clamp(min(3.75rem, 17vw), min(1.75rem + 5vw, 15vh), 7.5rem);
   --text-hero--line-height: 0.98;
@@ -117,6 +117,7 @@
   .font-display {
     font-weight: 600; /* ds-allow-hardcode: the one weight of the display face */
     letter-spacing: -0.022em;
+    overflow-wrap: anywhere; /* a long word breaks instead of widening the page at a larger text size */
   }
 }
 
@@ -128,7 +129,7 @@
   }
   html {
     scroll-behavior: smooth;
-    scrollbar-color: color-mix(in oklab, var(--fg-faint) 45%, var(--bg)) var(--bg);
+    scrollbar-color: var(--fg-faint) var(--bg); /* the thumb is 5.5:1 against the track; the default would be dimmer */
   }
   body {
     background: var(--bg);
@@ -144,7 +145,8 @@
   }
   p,
   li,
-  dd {
+  dd,
+  figcaption {
     text-wrap: pretty;
   }
   ::selection {
@@ -524,14 +526,8 @@
   transform-origin: bottom;
   transition: transform var(--dur-bar) var(--ease-out) calc(var(--i, 0) * var(--bar-step));
 }
-.score-label {
-  transition: opacity var(--dur-reveal) var(--ease-out) calc(var(--i, 0) * var(--bar-step) + var(--dur-bar));
-}
 [data-pending] .score-bar {
   transform: scaleY(0);
-}
-[data-pending] .score-label {
-  opacity: 0;
 }
 
 /* The comparison bars under the MeetRec window grow from the left in the same way, in order. */
@@ -557,7 +553,6 @@
     animation: none !important;
   }
   .score-bar,
-  .score-label,
   .cmp-bar,
   .exp-fill {
     transition: none !important;
@@ -618,9 +613,6 @@
   .score-bar,
   .cmp-bar {
     transform: none !important;
-  }
-  .score-label {
-    opacity: 1 !important;
   }
   .exp-fill {
     transform: none !important;

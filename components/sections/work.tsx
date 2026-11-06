@@ -13,7 +13,7 @@ const WIDE_SIZES = "(min-width: 1024px) 960px, 100vw"; // ds-allow-hardcode
 /* Every card breaks a word that is longer than its box instead of overflowing it, and keeps its side padding in step
    with the screen rather than with the text size (--card-x), so a reader who enlarges the default text still gets the
    whole card. The figures inside clip their corners, so anything wider than the box would be cut off, not scrolled. */
-const CARD = "scroll-mt-24 rounded-card border bg-bg-raised px-(--card-x) py-5 transition-colors hover:border-accent/40 sm:p-8 [overflow-wrap:anywhere]";
+const CARD = "scroll-mt-24 rounded-card border bg-bg-raised px-(--card-x) py-5 sm:p-8 [overflow-wrap:anywhere]";
 
 /* The reviewer's own words behind a claim, closed until opened so the card stays short. It is a native disclosure, so
    the keyboard and screen reader behaviour come with it. The attribution sits in a figcaption beside the blockquote,
@@ -72,8 +72,12 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
     return (
       <figure className="overflow-hidden rounded-card bg-bg-tint">
         <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-4 py-1 text-label font-medium text-fg-faint sm:px-5">
-          <span>{c.image.label}</span>
-          {/* On a phone the capture is drawn small; the full file opens in a tab where it can be pinched. */}
+          <span>
+            {c.image.label}
+            {wide && <span className="sm:hidden">, swipe sideways</span>}
+          </span>
+          {/* On a phone a wide capture keeps a size its text can be read at and scrolls sideways; the full file opens in a tab
+              where it can be pinched. */}
           <a
             href={c.image.src}
             target="_blank"
@@ -86,15 +90,37 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
             <ArrowUpRightIcon size={14} />
           </a>
         </figcaption>
-        <Image
-          src={c.image.src}
-          alt={c.image.alt}
-          width={c.image.width}
-          height={c.image.height}
-          sizes={wide ? WIDE_SIZES : VISUAL_SIZES}
-          className={`h-auto w-full ${c.image.height > c.image.width ? "mx-auto max-w-[24rem]" : wide ? "mx-auto max-w-[60rem]" : ""}`}
-        />
-        {c.image.note && <p className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">{c.image.note}</p>}
+        {wide ? (
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label={`${c.image.label} capture, scrolls sideways on a narrow screen`}
+            className="max-sm:overflow-x-auto max-sm:[scrollbar-width:thin]"
+          >
+            <Image
+              src={c.image.src}
+              alt={c.image.alt}
+              width={c.image.width}
+              height={c.image.height}
+              sizes={WIDE_SIZES}
+              className="mx-auto h-auto w-full max-w-[60rem] max-sm:w-[40rem] max-sm:max-w-none"
+            />
+          </div>
+        ) : (
+          <Image
+            src={c.image.src}
+            alt={c.image.alt}
+            width={c.image.width}
+            height={c.image.height}
+            sizes={VISUAL_SIZES}
+            className={`h-auto w-full ${c.image.height > c.image.width ? "mx-auto max-w-[24rem]" : ""}`}
+          />
+        )}
+        {c.image.note && (
+          <p className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">
+            <span className="block max-w-[80ch]">{c.image.note}</span>
+          </p>
+        )}
       </figure>
     );
   }
@@ -254,8 +280,7 @@ function VisualCard({ c, lead, flip }: { c: CaseStudy; lead: boolean; flip: bool
     <header className={`flex max-w-[34rem] flex-col lg:col-span-5 lg:row-start-1 lg:max-w-none ${side}`}>
       <p className="text-sm text-fg-faint">{c.client}</p>
       <Title c={c} lead={lead} />
-      {/* The lead card shows its number large under the capture from lg; below that it sits here. */}
-      <Metric c={c} size="text-4xl" className={`mt-4 ${lead ? "lg:hidden" : ""}`} />
+      <Metric c={c} size="text-4xl" className="mt-4" />
     </header>
   );
   const visual = (
@@ -267,7 +292,6 @@ function VisualCard({ c, lead, flip }: { c: CaseStudy; lead: boolean; flip: bool
     >
       <Visual c={c} />
       {c.comparison && <CompareBars data={c.comparison} />}
-      {lead && <Metric c={c} size="text-7xl" className="mt-6 hidden lg:flex" />}
     </div>
   );
   const body = (
@@ -308,7 +332,7 @@ function WideCard({ c }: { c: CaseStudy }) {
     <article id={c.anchor} className={`${CARD} flex flex-col`}>
       <header className="flex max-w-[34rem] flex-col">
         <p className="text-sm text-fg-faint">{c.client}</p>
-        <Title c={c} />
+        <Title c={c} lead />
         <Metric c={c} size="text-4xl" className="mt-4" />
       </header>
       <div className="mt-6">

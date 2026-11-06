@@ -63,9 +63,9 @@ await page.evaluate(async ({ profile, roleBefore, roleAfter }) => {
     // A local font has a generated family name; the page's CSS variable holds it.
     document.fonts.load(`600 112px ${getComputedStyle(document.documentElement).getPropertyValue("--font-display-sans").split(",")[0].trim()}`, profile.headline),
     document.fonts.load('500 25px "Noto Sans JP"', profile.jp),
-    document.fonts.load('34px "Hanken Grotesk"', profile.role),
-    document.fonts.load('500 34px "Hanken Grotesk"', profile.roleEmphasis),
-    document.fonts.load('500 30px "Hanken Grotesk"', profile.name),
+    document.fonts.load('34px "Source Sans 3"', profile.role),
+    document.fonts.load('500 34px "Source Sans 3"', profile.roleEmphasis),
+    document.fonts.load('500 30px "Source Sans 3"', profile.name),
   ]);
   await document.fonts.ready;
   await photo.decode();

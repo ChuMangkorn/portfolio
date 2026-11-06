@@ -17,7 +17,11 @@ const css = await (
 const urls = [...new Set([...css.matchAll(/url\((https:[^)]+)\)/g)].map((m) => m[1]))];
 if (urls.length !== 1) throw new Error(`expected one font file, got ${urls.length}`);
 
-const file = Buffer.from(await (await fetch(urls[0])).arrayBuffer());
+const res = await fetch(urls[0]);
+if (!res.ok) throw new Error(`the font request answered ${res.status}`);
+const file = Buffer.from(await res.arrayBuffer());
+// A woff2 file starts with "wOF2"; anything else (an error page, an empty body) must not overwrite the font.
+if (file.length < 1024 || file.subarray(0, 4).toString("latin1") !== "wOF2") throw new Error(`the answer is not a woff2 font (${file.length} bytes)`);
 writeFileSync(new URL("../app/fonts/archivo-display-subset.woff2", import.meta.url), file);
 writeFileSync(new URL("../app/fonts/archivo-display-subset.chars.txt", import.meta.url), ascii + "\n");
 console.log(`display subset written: printable ASCII, ${(file.length / 1024).toFixed(1)} KB`);

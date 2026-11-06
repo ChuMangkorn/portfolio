@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <main id="main" className="mx-auto flex min-h-dvh max-w-6xl flex-col justify-center px-5 py-20 sm:px-8">
       <p className="font-mono text-sm text-fg-faint">404</p>
-      <h1 className="mt-4 font-display text-6xl leading-[1.02] tracking-normal [word-spacing:0.06em] sm:text-7xl">
+      <h1 className="mt-4 font-display text-6xl leading-[1.02] sm:text-7xl">
         That page is not here.
       </h1>
       <p className="mt-6 max-w-[48ch] text-lg leading-relaxed text-fg-muted">

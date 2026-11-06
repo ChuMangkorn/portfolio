@@ -38,7 +38,7 @@ export const profile = {
   email: "chu.mangkorn@gmail.com",
   github: "https://github.com/ChuMangkorn",
   linkedin: "https://linkedin.com/in/chulaprungrueang-mangkorn",
-  photo: "/profile-cutout.png",
+  photo: "/profile-cutout-refined.png",
 };
 
 /* The facts a reader looks for first, set beside the career list. The story is in the hero, the work and the list; a
@@ -68,7 +68,7 @@ export const run = {
   titleShort: "Built with AI",
   replay: "Replay the run",
   link: { label: "How it was built", href: `#${PROOF_ANCHOR}` },
-  scoreLabel: "reviewer agent",
+  scoreLabel: "agent's score",
   rows: [
     { who: "builder", what: "writes code", stage: 2 },
     { who: "tests", what: "lint, axe", stage: 3 },
@@ -146,6 +146,38 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    title: "MeetRec: screen recorder with live translated subtitles",
+    client: "Personal project",
+    problem:
+      "Japanese meetings move faster than I can take notes. I wanted a recording with subtitles in my language and a summary I can send afterwards.",
+    work: [
+      "Captures screen and audio on macOS",
+      "Streams speech to text and translates it as live subtitles",
+      "Produces a structured summary and action items after the call",
+    ],
+    outcome:
+      "Tested on a real 90 second meeting segment: Apple's on-device translation kept the meaning in about 7 of 18 sentences, Claude's in about 16 of 18. The app shows the quick one first, then swaps in the better one. A private-meeting switch keeps translation on the device and asks before any summary leaves it.",
+    stack: ["Swift", "SwiftUI", "ScreenCaptureKit", "Apple Speech", "Claude"],
+    personal: true,
+    anchor: "meetrec",
+    comparison: {
+      title: "translation quality",
+      rows: [
+        { label: "Claude", got: 16, of: 18 },
+        { label: "On-device translation", got: 7, of: 18 },
+      ],
+      caption: "Sentences that kept their meaning in one real 90 second meeting segment. Both counts are approximate.",
+    },
+    image: {
+      src: "/work-meetrec-window.png",
+      alt: "MeetRec live subtitle window: each Japanese line from the meeting with its Thai translation below it",
+      width: 1290,
+      height: 776,
+      label: "live subtitles",
+      note: "The live window during a meeting. Each Japanese line is grey with its Thai translation in white; the amber chip is a misheard term the app corrected.",
+    },
+  },
+  {
     title: "An AI engineering workflow that runs my day",
     client: "Personal tooling",
     problem:
@@ -193,38 +225,6 @@ export const caseStudies: CaseStudy[] = [
       ],
       process:
         "I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks, in small commits. A separate reviewer agent, fresh each round, scored the rendered page out of 10. Its score is a judgement, not a benchmark. I stopped when the rest needed material only I can supply.",
-    },
-  },
-  {
-    title: "MeetRec: screen recorder with live translated subtitles",
-    client: "Personal project",
-    problem:
-      "Japanese meetings move faster than I can take notes. I wanted a recording with subtitles in my language and a summary I can send afterwards.",
-    work: [
-      "Captures screen and audio on macOS",
-      "Streams speech to text and translates it as live subtitles",
-      "Produces a structured summary and action items after the call",
-    ],
-    outcome:
-      "Tested on a real 90 second meeting segment: Apple's on-device translation kept the meaning in about 7 of 18 sentences, Claude's in about 16 of 18. The app shows the quick one first, then swaps in the better one. A private-meeting switch keeps translation on the device and asks before any summary leaves it.",
-    stack: ["Swift", "SwiftUI", "ScreenCaptureKit", "Apple Speech", "Claude"],
-    personal: true,
-    anchor: "meetrec",
-    comparison: {
-      title: "translation quality",
-      rows: [
-        { label: "Claude", got: 16, of: 18 },
-        { label: "On-device translation", got: 7, of: 18 },
-      ],
-      caption: "Sentences that kept their meaning in one real 90 second meeting segment. Both counts are approximate.",
-    },
-    image: {
-      src: "/work-meetrec-window.png",
-      alt: "MeetRec live subtitle window: each Japanese line from the meeting with its Thai translation below it",
-      width: 1290,
-      height: 776,
-      label: "live subtitles",
-      note: "The live window during a meeting. Each Japanese line is grey with its Thai translation in white; the amber chip is a misheard term the app corrected.",
     },
   },
   {

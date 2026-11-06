@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDownIcon, ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { receipts } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 
@@ -24,7 +24,7 @@ function Figure({ value }: { value: string }) {
 export function Receipts() {
   return (
     <section aria-label="Measured results" className="border-t">
-      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 md:py-14">
+      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 md:pb-14 md:pt-10">
         <Reveal>
           <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-card border bg-line sm:grid-cols-2 lg:grid-cols-4">
             {receipts.map((r, i) => (
@@ -40,7 +40,10 @@ export function Receipts() {
                     <Figure value={r.figure} />
                   </span>
                   <span className="mt-3 text-sm leading-snug text-fg-muted">{r.label}</span>
-                  <span className="mt-auto pt-4 text-label font-medium text-fg-faint transition-colors group-hover:text-accent">{r.where}</span>
+                  <span className="mt-auto flex items-center gap-1.5 pt-4 text-label font-medium text-fg-faint transition-colors group-hover:text-accent">
+                    {r.where}
+                    <ArrowDownIcon aria-hidden size={14} weight="bold" className="shrink-0" />
+                  </span>
                 </a>
               </li>
             ))}

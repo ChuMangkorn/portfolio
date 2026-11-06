@@ -20,6 +20,7 @@ for _ in $(seq 1 30); do curl -sf "localhost:$PORT" >/dev/null && break; sleep 1
 curl -s "localhost:$PORT" | node scripts/check-meta.mjs "http://localhost:$PORT"
 node scripts/check-run-length.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
 curl -s "localhost:$PORT" | node scripts/check-jp-font.mjs
+node scripts/check-display-font.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
 node scripts/check-label-in-name.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
 node scripts/check-text-size.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
 

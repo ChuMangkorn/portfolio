@@ -24,7 +24,7 @@ export function Hero() {
   const [before, after] = profile.tagline.split(profile.taglineEmphasis);
   const [roleBefore, roleAfter] = profile.role.split(profile.roleEmphasis);
   return (
-    <section className="hero-recede mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-9 sm:px-8 md:min-h-[min(calc(100dvh-4.25rem),46rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 md:short:pt-10 print:min-h-0 print:pt-8">
+    <section className="hero-recede mx-auto grid max-w-6xl grid-cols-1 gap-x-12 px-5 pt-9 sm:px-8 md:min-h-[min(calc(100dvh-4.25rem),42rem)] md:grid-cols-12 md:grid-rows-[1fr_auto] md:pt-20 md:short:pt-10 print:min-h-0 print:pt-8">
       <div className="order-1 md:col-span-7 md:row-start-1 md:self-center md:pb-12 md:short:pb-6">
         <div className="hero-fade hero-fade--lead mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 md:mb-5 md:short:mb-3">
           {/* On a phone the large portrait sits below the first screen, so the face is here as well. It is lazy on purpose:
@@ -41,7 +41,7 @@ export function Hero() {
             </span>
           </p>
         </div>
-        <h1 className="font-display text-hero [letter-spacing:-0.035em] [text-wrap:balance]">
+        <h1 className="font-display text-hero [letter-spacing:-0.035em] [text-wrap:balance] [word-spacing:0.08em]">
           {words.map((word, i) => (
             <Fragment key={i}>
               {i > 0 && " "}
@@ -109,8 +109,8 @@ export function Hero() {
         {profile.pipeline.map((step, i) => (
           <li
             key={step.ja}
-            className={`pipeline-step relative flex items-start gap-1 whitespace-nowrap md:justify-between md:py-5 md:short:py-3 md:pr-4 md:before:absolute md:before:-top-px md:before:left-0 md:before:h-0.5 md:before:w-10 md:before:bg-accent ${
-              i === last ? "text-fg" : ""
+            className={`pipeline-step relative flex items-start gap-1 whitespace-nowrap md:justify-between md:py-5 md:short:py-3 md:pr-4 md:before:absolute md:before:-top-px md:before:left-0 md:before:h-0.5 md:before:w-10 ${
+              i === last ? "text-fg md:before:bg-accent" : "md:before:bg-accent/45"
             }`}
             style={{ "--i": i } as CSSProperties}
           >
@@ -121,7 +121,7 @@ export function Hero() {
               <span className="text-xs md:mt-1 md:text-label">{step.en}</span>
             </span>
             {i < last && (
-              <span aria-hidden className="text-accent max-[22.4rem]:hidden md:max-lg:hidden lg:text-xl">
+              <span aria-hidden className="text-fg-faint max-[22.4rem]:hidden md:max-lg:hidden lg:text-xl">
                 {"→"}
               </span>
             )}

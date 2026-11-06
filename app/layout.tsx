@@ -1,15 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Source_Sans_3 } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { profile } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
 
 // Display: Archivo SemiCondensed at weight 600, one instance cut to printable ASCII (about 8 KB instead of the 90 KB variable
-// font; regenerate with scripts/subset-display-font.mjs). Body: Hanken Grotesk. Figures and code: IBM Plex Mono, for numbers,
-// dates and identifiers only, not for labels.
+// font; regenerate with scripts/subset-display-font.mjs). Body: Source Sans 3, which shares its design with the Noto Sans JP
+// beside it and whose capital I is shorter than its l, so "AI" does not read "Al" (Hanken Grotesk, Figtree and Onest draw
+// them the same height). Figures and code: IBM Plex Mono, for numbers, dates and identifiers only, not for labels.
 const displaySans = localFont({ src: "./fonts/archivo-display-subset.woff2", variable: "--font-display-sans", weight: "600", display: "swap" });
-const bodySans = Hanken_Grotesk({ variable: "--font-body-sans", subsets: ["latin"] });
+const bodySans = Source_Sans_3({ variable: "--font-body-sans", subsets: ["latin"] });
 const codeMono = IBM_Plex_Mono({ variable: "--font-code-mono", subsets: ["latin"], weight: "400" });
 // Noto Sans JP cut down to the glyphs the page uses (about 30 KB instead of about 260 KB of slices).
 // Regenerate with scripts/subset-jp-font.mjs when Japanese copy changes; npm run check fails if a character is missing.

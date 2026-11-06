@@ -20,7 +20,7 @@ function Score() {
             ))}
           </span>
           <span className="sr-only">
-            {FINAL.toFixed(1)} out of 10 after {buildScores.length} rounds
+            {FINAL.toFixed(1)} out of 10 after {buildScores.length} rounds, scored by my reviewer agent
           </span>
         </span>
         <span aria-hidden className="pb-2 text-fg-faint">
@@ -37,7 +37,7 @@ function Score() {
 function Done() {
   return (
     <span className="run-done relative inline-flex h-5 w-5 items-center justify-center">
-      <CheckIcon aria-hidden size={14} weight="bold" className="run-check text-accent" />
+      <CheckIcon aria-hidden size={14} weight="bold" className="run-check text-fg-muted" />
       <span className="sr-only">done</span>
     </span>
   );

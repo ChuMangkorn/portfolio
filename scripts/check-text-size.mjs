@@ -1,8 +1,7 @@
 // A reader who raises the browser's default text size must not get a page that scrolls sideways, and must not lose text
 // inside a box that clips it (a card figure with overflow-hidden hides what does not fit instead of scrolling, so the page
 // width alone cannot see it). Rem-based layout grows with that setting, so this sets the default text size the way the
-// browser setting does (CDP Page.setFontSizes) and measures the rendered page: 150% on every width, 200% from a 360 px
-// phone up. A phone narrower than 360 px at 200% is not covered (one chart label loses a few px there).
+// browser setting does (CDP Page.setFontSizes) and measures the rendered page: 150% and 200% on every width from 320 px.
 // The clipped-text rule takes the glyph boxes of every text node (Range.getClientRects) and compares them with every
 // ancestor that hides its overflow sideways, the text's own parent included. A box that scrolls (overflow auto or scroll)
 // is skipped: its content is reachable. It looks sideways only: a box that clips lines vertically on purpose (the score
@@ -16,7 +15,8 @@ if (!base || !kitRoot) throw new Error("usage: node scripts/check-text-size.mjs 
 const { chromium } = createRequire(join(kitRoot, "/"))("playwright-core");
 
 const CASES = [
-  { width: 320, height: 568, sizes: [24] },
+  { width: 320, height: 568, sizes: [24, 32] },
+  { width: 345, height: 640, sizes: [32] },
   { width: 360, height: 740, sizes: [24, 32] },
   { width: 390, height: 844, sizes: [24, 32] },
   { width: 768, height: 1024, sizes: [24, 32] },
@@ -76,4 +76,4 @@ if (problems.length > 0) {
   console.error(`check-text-size: FAIL, a larger default text size breaks the page:\n  ${problems.join("\n  ")}`);
   process.exit(1);
 }
-console.log("check-text-size: OK, no sideways scroll and no text cut off at 150% text on any width or at 200% from 360 px");
+console.log("check-text-size: OK, no sideways scroll and no text cut off at 150% text on any width or at 200% from 320 px");
