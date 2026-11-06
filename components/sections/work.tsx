@@ -3,12 +3,13 @@ import { ArrowUpRightIcon, CaretRightIcon } from "@phosphor-icons/react/dist/ssr
 import { caseStudies, type CaseStudy, type CaughtRow, type Comparison } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
 import { StaggerRows } from "@/components/stagger-rows";
+import { ScrollRegion } from "@/components/scroll-region";
 import { ScoreChart } from "@/components/score-chart";
 
 // Half the container at the lg breakpoint and above, full width below it. A wide capture runs the card's full width, at
 // most 60rem of it.
 const VISUAL_SIZES = "(min-width: 1024px) 50vw, 100vw"; // ds-allow-hardcode
-const WIDE_SIZES = "(min-width: 1024px) 960px, 100vw"; // ds-allow-hardcode
+const WIDE_SIZES = "(min-width: 1024px) 960px, (min-width: 40em) 100vw, 40em"; // ds-allow-hardcode: the capture is 40rem wide below sm
 
 /* Every card breaks a word that is longer than its box instead of overflowing it, and keeps its side padding in step
    with the screen rather than with the text size (--card-x), so a reader who enlarges the default text still gets the
@@ -91,11 +92,9 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
           </a>
         </figcaption>
         {wide ? (
-          <div
-            tabIndex={0}
-            role="region"
-            aria-label={`${c.image.label} capture, scrolls sideways on a narrow screen`}
-            className="max-sm:overflow-x-auto max-sm:[scrollbar-width:thin]"
+          <ScrollRegion
+            label={`${c.image.label} capture, scrolls sideways on a narrow screen`}
+            className="max-sm:overflow-x-auto max-sm:[scrollbar-width:thin] focus-visible:-outline-offset-4"
           >
             <Image
               src={c.image.src}
@@ -105,7 +104,7 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
               sizes={WIDE_SIZES}
               className="mx-auto h-auto w-full max-w-[60rem] max-sm:w-[40rem] max-sm:max-w-none"
             />
-          </div>
+          </ScrollRegion>
         ) : (
           <Image
             src={c.image.src}
@@ -173,7 +172,7 @@ function Visual({ c, wide = false }: { c: CaseStudy; wide?: boolean }) {
 
 function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   return (
-    <h3 className={`mt-2 font-display leading-tight ${lead ? "text-4xl" : "text-3xl"}`}>
+    <h3 className={`mt-2 font-display leading-tight [text-wrap:wrap] ${lead ? "text-4xl" : "text-3xl"}`}>
       {c.link && !c.proof ? (
         <a href={c.link} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1 hover:text-accent">
           {c.title}
@@ -398,7 +397,7 @@ export function Work() {
             const flip = kind === "split" && caseStudies.slice(0, i).filter((x) => kindOf(x) === "split").length % 2 === 1;
             return (
               <Reveal key={c.title} delay={i * 0.06}>
-                {kind === "split" ? <VisualCard c={c} lead={i === 0 || Boolean(c.metric)} flip={flip} /> : kind === "wide" ? <WideCard c={c} /> : <TextCard c={c} />}
+                {kind === "split" ? <VisualCard c={c} lead={Boolean(c.metric || c.proof)} flip={flip} /> : kind === "wide" ? <WideCard c={c} /> : <TextCard c={c} />}
               </Reveal>
             );
           })}

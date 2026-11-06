@@ -22,6 +22,8 @@ if (!res.ok) throw new Error(`the font request answered ${res.status}`);
 const file = Buffer.from(await res.arrayBuffer());
 // A woff2 file starts with "wOF2"; anything else (an error page, an empty body) must not overwrite the font.
 if (file.length < 1024 || file.subarray(0, 4).toString("latin1") !== "wOF2") throw new Error(`the answer is not a woff2 font (${file.length} bytes)`);
+// An in-between width or weight comes back as a variable font of about 59 KB, not the 8 KB named instance this file is for.
+if (file.length > 20 * 1024) throw new Error(`${(file.length / 1024).toFixed(0)} KB is a variable file: use a named width (75, 87.5, 100) and a weight in steps of 100`);
 writeFileSync(new URL("../app/fonts/archivo-display-subset.woff2", import.meta.url), file);
 writeFileSync(new URL("../app/fonts/archivo-display-subset.chars.txt", import.meta.url), ascii + "\n");
 console.log(`display subset written: printable ASCII, ${(file.length / 1024).toFixed(1)} KB`);

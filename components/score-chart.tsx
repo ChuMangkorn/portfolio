@@ -7,8 +7,7 @@ import type { CSSProperties } from "react";
    absolutely still widens the page on a narrow screen when it is not inside a box that clips. The bars are fills, so
    they ask the browser to keep them when "background graphics" is off in the print dialog. The bars grow one after
    another when the chart scrolls into view (the `score-bar` rule in globals.css). The gap between bars is a share of the
-   plot, not a size in rem, and the word "round" drops out of the two end labels when the chart is too narrow to hold
-   both whole (a reader who enlarges the default text), so nothing is pushed out of the box that clips it. The values sit
+   plot, not a size in rem, and the word "round" drops out of the two end labels, and then the values, when the chart is too narrow to hold them whole (a reader who enlarges the default text), so nothing is pushed out of the box that clips it. The values sit
    in that row, not above the bars: a label floating over a bar collided with its neighbour once the text was larger. */
 export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; label: string; max?: number }) {
   const last = scores.length - 1;
@@ -44,18 +43,18 @@ export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; labe
         </div>
         <span />
         <div className="mt-1 flex justify-between text-label font-medium text-fg-faint">
-          <span className="inline-flex items-baseline gap-2">
+          <span className="inline-flex items-baseline gap-2 whitespace-nowrap">
             <span>
-              <span className="hidden @min-[11rem]:inline">round </span>1
+              <span className="hidden @min-[13rem]:inline">round </span>1
             </span>
-            <span className="hidden font-mono text-fg @min-[7rem]:inline">{fmt(scores[0])}</span>
+            <span className="hidden font-mono text-fg @min-[8.5rem]:inline">{fmt(scores[0])}</span>
           </span>
-          <span className="inline-flex items-baseline gap-2">
+          <span className="inline-flex items-baseline gap-2 whitespace-nowrap">
             <span>
-              <span className="hidden @min-[11rem]:inline">round </span>
+              <span className="hidden @min-[13rem]:inline">round </span>
               {scores.length}
             </span>
-            <span className="hidden font-mono text-fg @min-[7rem]:inline">{fmt(scores[last])}</span>
+            <span className="hidden font-mono text-fg @min-[8.5rem]:inline">{fmt(scores[last])}</span>
           </span>
         </div>
       </div>

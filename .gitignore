@@ -44,3 +44,6 @@ next-env.d.ts
 tests/banned.local.txt
 .gates/
 .ds-receipts/
+
+# Browser tool snapshots
+.playwright-mcp/

@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties } from "react";
 import Image from "next/image";
-import { ArrowDownIcon, GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDownIcon, ArrowRightIcon, GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { profile } from "@/lib/data";
 import { RunGate } from "@/components/run-gate";
 import { RunPanel } from "@/components/run-panel";
@@ -122,7 +122,7 @@ export function Hero() {
             </span>
             {i < last && (
               <span aria-hidden className="text-fg-faint max-[22.4rem]:hidden md:max-lg:hidden lg:text-xl">
-                {"→"}
+                <ArrowRightIcon size="1em" weight="bold" />
               </span>
             )}
           </li>
