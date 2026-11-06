@@ -330,11 +330,18 @@
   background: linear-gradient(90deg, transparent, var(--accent) 70%, var(--fg));
 }
 
-/* Between md and xl the panel sits above the portrait in the right column. In a window shorter than 58rem it would
-   push the rail off the first screen (measured: the rail ends at 924 px at 1180 wide), so it is dropped there. */
+/* Between md and xl the panel sits above the portrait in the right column. In a window shorter than 58rem that would
+   push the rail off the first screen (measured: the rail ends at 924 px at 1180 wide), so there it stands over the
+   portrait's lower left instead, as it does from xl, and takes no room of its own. */
 @media (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 57.99rem) { /* ds-allow-hardcode: md, xl and hero-fit breakpoints */
   .run-panel {
-    display: none;
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0;
+    z-index: 10;
+    width: min(21.5rem, 100%);
+    max-width: none;
+    margin: 0;
   }
 }
 
@@ -522,22 +529,6 @@
   transform: scaleY(0);
 }
 
-/* A short amber tick above each section heading, the same mark that stands over each station of the rail. It draws in
-   as the heading arrives. */
-.section-tick::before {
-  content: "";
-  display: block;
-  width: 2.5rem;
-  height: 2px; /* ds-allow-hardcode: hairline */
-  margin-bottom: 1.25rem;
-  background: var(--accent);
-  transform-origin: left;
-  transition: transform var(--dur-reveal) var(--ease-out) var(--tick-delay);
-}
-[data-pending] .section-tick::before {
-  transform: scaleX(0);
-}
-
 /* The proof chart grows bar by bar as it scrolls into view. */
 .score-bar {
   transform-origin: bottom;
@@ -579,7 +570,6 @@
   .score-bar,
   .score-label,
   .cmp-bar,
-  .section-tick::before,
   .exp-fill {
     transition: none !important;
   }
@@ -646,9 +636,6 @@
   }
   .score-label {
     opacity: 1 !important;
-  }
-  .section-tick::before {
-    transform: none !important;
   }
   .exp-fill {
     transform: none !important;

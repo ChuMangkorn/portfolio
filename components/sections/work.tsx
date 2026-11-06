@@ -304,7 +304,7 @@ export function Work() {
     <section id="work" className="border-t">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
-          <h2 className="section-tick font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Selected work</h2>
+          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">Selected work</h2>
           <p className="mt-3 max-w-[60ch] text-fg-muted">
             Client names are withheld. I can walk through any of this in detail.
           </p>

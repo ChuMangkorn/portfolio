@@ -24,6 +24,8 @@ export const profile = {
   // The phrase inside the tagline that the hero highlights: the part a hiring reader should not miss.
   taglineEmphasis: "AI agents",
   jp: "日本語での要件ヒアリングから納品まで、一貫して担当します。",
+  // The certified level, shown beside the Japanese line so the claim and its qualifier are read together.
+  jlpt: "JLPT N3",
   email: "chu.mangkorn@gmail.com",
   github: "https://github.com/ChuMangkorn",
   linkedin: "https://linkedin.com/in/chulaprungrueang-mangkorn",
@@ -33,11 +35,10 @@ export const profile = {
 export const about = {
   proofLink: { label: "See how this page was built", href: "#workflow" },
   paragraphs: [
-    "I work at a Bangkok agency for Japanese clients. A request arrives in Japanese; I work out what is being asked, build it, test it, and report back in Japanese.",
-    "Most of my output goes through an AI agent workflow I set up and run: a task harness, notes that carry between sessions, review agents, and browser automation. I review what it produces before anything goes out.",
+    "I work at a Bangkok agency for Japanese clients. A request arrives in Japanese; I work out what is being asked, build it, test it, and report back in Japanese. Most of the building goes through an AI agent workflow I set up and run, and I review what it produces before anything goes out.",
   ],
   ledger: [
-    { key: "Brief language", value: "Japanese, JLPT N3" },
+    { key: "Brief language", value: `Japanese, ${profile.jlpt}` },
     { key: "Web work", value: "2019 to 2022, 2025 to now" },
     { key: "Daily stack", value: "Shopify, WordPress, Tailwind" },
     { key: "Tests", value: "Jest and Playwright in CI" },

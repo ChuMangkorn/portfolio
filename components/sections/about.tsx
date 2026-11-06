@@ -7,7 +7,7 @@ export function About() {
     <section id="about" className="border-t bg-bg-raised">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-5 py-20 sm:px-8 md:grid-cols-12 md:gap-x-12 md:gap-y-12 md:py-28">
         <Reveal className="md:col-span-12">
-          <h2 className="section-tick font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">About</h2>
+          <h2 className="font-display text-4xl tracking-normal [word-spacing:0.06em] md:text-6xl">About</h2>
         </Reveal>
         <Reveal delay={0.05} className="md:col-span-7">
           <div className="max-w-[36rem] space-y-5 text-lg leading-relaxed text-fg-muted">

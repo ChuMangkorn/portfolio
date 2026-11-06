@@ -13,8 +13,8 @@ const PORTRAIT_SIZES = "(min-width: 1600px) 550px, (min-width: 768px) 440px, 100
    and its score landing as the line reaches each stage. It is all in the HTML and finishes at rest, so a reader who
    never sees it still gets the whole page.
    From md the stages run as a rail under both columns and the portrait stands on its line. The panel sits over the
-   portrait's lower left from xl, above the portrait below that, and is dropped between md and xl on a window shorter
-   than 58rem (a rule in globals.css), where it would push the rail off the first screen. On a phone it comes straight
+   portrait's lower left from xl, and between md and xl on a window shorter than 58rem (a rule in globals.css), where
+   above the portrait it would push the rail off the first screen; in a taller window it sits above the portrait. On a phone it comes straight
    after the buttons. Under md the large portrait is not shown at all: a 72 px one sits beside the name instead, because the
    large one would sit below the first screen as a cropped head and repeat the face. The large one is lazy for the same
    reason: a browser does not fetch a lazy image that is display:none, so a phone never downloads it. */
@@ -61,6 +61,9 @@ export function Hero() {
           className="hero-fade mt-5 font-jp text-lg font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase] md:mt-6 md:short:mt-4"
         >
           {profile.jp}
+          <span lang="en" className="ml-2 whitespace-nowrap font-mono text-label font-normal text-fg-faint">
+            {profile.jlpt}
+          </span>
         </p>
         <p style={{ "--k": 1 } as CSSProperties} className="hero-fade mt-3 max-w-[48ch] text-lg leading-relaxed text-fg-muted">
           {before}
