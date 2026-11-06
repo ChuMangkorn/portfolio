@@ -15,6 +15,9 @@ The one-line claim the whole page proves. Current positioning: *an AI-driven eng
 **Case study**
 A featured piece of work told as problem, what was done, and outcome. Client and brand names are never shown (see ADR-0001); the case is described by industry and shape ("Japanese D2C cosmetics brand"). Links appear only when the artifact is public.
 
+**Visual card and text card**
+A case study with a picture or an evidence panel is a visual card: the title over the text in one column, the visual in the other (title, picture, then text on a phone). A case with nothing to show is a text card: the same text in three columns, with its checks as a plain list. A card does not dress a list up as an artefact.
+
 **Proof point**
 A short, verifiable fact that supports the positioning: a JLPT level, a number of stores imported, a test suite that runs in CI. Never a self-assessment like "expert" or "can do everything".
 

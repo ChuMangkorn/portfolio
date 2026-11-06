@@ -104,7 +104,9 @@ export function Hero() {
         {profile.pipeline.map((step, i) => (
           <li
             key={step.ja}
-            className="pipeline-step relative flex items-start gap-1 whitespace-nowrap md:justify-between md:py-5 md:short:py-3 md:pr-4 md:before:absolute md:before:-top-px md:before:left-0 md:before:h-0.5 md:before:w-10 md:before:bg-accent"
+            className={`pipeline-step relative flex items-start gap-1 whitespace-nowrap md:justify-between md:py-5 md:short:py-3 md:pr-4 md:before:absolute md:before:-top-px md:before:left-0 md:before:h-0.5 md:before:w-10 md:before:bg-accent ${
+              i === last ? "text-fg" : ""
+            }`}
             style={{ "--i": i } as CSSProperties}
           >
             <span className="flex flex-col leading-tight">

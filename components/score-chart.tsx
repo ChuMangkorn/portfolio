@@ -7,14 +7,16 @@ import type { CSSProperties } from "react";
    absolutely still widens the page on a narrow screen when it is not inside a box that clips. The bars are fills, so
    they ask the browser to keep them when "background graphics" is off in the print dialog. The bars grow one after
    another when the chart scrolls into view (the `score-bar` and `score-label` rules in globals.css); the value labels
-   sit beside the bars rather than inside them so the growth never stretches the text. */
+   sit beside the bars rather than inside them so the growth never stretches the text. The gap between bars is a share of
+   the plot, not a size in rem, and the word "round" drops out of the two end labels when the chart is too narrow to
+   hold both whole (a reader who enlarges the default text), so nothing is pushed out of the box that clips it. */
 export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; label: string; max?: number }) {
   const last = scores.length - 1;
   const fmt = (n: number) => n.toFixed(1);
   const pct = (n: number) => (n / max) * 100;
 
   return (
-    <div>
+    <div className="@container">
       <div aria-hidden className="grid grid-cols-[1.5rem_1fr] gap-x-3">
         <div className="relative h-36 font-mono text-label text-fg-faint">
           <span className="absolute right-0 top-0 -translate-y-1/2">{max}</span>
@@ -24,7 +26,7 @@ export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; labe
         <div className="relative h-36 border-b border-line">
           <div className="absolute inset-x-0 top-0 border-t border-line" />
           <div className="absolute inset-x-0 top-1/2 border-t border-line" />
-          <ol className="absolute inset-0 flex items-end gap-1.5 sm:gap-2">
+          <ol className="absolute inset-0 flex items-end gap-[2%]">
             {scores.map((score, i) => (
               <li
                 key={i}
@@ -38,7 +40,7 @@ export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; labe
                 />
                 {(i === 0 || i === last) && (
                   <span
-                    className="score-label absolute left-1/2 -translate-x-1/2 font-mono text-label text-fg"
+                    className="score-label absolute left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-label text-fg"
                     style={{ bottom: `calc(${pct(score)}% + 0.25rem)` }}
                   >
                     {fmt(score)}
@@ -50,8 +52,13 @@ export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; labe
         </div>
         <span />
         <div className="mt-1 flex justify-between font-mono text-label text-fg-faint">
-          <span>round 1</span>
-          <span>round {scores.length}</span>
+          <span>
+            <span className="hidden @min-[9rem]:inline">round </span>1
+          </span>
+          <span>
+            <span className="hidden @min-[9rem]:inline">round </span>
+            {scores.length}
+          </span>
         </div>
       </div>
       <div className="sr-only">

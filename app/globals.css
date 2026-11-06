@@ -22,6 +22,9 @@
   --radius-lg: 20px;
   --portrait: 27.5rem; /* 440px at the default root size; scales with it on large monitors */
   --portrait-sm: 15rem;
+  /* Side padding of a work card on a phone: 1.25rem, but never more than 5% of the screen, so a reader who enlarges the
+     default text keeps the room the card's content needs (padding in rem alone takes most of a phone at 200%). */
+  --card-x: min(1.25rem, 5vw);
   --dur-pipeline: 1.2s;
   --dur-reveal: 0.5s;
   --dur-row: 0.35s;
@@ -185,6 +188,9 @@
 }
 
 /* Short motion, each under five seconds. All of it is switched off under reduced motion. */
+/* A station is dim until the line reaches it, lights as the line arrives and settles on the colour it has with no motion
+   at all (muted), so the page after the run is the page without it. The last station stays lit: the line ends on
+   delivery. */
 @keyframes step-lit {
   0% {
     color: var(--fg-faint);
@@ -194,7 +200,16 @@
     color: var(--fg);
   }
   100% {
+    color: var(--fg-muted);
+  }
+}
+@keyframes step-lit-last {
+  0% {
     color: var(--fg-faint);
+  }
+  35%,
+  100% {
+    color: var(--fg);
   }
 }
 @keyframes caret-blink {
@@ -381,6 +396,9 @@
   }
   .run[data-run="play"] .pipeline-step {
     animation: step-lit var(--dur-pipeline) ease-in-out calc(var(--run-lead) + var(--i, 0) * var(--run-unit)) 1 both;
+  }
+  .run[data-run="play"] .pipeline-step:last-child {
+    animation-name: step-lit-last;
   }
   .run[data-run="play"].rail::after {
     animation:

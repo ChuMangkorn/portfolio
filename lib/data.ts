@@ -114,7 +114,8 @@ export type BuildProof = {
   chartTitle: string;
   scores: number[];
   checks: ExcerptRow[];
-  caption: string;
+  // How the build ran, who did what. It is set in the case's text column, beside the panel.
+  process: string;
 };
 
 export type CaseStudy = {
@@ -160,7 +161,7 @@ export const caseStudies: CaseStudy[] = [
           value: "Every section below the first screen stayed invisible until JavaScript loaded: 28 of 28 blocks hidden with scripts blocked. Now 0 of 28.",
           quote: {
             text: "Everything below the hero is invisible until JavaScript hydrates, and the audits did not see it. All 28 reveal wrappers are server-rendered with opacity:0 (reveal.tsx:25, stagger-rows.tsx:30). With only the 9 script requests aborted, 28 of 28 stayed hidden and About and Work rendered as empty panels [screenshot omitted]. axe checked 28 contrast nodes on the gate snapshot and on the unscrolled live page, against 156 once everything was revealed. When revealed it reports 0 violations, so the accessibility claim holds. The method was blind to 82% of it.",
-            source: "Reviewer agent, round 8, finding 3. An excerpt of its report: the markdown backticks and a screenshot name are removed, nothing else is changed.",
+            source: "Reviewer agent, round 8, finding 3. An excerpt of its report. The markdown backticks and a screenshot file name are removed and a bracketed note marks where the screenshot was. The wording is its own.",
           },
         },
         {
@@ -180,8 +181,8 @@ export const caseStudies: CaseStudy[] = [
         { label: "every commit", value: "type check, lint, 11 content tests, no looping motion" },
         { label: "whole page", value: "about 400 KB over the wire, fonts included" },
       ],
-      caption:
-        "Rebuilt in one day, in small commits. I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks. A separate reviewer agent, fresh each round, scored the rendered page, and I stopped when the rest needed material only I can supply.",
+      process:
+        "I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks, in small commits. A separate reviewer agent, fresh each round, scored the rendered page. I stopped when the rest needed material only I can supply.",
     },
   },
   {

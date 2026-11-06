@@ -2,15 +2,20 @@ import Image from "next/image";
 import { ArrowUpRightIcon, CaretRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { caseStudies, type CaseStudy, type CaughtRow, type Comparison } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
-import { CountUp } from "@/components/count-up";
 import { StaggerRows } from "@/components/stagger-rows";
 import { ScoreChart } from "@/components/score-chart";
 
 // Half the container at the lg breakpoint and above, full width below it.
 const VISUAL_SIZES = "(min-width: 1024px) 50vw, 100vw"; // ds-allow-hardcode
 
+/* Every card breaks a word that is longer than its box instead of overflowing it, and keeps its side padding in step
+   with the screen rather than with the text size (--card-x), so a reader who enlarges the default text still gets the
+   whole card. The figures inside clip their corners, so anything wider than the box would be cut off, not scrolled. */
+const CARD = "scroll-mt-24 rounded-card border bg-bg-raised px-(--card-x) py-5 transition-colors hover:border-accent/40 sm:p-8 [overflow-wrap:anywhere]";
+
 /* The reviewer's own words behind a claim, closed until opened so the card stays short. It is a native disclosure, so
-   the keyboard and screen reader behaviour come with it. */
+   the keyboard and screen reader behaviour come with it. The attribution sits in a figcaption beside the blockquote,
+   never inside it: the spec keeps the source outside the quoted words. */
 function Quote({ quote }: { quote: NonNullable<CaughtRow["quote"]> }) {
   return (
     <details className="group mt-1">
@@ -18,10 +23,12 @@ function Quote({ quote }: { quote: NonNullable<CaughtRow["quote"]> }) {
         <CaretRightIcon aria-hidden size={12} weight="bold" className="transition-transform group-open:rotate-90" />
         Read the reviewer&rsquo;s own words
       </summary>
-      <blockquote className="mb-2 mt-1 border-l-2 border-fg-faint pl-4">
-        <p className="leading-relaxed text-fg-muted">{quote.text}</p>
-        <footer className="mt-2 text-label leading-relaxed text-fg-faint">{quote.source}</footer>
-      </blockquote>
+      <figure className="mb-2 mt-1 border-l-2 border-fg-faint pl-4">
+        <blockquote>
+          <p className="leading-relaxed text-fg-muted">{quote.text}</p>
+        </blockquote>
+        <figcaption className="mt-2 text-label leading-relaxed text-fg-faint">{quote.source}</figcaption>
+      </figure>
     </details>
   );
 }
@@ -32,7 +39,7 @@ function Quote({ quote }: { quote: NonNullable<CaughtRow["quote"]> }) {
 function CompareBars({ data }: { data: Comparison }) {
   const best = Math.max(...data.rows.map((r) => r.got / r.of));
   return (
-    <figure className="mt-5 rounded-card bg-bg-tint px-5 py-4 sm:px-8">
+    <figure className="mt-5 rounded-card bg-bg-tint px-(--card-x) py-4 sm:px-8">
       <p className="mb-3 font-mono text-label text-fg-faint">{data.title}</p>
       <Reveal>
         <ul className="space-y-4">
@@ -56,6 +63,8 @@ function CompareBars({ data }: { data: Comparison }) {
   );
 }
 
+/* The picture or the evidence panel of a case. A figure holds one caption, the line on top; a note under a picture is a
+   plain paragraph. */
 function Visual({ c }: { c: CaseStudy }) {
   if (c.image) {
     return (
@@ -83,7 +92,7 @@ function Visual({ c }: { c: CaseStudy }) {
           sizes={VISUAL_SIZES}
           className={`h-auto w-full ${c.image.height > c.image.width ? "mx-auto max-w-[24rem]" : ""}`}
         />
-        {c.image.note && <figcaption className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">{c.image.note}</figcaption>}
+        {c.image.note && <p className="border-t px-4 py-2.5 text-label text-fg-faint sm:px-5">{c.image.note}</p>}
       </figure>
     );
   }
@@ -91,7 +100,7 @@ function Visual({ c }: { c: CaseStudy }) {
     const p = c.proof;
     return (
       <figure className="flex flex-col overflow-hidden rounded-card bg-bg-tint">
-        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-5 py-1 font-mono text-label text-fg-faint sm:px-8">
+        <figcaption className="flex flex-wrap items-center justify-between gap-x-4 border-b px-(--card-x) py-1 font-mono text-label text-fg-faint sm:px-8">
           <span>{p.title}</span>
           {c.link && (
             <a
@@ -105,7 +114,7 @@ function Visual({ c }: { c: CaseStudy }) {
             </a>
           )}
         </figcaption>
-        <div className="space-y-6 p-5 sm:p-8">
+        <div className="space-y-6 px-(--card-x) py-5 sm:p-8">
           <div>
             <p className="mb-3 font-mono text-label text-fg-faint">{p.caughtTitle}</p>
             <dl className="space-y-3 text-sm leading-relaxed">
@@ -128,18 +137,6 @@ function Visual({ c }: { c: CaseStudy }) {
           </div>
           <StaggerRows rows={p.checks} caret={false} className="space-y-3 border-t pt-6 font-mono text-sm leading-relaxed" />
         </div>
-        <figcaption className="border-t px-5 py-3 text-label leading-relaxed text-fg-faint sm:px-8">{p.caption}</figcaption>
-      </figure>
-    );
-  }
-  if (c.excerpt) {
-    return (
-      <figure className="flex flex-col overflow-hidden rounded-card bg-bg-tint">
-        <div className="border-b px-5 py-3 font-mono text-label text-fg-faint sm:px-8">{c.excerpt.title}</div>
-        <div className="p-5 sm:p-8">
-          <StaggerRows rows={c.excerpt.rows} caret={false} className="space-y-3 font-mono text-sm leading-relaxed sm:text-base lg:space-y-4" />
-        </div>
-        <figcaption className="border-t px-5 py-3 text-label text-fg-faint sm:px-8">{c.excerpt.caption}</figcaption>
       </figure>
     );
   }
@@ -161,10 +158,10 @@ function Title({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   );
 }
 
-/* The labels are plain text, not headings: twelve one-word headings would crowd the page outline. */
-function Block({ label, children }: { label: string; children: React.ReactNode }) {
+/* The labels are plain text, not headings: a dozen one-word headings would crowd the page outline. */
+function Block({ label, children, className = "mt-6" }: { label: string; children: React.ReactNode; className?: string }) {
   return (
-    <div className="mt-6">
+    <div className={className}>
       <p className="mb-2 break-after-avoid font-mono text-label text-fg-faint">{label}</p>
       {children}
     </div>
@@ -175,39 +172,130 @@ function Metric({ c, className = "", size }: { c: CaseStudy; className?: string;
   if (!c.metric) return null;
   return (
     <p className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 ${className}`}>
-      <CountUp value={c.metric.value} className={`font-mono tracking-tight text-accent ${size}`} />
+      <span className={`font-mono tracking-tight text-accent ${size}`}>{c.metric.value}</span>
       <span className="text-sm text-fg-muted">{c.metric.label}</span>
     </p>
   );
 }
 
-function Details({ c }: { c: CaseStudy }) {
+/* The parts of a case's text. Each takes the class that places it, so a card can set them in one column or three. */
+function Brief({ c, className }: { c: CaseStudy; className?: string }) {
   return (
-    <>
-      <Block label="brief">
-        <p className="leading-relaxed text-fg-muted">{c.problem}</p>
-      </Block>
-      <Block label="built">
-        <ul className="space-y-2 leading-relaxed text-fg">
-          {c.work.map((w) => (
-            <li key={w} className="flex gap-3">
-              <span aria-hidden className="mt-[0.7rem] h-0.5 w-3 shrink-0 bg-fg-faint" />
-              {w}
-            </li>
-          ))}
-        </ul>
-      </Block>
-      <Block label="result">
-        <p className="leading-relaxed text-fg">{c.outcome}</p>
-      </Block>
-      <ul className="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-6 font-mono text-label text-fg-faint">
-        {c.stack.map((s) => (
-          <li key={s} className="whitespace-nowrap">
-            {s}
+    <Block label="brief" className={className}>
+      <p className="leading-relaxed text-fg-muted">{c.problem}</p>
+    </Block>
+  );
+}
+
+function Built({ c, className }: { c: CaseStudy; className?: string }) {
+  return (
+    <Block label="built" className={className}>
+      <ul className="space-y-2 leading-relaxed text-fg">
+        {c.work.map((w) => (
+          <li key={w} className="flex gap-3">
+            <span aria-hidden className="mt-[0.7rem] h-0.5 w-3 shrink-0 bg-fg-faint" />
+            {w}
           </li>
         ))}
       </ul>
-    </>
+    </Block>
+  );
+}
+
+function Result({ c, className }: { c: CaseStudy; className?: string }) {
+  return (
+    <Block label="result" className={className}>
+      <p className="leading-relaxed text-fg">{c.outcome}</p>
+    </Block>
+  );
+}
+
+function Stack({ c }: { c: CaseStudy }) {
+  return (
+    <ul className="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-6 font-mono text-label text-fg-faint">
+      {c.stack.map((s) => (
+        <li key={s} className="whitespace-nowrap">
+          {s}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* A case with no picture says so: its checks are a plain list among the text, not a panel dressed as an artefact. */
+function Checklist({ excerpt, className }: { excerpt: NonNullable<CaseStudy["excerpt"]>; className?: string }) {
+  return (
+    <Block label={excerpt.title} className={className}>
+      <p className="text-fg-muted">{excerpt.caption}</p>
+      <ul className="mt-3 space-y-2 leading-relaxed text-fg">
+        {excerpt.rows.map((r) => (
+          <li key={r.label}>
+            <span className="mr-2 font-mono text-label text-fg-faint">{r.label}</span>
+            {r.value}
+          </li>
+        ))}
+      </ul>
+    </Block>
+  );
+}
+
+/* A case with a picture or an evidence panel. From lg the title sits over the text in one column and the visual spans
+   both rows of the other, sticking while the text scrolls past; the columns swap sides on every other card. Below lg
+   the cards stack, and a card with a picture shows its title first and the picture straight after it, so a reader who
+   jumps to a card from the strip knows where they landed. An evidence panel is long, so its text comes first. */
+function VisualCard({ c, lead, flip }: { c: CaseStudy; lead: boolean; flip: boolean }) {
+  const pictureFirst = Boolean(c.image);
+  const side = flip ? "lg:col-start-8" : "lg:col-start-1";
+  return (
+    <article id={c.anchor} className={`${CARD} flex flex-col lg:grid lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-10`}>
+      <header className={`flex max-w-[34rem] flex-col max-lg:order-1 lg:col-span-5 lg:row-start-1 lg:max-w-none ${side}`}>
+        <p className="text-sm text-fg-faint">{c.client}</p>
+        <Title c={c} lead={lead} />
+        {/* The lead card shows its number large under the capture from lg; below that it sits here. */}
+        <Metric c={c} size="text-4xl" className={`mt-4 ${lead ? "lg:hidden" : ""}`} />
+      </header>
+      <div
+        className={`${pictureFirst ? "max-lg:order-2 max-lg:mt-5" : "max-lg:order-3 max-lg:mt-6"} lg:col-span-7 lg:row-span-2 lg:row-start-1 lg:top-24 lg:self-start lg:tall:sticky ${
+          flip ? "lg:col-start-1" : "lg:col-start-6"
+        }`}
+      >
+        <Visual c={c} />
+        {c.comparison && <CompareBars data={c.comparison} />}
+        {lead && <Metric c={c} size="text-7xl" className="mt-6 hidden lg:flex" />}
+      </div>
+      <div className={`flex max-w-[34rem] flex-col ${pictureFirst ? "max-lg:order-3" : "max-lg:order-2"} lg:col-span-5 lg:row-start-2 lg:max-w-none ${side}`}>
+        <Brief c={c} />
+        <Built c={c} />
+        <Result c={c} />
+        {c.proof && (
+          <Block label="how it ran">
+            <p className="leading-relaxed text-fg-muted">{c.proof.process}</p>
+          </Block>
+        )}
+        <Stack c={c} />
+      </div>
+    </article>
+  );
+}
+
+/* A case with no picture: the text in three columns from lg (the brief over the result, what was built, then the
+   checks), one column below it in reading order. */
+function TextCard({ c }: { c: CaseStudy }) {
+  return (
+    <article id={c.anchor} className={`${CARD} flex flex-col`}>
+      <header className="flex max-w-[34rem] flex-col">
+        <p className="text-sm text-fg-faint">{c.client}</p>
+        <Title c={c} />
+        <Metric c={c} size="text-4xl" className="mt-4" />
+      </header>
+      <div className="mt-6 grid max-w-[34rem] gap-y-6 lg:max-w-none lg:grid-cols-3 lg:gap-x-10">
+        <Brief c={c} className="lg:col-start-1 lg:row-start-1" />
+        <Built c={c} className="lg:col-start-2 lg:row-span-2 lg:row-start-1" />
+        <Result c={c} className="lg:col-start-1 lg:row-start-2" />
+        {c.excerpt && <Checklist excerpt={c.excerpt} className="lg:col-start-3 lg:row-span-2 lg:row-start-1" />}
+      </div>
+      <Stack c={c} />
+    </article>
   );
 }
 
@@ -222,38 +310,12 @@ export function Work() {
           </p>
         </Reveal>
 
-        <div className="mt-12 space-y-5">
-          {caseStudies.map((c, i) => {
-            const lead = i === 0 || Boolean(c.metric);
-            return (
-              <Reveal key={c.title} delay={i * 0.06}>
-                {/* Two columns from lg. Below that the card is one column so tablets keep readable measures. */}
-                <article
-                  id={c.anchor}
-                  className="flex scroll-mt-24 flex-col rounded-card border bg-bg-raised p-5 transition-colors hover:border-accent/40 sm:p-8 lg:grid lg:grid-cols-12 lg:gap-10"
-                >
-                  <div className="flex max-w-[34rem] flex-col lg:col-span-5 lg:max-w-none">
-                    <p className="text-sm text-fg-faint">{c.client}</p>
-                    <Title c={c} lead={lead} />
-                    {/* The lead card shows its number large under the capture from lg; below that it sits here. */}
-                    <Metric c={c} size="text-4xl" className={`mt-4 ${lead ? "lg:hidden" : ""}`} />
-                    <div className="flex flex-1 flex-col">
-                      <Details c={c} />
-                    </div>
-                  </div>
-                  <div
-                    className={`mt-6 lg:top-24 lg:col-span-7 lg:mt-0 lg:self-start lg:tall:sticky ${
-                      c.image ? "max-lg:order-first max-lg:mb-5 max-lg:mt-0" : ""
-                    } ${i % 2 === 1 ? "lg:order-first" : ""}`}
-                  >
-                    <Visual c={c} />
-                    {c.comparison && <CompareBars data={c.comparison} />}
-                    {lead && <Metric c={c} size="text-7xl" className="mt-6 hidden lg:flex" />}
-                  </div>
-                </article>
-              </Reveal>
-            );
-          })}
+        <div className="mt-12 space-y-8">
+          {caseStudies.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.06}>
+              {c.image || c.proof ? <VisualCard c={c} lead={i === 0 || Boolean(c.metric)} flip={i % 2 === 1} /> : <TextCard c={c} />}
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

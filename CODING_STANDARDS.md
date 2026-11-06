@@ -6,7 +6,7 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 
 - Every claim in `lib/data.ts` traces to another line in that file or to something the owner has said. Facts the owner has not supplied (availability, notice period, links to private work) are asked for, never filled in.
 - The build log in `lib/data.ts` (`proof`) states numbers about this page: reviewer scores, check results, size. Each one must come from the git history, a reviewer report or a measurement of the finished build. Change the number when the build changes, and never round up.
-- A quotation shown as the reviewer's own words is an excerpt of a real report: only formatting and a screenshot reference may be removed, its source line says so, and a test ties it to the row it sits under. Never paraphrase inside the quote marks.
+- A quotation shown as the reviewer's own words is an excerpt of a real report: only formatting and a screenshot reference may be removed, its source line says so and says what was removed, the attribution sits in a `figcaption` beside the `blockquote` (the spec keeps it outside), a test ties it to the row it sits under and a hash pins its text, so an edit has to be deliberate. Never paraphrase inside the quote marks.
 - Case studies never name clients (docs/adr/0001-anonymized-case-studies.md). Real names live only in the gitignored `tests/banned.local.txt`.
 
 ## Motion
@@ -23,7 +23,8 @@ Read during review. Mechanical rules are enforced by `npm run check`, not listed
 - A link's visible label is one whole run of text. Splitting it across a text node and an inline span (to hide the tail in a narrow container, say) makes Lighthouse's label-in-name audit fail even when the `aria-label` starts with the same words; show one of two whole labels instead. `scripts/check-label-in-name.mjs` runs that rule on the served page, because the design kit's axe gate leaves it out.
 - A `<details>` disclosure prints open (`details::details-content` in the print block of `globals.css`): the page on paper is the finished page, with nothing left to click.
 - A focus ring must stay visible: inside a container that clips (`overflow-hidden`), draw it inward with `focus-visible:-outline-offset-4`.
-- On screen the root font size is set in percentages of the reader's own default, never in pixels (print sets its own). The page must not scroll sideways at 150% default text on any width, or at 200% from a 390 px phone up; `scripts/check-text-size.mjs` sets the default text size through the browser protocol and measures it. A 320 to 360 px phone at 200% is a known gap: the card padding is in rem and takes most of the width.
+- On screen the root font size is set in percentages of the reader's own default, never in pixels (print sets its own). At 150% default text on any width, and at 200% from a 360 px phone up, the page must not scroll sideways and no text may be cut off; `scripts/check-text-size.mjs` sets the default text size through the browser protocol and measures both, with every disclosure open. The second rule matters because a card figure has `overflow-hidden`: it hides what does not fit instead of scrolling, so the page width alone cannot see the loss. A work card therefore breaks a word longer than its box (`overflow-wrap:anywhere`) and keeps its side padding in step with the screen, not the text (`--card-x`). A 320 px phone at 200% is a known gap: one chart label loses 3 px.
+- A `figure` holds one `figcaption`. A note under a picture is a plain paragraph.
 
 ## Type
 
