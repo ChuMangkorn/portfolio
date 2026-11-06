@@ -331,9 +331,15 @@
 }
 
 /* Between md and xl the panel sits above the portrait in the right column. In a window shorter than 58rem that would
-   push the rail off the first screen (measured: the rail ends at 924 px at 1180 wide), so there it stands over the
-   portrait's lower left instead, as it does from xl, and takes no room of its own. */
-@media (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 57.99rem) { /* ds-allow-hardcode: md, xl and hero-fit breakpoints */
+   push the rail off the first screen (measured: the rail ends at 924 px at 1180 wide), so from lg it stands over the
+   portrait's lower left instead, as it does from xl, and takes no room of its own. Between md and lg the column is
+   about 265 px wide and the panel would cover the mouth and chin, so there it is dropped. */
+@media (min-width: 48rem) and (max-width: 63.99rem) and (max-height: 57.99rem) { /* ds-allow-hardcode: md, lg and hero-fit breakpoints */
+  .run-panel {
+    display: none;
+  }
+}
+@media (min-width: 64rem) and (max-width: 79.99rem) and (max-height: 57.99rem) { /* ds-allow-hardcode: lg, xl and hero-fit breakpoints */
   .run-panel {
     position: absolute;
     bottom: 0.75rem;

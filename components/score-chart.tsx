@@ -53,10 +53,10 @@ export function ScoreChart({ scores, label, max = 10 }: { scores: number[]; labe
         <span />
         <div className="mt-1 flex justify-between font-mono text-label text-fg-faint">
           <span>
-            <span className="hidden @min-[9rem]:inline">round </span>1
+            <span className="hidden @min-[11rem]:inline">round </span>1
           </span>
           <span>
-            <span className="hidden @min-[9rem]:inline">round </span>
+            <span className="hidden @min-[11rem]:inline">round </span>
             {scores.length}
           </span>
         </div>

@@ -58,10 +58,16 @@ export function Hero() {
         <p
           lang="ja"
           style={{ "--k": 0 } as CSSProperties}
-          className="hero-fade mt-5 font-jp text-lg font-medium leading-relaxed text-fg [text-wrap:balance] [word-break:auto-phrase] md:mt-6 md:short:mt-4"
+          className="hero-fade mt-5 font-jp text-lg font-medium leading-relaxed text-fg [overflow-wrap:anywhere] [text-wrap:balance] [word-break:keep-all] supports-[word-break:auto-phrase]:[word-break:auto-phrase] md:mt-6 md:short:mt-4"
         >
-          {profile.jp}
-          <span lang="en" className="ml-2 whitespace-nowrap font-mono text-label font-normal text-fg-faint">
+          {/* Safari has no auto-phrase: it breaks only at the <wbr>, so "納品まで" is never split. */}
+          {profile.jpPhrases.map((phrase, i) => (
+            <Fragment key={phrase}>
+              {i > 0 && <wbr />}
+              {phrase}
+            </Fragment>
+          ))}
+          <span lang="en" className="ml-2 whitespace-nowrap font-mono text-sm font-normal text-fg-muted">
             {profile.jlpt}
           </span>
         </p>

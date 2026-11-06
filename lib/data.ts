@@ -1,5 +1,13 @@
 // All page content lives here. Client names are never written (see docs/adr/0001).
 
+// The Japanese line, phrase by phrase. Safari has no `word-break: auto-phrase`, so the hero breaks the line only between
+// these phrases (a <wbr> after each) and never inside "納品まで".
+const jpPhrases = ["日本語での要件ヒアリングから", "納品まで、", "一貫して担当します。"];
+
+// The one place the evidence panel of the workflow case is named: the hero panel, the measured strip and the case itself
+// all link to it, so a tap lands on the numbers and not on the card's title.
+export const PROOF_ANCHOR = "workflow-proof";
+
 export const profile = {
   name: "Mangkorn Chulaprungrueang",
   shortName: "Mangkorn",
@@ -23,7 +31,8 @@ export const profile = {
     "I take Japanese client briefs to delivery: Shopify, landing pages, WordPress and tracking, using AI agents I run and review.",
   // The phrase inside the tagline that the hero highlights: the part a hiring reader should not miss.
   taglineEmphasis: "AI agents",
-  jp: "日本語での要件ヒアリングから納品まで、一貫して担当します。",
+  jpPhrases,
+  jp: jpPhrases.join(""),
   // The certified level, shown beside the Japanese line so the claim and its qualifier are read together.
   jlpt: "JLPT N3",
   email: "chu.mangkorn@gmail.com",
@@ -34,9 +43,6 @@ export const profile = {
 
 export const about = {
   proofLink: { label: "See how this page was built", href: "#workflow" },
-  paragraphs: [
-    "I work at a Bangkok agency for Japanese clients. A request arrives in Japanese; I work out what is being asked, build it, test it, and report back in Japanese. Most of the building goes through an AI agent workflow I set up and run, and I review what it produces before anything goes out.",
-  ],
   ledger: [
     { key: "Brief language", value: `Japanese, ${profile.jlpt}` },
     { key: "Web work", value: "2019 to 2022, 2025 to now" },
@@ -60,7 +66,7 @@ export const run = {
   // What the title shortens to when the panel is too narrow to hold it.
   titleShort: "Built with AI",
   replay: "Replay the run",
-  link: { label: "How it was built", href: "#workflow" },
+  link: { label: "How it was built", href: `#${PROOF_ANCHOR}` },
   scoreLabel: "reviewer agent",
   rows: [
     { who: "builder", what: "writes code", stage: 2 },
@@ -87,7 +93,7 @@ export const receipts: Receipt[] = [
     figure: "28 to 0",
     label: "Blocks hidden with scripts blocked. The reviewer agent caught it in round 8.",
     where: "how it was built",
-    href: "#workflow",
+    href: `#${PROOF_ANCHOR}`,
   },
   {
     figure: "300+",
@@ -109,6 +115,7 @@ export type Comparison = { title: string; rows: { label: string; got: number; of
 /* Evidence about this page's own build. Every number is taken from the repository history, the reviewer reports or a
    measurement run on the finished build. Update them when they change (see CODING_STANDARDS.md). */
 export type BuildProof = {
+  anchor: string;
   title: string;
   caughtTitle: string;
   caught: CaughtRow[];
@@ -154,6 +161,7 @@ export const caseStudies: CaseStudy[] = [
     personal: true,
     anchor: "workflow",
     proof: {
+      anchor: PROOF_ANCHOR,
       title: "this page, built by the workflow",
       caughtTitle: "What the reviewer caught",
       caught: [
@@ -183,7 +191,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "whole page", value: "about 400 KB over the wire, fonts included" },
       ],
       process:
-        "I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks, in small commits. A separate reviewer agent, fresh each round, scored the rendered page. I stopped when the rest needed material only I can supply.",
+        "I decided who it is for, what stays private and what to cut. The builder agent wrote the code and the checks, in small commits. A separate reviewer agent, fresh each round, scored the rendered page out of 10. Its score is a judgement, not a benchmark. I stopped when the rest needed material only I can supply.",
     },
   },
   {

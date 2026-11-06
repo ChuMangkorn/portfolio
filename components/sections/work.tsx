@@ -19,7 +19,7 @@ const CARD = "scroll-mt-24 rounded-card border bg-bg-raised px-(--card-x) py-5 t
 function Quote({ quote }: { quote: NonNullable<CaughtRow["quote"]> }) {
   return (
     <details className="group mt-1">
-      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-control font-mono text-label text-fg-muted transition-colors hover:text-accent [&::-webkit-details-marker]:hidden">
+      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-control font-mono text-label text-fg underline decoration-accent underline-offset-4 transition-colors hover:text-accent [&::-webkit-details-marker]:hidden">
         <CaretRightIcon aria-hidden size={12} weight="bold" className="transition-transform group-open:rotate-90" />
         Read the reviewer&rsquo;s own words
       </summary>
@@ -241,39 +241,60 @@ function Checklist({ excerpt, className }: { excerpt: NonNullable<CaseStudy["exc
 
 /* A case with a picture or an evidence panel. From lg the title sits over the text in one column and the visual spans
    both rows of the other, sticking while the text scrolls past; the columns swap sides on every other card. Below lg
-   the cards stack, and a card with a picture shows its title first and the picture straight after it, so a reader who
-   jumps to a card from the strip knows where they landed. An evidence panel is long, so its text comes first. */
+   the cards stack, in the order they are written: a card with a picture shows its title and the picture straight after
+   it, so a reader who jumps to a card from the strip knows where they landed; an evidence panel is long, so its text
+   comes first. The source order is the reading order on a screen, in print and for a screen reader; from lg the grid
+   places each part by its own column and row, so the order does not matter there. */
 function VisualCard({ c, lead, flip }: { c: CaseStudy; lead: boolean; flip: boolean }) {
   const pictureFirst = Boolean(c.image);
   const side = flip ? "lg:col-start-8" : "lg:col-start-1";
+  const header = (
+    <header className={`flex max-w-[34rem] flex-col lg:col-span-5 lg:row-start-1 lg:max-w-none ${side}`}>
+      <p className="text-sm text-fg-faint">{c.client}</p>
+      <Title c={c} lead={lead} />
+      {/* The lead card shows its number large under the capture from lg; below that it sits here. */}
+      <Metric c={c} size="text-4xl" className={`mt-4 ${lead ? "lg:hidden" : ""}`} />
+    </header>
+  );
+  const visual = (
+    <div
+      id={c.proof?.anchor}
+      className={`scroll-mt-24 ${pictureFirst ? "max-lg:mt-5" : "max-lg:mt-6"} lg:col-span-7 lg:row-span-2 lg:row-start-1 lg:top-24 lg:self-start lg:tall:sticky ${
+        flip ? "lg:col-start-1" : "lg:col-start-6"
+      }`}
+    >
+      <Visual c={c} />
+      {c.comparison && <CompareBars data={c.comparison} />}
+      {lead && <Metric c={c} size="text-7xl" className="mt-6 hidden lg:flex" />}
+    </div>
+  );
+  const body = (
+    <div className={`flex max-w-[34rem] flex-col lg:col-span-5 lg:row-start-2 lg:max-w-none ${side}`}>
+      <Brief c={c} />
+      <Built c={c} />
+      <Result c={c} />
+      {c.proof && (
+        <Block label="how it ran">
+          <p className="leading-relaxed text-fg-muted">{c.proof.process}</p>
+        </Block>
+      )}
+      <Stack c={c} />
+    </div>
+  );
   return (
     <article id={c.anchor} className={`${CARD} flex flex-col lg:grid lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-10`}>
-      <header className={`flex max-w-[34rem] flex-col max-lg:order-1 lg:col-span-5 lg:row-start-1 lg:max-w-none ${side}`}>
-        <p className="text-sm text-fg-faint">{c.client}</p>
-        <Title c={c} lead={lead} />
-        {/* The lead card shows its number large under the capture from lg; below that it sits here. */}
-        <Metric c={c} size="text-4xl" className={`mt-4 ${lead ? "lg:hidden" : ""}`} />
-      </header>
-      <div
-        className={`${pictureFirst ? "max-lg:order-2 max-lg:mt-5" : "max-lg:order-3 max-lg:mt-6"} lg:col-span-7 lg:row-span-2 lg:row-start-1 lg:top-24 lg:self-start lg:tall:sticky ${
-          flip ? "lg:col-start-1" : "lg:col-start-6"
-        }`}
-      >
-        <Visual c={c} />
-        {c.comparison && <CompareBars data={c.comparison} />}
-        {lead && <Metric c={c} size="text-7xl" className="mt-6 hidden lg:flex" />}
-      </div>
-      <div className={`flex max-w-[34rem] flex-col ${pictureFirst ? "max-lg:order-3" : "max-lg:order-2"} lg:col-span-5 lg:row-start-2 lg:max-w-none ${side}`}>
-        <Brief c={c} />
-        <Built c={c} />
-        <Result c={c} />
-        {c.proof && (
-          <Block label="how it ran">
-            <p className="leading-relaxed text-fg-muted">{c.proof.process}</p>
-          </Block>
-        )}
-        <Stack c={c} />
-      </div>
+      {header}
+      {pictureFirst ? (
+        <>
+          {visual}
+          {body}
+        </>
+      ) : (
+        <>
+          {body}
+          {visual}
+        </>
+      )}
     </article>
   );
 }
@@ -310,7 +331,7 @@ export function Work() {
           </p>
         </Reveal>
 
-        <div className="mt-12 space-y-8">
+        <div className="mt-12 space-y-5 sm:space-y-8">
           {caseStudies.map((c, i) => (
             <Reveal key={c.title} delay={i * 0.06}>
               {c.image || c.proof ? <VisualCard c={c} lead={i === 0 || Boolean(c.metric)} flip={i % 2 === 1} /> : <TextCard c={c} />}

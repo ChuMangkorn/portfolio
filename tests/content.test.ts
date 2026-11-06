@@ -69,7 +69,7 @@ test("the hero run and the case study tell the same story", () => {
   assert.ok(study?.proof, "the workflow case study carries the build proof");
   assert.deepEqual(study.proof.scores, buildScores, "the run and the chart must draw from the same scores");
   assert.ok(buildScores.every((s) => s >= 0 && s <= 10), "scores are out of 10");
-  assert.equal(run.link.href, `#${study.anchor}`, "the run links to the case study that holds the numbers");
+  assert.equal(run.link.href, `#${study.proof.anchor}`, "the run links to the evidence panel that holds the numbers");
   for (const row of run.rows) {
     assert.ok(Number.isInteger(row.stage) && row.stage >= 0 && row.stage < profile.pipeline.length, `run row "${row.who}" names a real stage`);
   }
@@ -102,9 +102,11 @@ test("the strip's measurements match the case text they come from", () => {
   assert.equal(finder.figure, f.metric?.value);
   // Every cell links to the case that holds its evidence, and nowhere else.
   assert.equal(meetrec.href, "#meetrec");
-  assert.equal(caught.href, `#${w.anchor}`);
+  assert.equal(caught.href, `#${w.proof?.anchor}`, "the defect cell lands on the panel that lists it, not on the card's title");
   assert.equal(finder.href, "#store-finder");
-  for (const r of receipts) assert.ok(caseStudies.some((c) => `#${c.anchor}` === r.href), `${r.where} links to a case study`);
+  for (const r of receipts) {
+    assert.ok(caseStudies.some((c) => `#${c.anchor}` === r.href || (c.proof && `#${c.proof.anchor}` === r.href)), `${r.where} links to a case study or its evidence`);
+  }
 });
 
 // The page prints this text as the reviewer's own words. Editing it is allowed only on purpose: change the hash with it.

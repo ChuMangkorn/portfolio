@@ -3,8 +3,10 @@
 // width alone cannot see it). Rem-based layout grows with that setting, so this sets the default text size the way the
 // browser setting does (CDP Page.setFontSizes) and measures the rendered page: 150% on every width, 200% from a 360 px
 // phone up. A 320 px phone at 200% is not covered (one chart label loses 3 px there).
-// The clipped-text rule looks at every visible element that holds its own text and finds the nearest ancestor that hides
-// its overflow sideways. A box that scrolls (overflow auto or scroll) is skipped: its content is reachable.
+// The clipped-text rule takes the glyph boxes of every text node (Range.getClientRects) and compares them with every
+// ancestor that hides its overflow sideways, the text's own parent included. A box that scrolls (overflow auto or scroll)
+// is skipped: its content is reachable. It looks sideways only: a box that clips lines vertically on purpose (the score
+// ticker) is not a loss.
 // Usage: node scripts/check-text-size.mjs http://localhost:3101 <design-kit-root>
 import { createRequire } from "node:module";
 import { join } from "node:path";
@@ -39,20 +41,28 @@ for (const { width, height, sizes } of CASES) {
     if (scroll > client + 1) problems.push(`${width} px wide at ${pct}% text: the page is ${scroll} px wide`);
     const clipped = await page.evaluate(() => {
       const out = [];
-      const ownText = (el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
-      for (const el of document.body.querySelectorAll("*")) {
-        if (el.closest(".sr-only") || !ownText(el)) continue;
-        const r = el.getBoundingClientRect();
-        if (r.width === 0 || r.height === 0) continue;
-        for (let box = el.parentElement; box && box !== document.body; box = box.parentElement) {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        const text = node.textContent.trim();
+        const parent = node.parentElement;
+        if (!text || !parent || parent.closest(".sr-only, script, style, noscript")) continue;
+        // The glyph boxes of the text itself, not the box of the element that holds it: a block whose text is wider
+        // than the block still measures as the block.
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+        if (rects.length === 0) continue;
+        let lost = 0;
+        for (let box = parent; box && box !== document.documentElement; box = box.parentElement) {
           const overflow = getComputedStyle(box).overflowX;
           if (overflow === "visible") continue;
-          if (overflow === "auto" || overflow === "scroll") break;
+          if (overflow === "auto" || overflow === "scroll") break; // a scroll box: the rest is reachable
           const b = box.getBoundingClientRect();
-          const lost = Math.max(r.right - b.right, b.left - r.left);
-          if (lost > 1) out.push(`"${el.textContent.trim().slice(0, 28)}" loses ${Math.round(lost)} px inside <${box.tagName.toLowerCase()}>`);
-          break;
+          const left = b.left + box.clientLeft;
+          const right = left + box.clientWidth;
+          for (const r of rects) lost = Math.max(lost, r.right - right, left - r.left);
         }
+        if (lost > 1) out.push(`"${text.slice(0, 28)}" loses ${Math.round(lost)} px`);
       }
       return out;
     });

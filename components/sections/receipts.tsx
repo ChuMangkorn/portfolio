@@ -35,7 +35,9 @@ export function Receipts() {
                   className="group flex h-full flex-col p-4 transition-colors hover:bg-bg-tint focus-visible:-outline-offset-4 sm:p-5"
                 >
                   {/* In a row (lg) the smaller figures stand on the lead figure's line, so the three labels start together. */}
-                  <span className={`font-mono leading-none text-fg ${i === 0 ? "text-5xl" : "text-score lg:pt-2"}`}>
+                  <span className={`font-mono leading-none text-fg ${
+                    i === 0 ? "[font-size:min(3rem,13vw)]" : "[font-size:min(2.5rem,11vw)] lg:pt-2"
+                  }`}>
                     <Figure value={r.figure} />
                   </span>
                   <span className="mt-3 text-sm leading-snug text-fg-muted">{r.label}</span>
