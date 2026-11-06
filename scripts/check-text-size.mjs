@@ -1,7 +1,7 @@
 // A reader who raises the browser's default text size must not get a page that scrolls sideways, and must not lose text
 // inside a box that clips it (a card figure with overflow-hidden hides what does not fit instead of scrolling, so the page
 // width alone cannot see it). Rem-based layout grows with that setting, so this sets the default text size the way the
-// browser setting does (CDP Page.setFontSizes) and measures the rendered page: 150% and 200% from 320 px, at six widths, plus every second pixel from 320 to 420 at 200%.
+// browser setting does (CDP Page.setFontSizes) and measures the rendered page: 150% and 200% from 320 px, at six widths, plus every pixel from 320 to 420 at 200%.
 // The clipped-text rule takes the glyph boxes of every text node (Range.getClientRects) and compares them with every
 // ancestor that hides its overflow sideways, the text's own parent included. A box that scrolls (overflow auto or scroll)
 // is skipped: its content is reachable. It looks sideways only: a box that clips lines vertically on purpose (the score
@@ -80,6 +80,20 @@ async function measurePage(page, width, pct) {
   await measure(page, width, pct);
 }
 
+// The cause of the 356 px failure below, checked on its own: a card title with balanced wrapping (the global h3 rule) and a
+// word break anywhere (.font-display). Chromium 145 laid such a title out 541 px wide on a first load at 356 px and 200% text.
+// The design kit's browser (153) does not, so the width sweep cannot see the fault there; a card title says text-wrap: wrap.
+{
+  const { context, page } = await openPage(1440, 900, 16, 0);
+  const styles = await page.evaluate(() => [...document.querySelectorAll("#work h3")].map((h) => [h.textContent.trim().slice(0, 28), getComputedStyle(h).getPropertyValue("text-wrap-style")]));
+  if (styles.length === 0) problems.push("no card titles found in #work, so their wrapping was not checked");
+  const unreadable = styles.filter(([, style]) => style === "");
+  if (unreadable.length > 0) problems.push("this browser does not report text-wrap-style, so card title wrapping was not checked");
+  const balanced = styles.filter(([, style]) => style !== "" && style !== "auto").map(([text]) => text);
+  if (balanced.length > 0) problems.push(`card titles must use text-wrap: wrap, not balanced wrapping with a word break anywhere (Chromium 145 laid one out 541 px wide): ${balanced.join("; ")}`);
+  await context.close();
+}
+
 for (const { width, height, sizes } of CASES) {
   for (const size of sizes) {
     const { context, page } = await openPage(width, height, size, Number(process.env.SETTLE_MS ?? 4600));
@@ -88,13 +102,13 @@ for (const { width, height, sizes } of CASES) {
   }
 }
 
-// The narrowest phones at 200%, every second pixel from 320 to 420, each in a fresh browser context, eight at a time: a
-// width (356 px) once laid out a heading far wider than its box, which the sample widths above did not see. It showed in
-// Playwright's own Chromium 145 on a first load, and not after a resize, after a reload in the same context, or in the
-// design kit's browser, which is why this measures the first-load state before it opens the disclosures. The layout does
-// not depend on the hero run, so these loads do not wait for it.
+// The narrowest phones at 200%, every pixel from 320 to 420, each in a fresh browser context, eight at a time: a width
+// (356 px) once laid out a heading far wider than its box, which the sample widths above did not see, and in Chromium 145
+// that failing band was one pixel wide. It showed on a first load, and not after a resize, after a reload in the same
+// context, or in the design kit's browser, which is why this measures the first-load state before it opens the
+// disclosures. The layout does not depend on the hero run, so these loads do not wait for it.
 {
-  const widths = Array.from({ length: 51 }, (_, i) => 320 + 2 * i);
+  const widths = Array.from({ length: 101 }, (_, i) => 320 + i);
   for (let i = 0; i < widths.length; i += 8) {
     await Promise.all(
       widths.slice(i, i + 8).map(async (width) => {
@@ -111,4 +125,4 @@ if (problems.length > 0) {
   console.error(`check-text-size: FAIL, a larger default text size breaks the page:\n  ${problems.join("\n  ")}`);
   process.exit(1);
 }
-console.log("check-text-size: OK, no sideways scroll and no text cut off at 150% or 200% text on the sample widths from 320 px, or at 200% on every second width from 320 to 420 px");
+console.log("check-text-size: OK, card titles wrap plainly; no sideways scroll and no text cut off at 150% or 200% text on the sample widths from 320 px, or at 200% on every width from 320 to 420 px");

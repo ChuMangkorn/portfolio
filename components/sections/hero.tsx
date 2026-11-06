@@ -121,7 +121,7 @@ export function Hero() {
               <span className="text-xs md:mt-1 md:text-label">{step.en}</span>
             </span>
             {i < last && (
-              <span aria-hidden className="text-fg-faint max-[22.4rem]:hidden md:max-lg:hidden lg:text-xl">
+              <span aria-hidden className="mt-[0.2em] text-fg-faint max-[22.4rem]:hidden md:max-lg:hidden lg:text-xl">
                 <ArrowRightIcon size="1em" weight="bold" />
               </span>
             )}

@@ -87,9 +87,11 @@
   --font-jp: var(--font-noto-jp);
   --text-label: 0.8125rem;
   --text-label--line-height: 1.5;
-  /* Fluid headline: 60px on a phone, 100px at 1440x900, capped at 7rem (112 to 140px), and smaller on short windows so the hero still fits.
-     The floor is also capped at 17vw, so a reader who enlarges the default text size does not push "engineer," off a phone. */
-  --text-hero: clamp(min(3.75rem, 17vw), min(1.75rem + 5vw, 15vh), 7rem);
+  /* Fluid headline: 60px on most phones, 100px at 1440x900, capped at 7rem (112 to 140px), and smaller on short windows so the hero still fits.
+     The floor is also capped at 16vw: "One engineer," is about 5.35 times the type size wide, so it fits one line in a 360 px phone's
+     320 px column only at 16vw or less (a 17vw floor put "engineer," on a line of its own up to 360 px), and a reader who enlarges the
+     default text size does not push it off a phone. */
+  --text-hero: clamp(min(3.75rem, 16vw), min(1.75rem + 5vw, 15vh), 7rem);
   --text-hero--line-height: 0.98;
   /* The reviewer score in the hero panel. */
   --text-score: 2.5rem;

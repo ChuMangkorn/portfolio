@@ -23,6 +23,7 @@ curl -s "localhost:$PORT" | node scripts/check-jp-font.mjs
 node scripts/check-display-font.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
 node scripts/check-label-in-name.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
 node scripts/check-text-size.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
+node scripts/check-scroll-region.mjs "http://localhost:$PORT" "$(dirname "$KIT")"
 
 # The gates open the snapshot as a file, so its stylesheets must be inlined or the page renders unstyled.
 mkdir -p .gates

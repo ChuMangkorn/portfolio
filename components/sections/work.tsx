@@ -7,9 +7,11 @@ import { ScrollRegion } from "@/components/scroll-region";
 import { ScoreChart } from "@/components/score-chart";
 
 // Half the container at the lg breakpoint and above, full width below it. A wide capture runs the card's full width, at
-// most 60rem of it.
-const VISUAL_SIZES = "(min-width: 1024px) 50vw, 100vw"; // ds-allow-hardcode
-const WIDE_SIZES = "(min-width: 1024px) 960px, (min-width: 40em) 100vw, 40em"; // ds-allow-hardcode: the capture is 40rem wide below sm
+// most 60rem of it, and is 40rem wide below sm. The breakpoints are in em because a media condition measures against the
+// reader's default text size, as the layout's own rem breakpoints do: at 200% text lg starts at 2048 px, and a list in px
+// would size the image for a layout that is not on screen.
+const VISUAL_SIZES = "(min-width: 64em) 50vw, 100vw"; // ds-allow-hardcode: the lg breakpoint, in em
+const WIDE_SIZES = "(min-width: 64em) 60em, (min-width: 40em) 100vw, 40em"; // ds-allow-hardcode: lg, sm and the capture's own widths, in em
 
 /* Every card breaks a word that is longer than its box instead of overflowing it, and keeps its side padding in step
    with the screen rather than with the text size (--card-x), so a reader who enlarges the default text still gets the
