@@ -2,7 +2,7 @@
 
 // The Japanese line, phrase by phrase. Safari has no `word-break: auto-phrase`, so the hero breaks the line only between
 // these phrases (a <wbr> after each) and never inside "納品まで".
-const jpPhrases = ["日本語での要件ヒアリングから", "納品まで、", "一貫して担当します。"];
+const jpPhrases = ["日本語での", "要件ヒアリングから", "納品まで、", "一貫して", "担当します。"];
 
 // The one place the evidence panel of the workflow case is named: the hero panel, the measured strip and the case itself
 // all link to it, so a tap lands on the numbers and not on the card's title.

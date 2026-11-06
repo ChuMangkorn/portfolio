@@ -4,6 +4,9 @@
    the fold. `tall` (from 46rem) is where a sticky visual fits on screen. */
 @custom-variant short (@media (max-height: 50rem)); /* ds-allow-hardcode: breakpoint */
 @custom-variant tall (@media (min-height: 46rem)); /* ds-allow-hardcode: breakpoint */
+/* `pin` (from 40rem) is where the header stays on screen: a phone with its toolbars up is about 41rem tall at the default
+   text size, but 35rem at 150% and 26rem at 200%, where a wrapped header would take a quarter or more of the screen. */
+@custom-variant pin (@media (min-height: 40rem)); /* ds-allow-hardcode: breakpoint */
 
 /* Dark theme, locked at page level (decided during design interview). */
 :root {
@@ -348,6 +351,12 @@
     width: min(21.5rem, 100%);
     max-width: none;
     margin: 0;
+  }
+}
+/* In a window under 37.5rem tall (600 px) it would cover the chin, so it is dropped there too. */
+@media (min-width: 64rem) and (max-width: 79.99rem) and (max-height: 37.49rem) { /* ds-allow-hardcode: lg, xl and short-window breakpoints */
+  .run-panel {
+    display: none;
   }
 }
 

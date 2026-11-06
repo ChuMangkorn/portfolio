@@ -2,7 +2,7 @@
 // inside a box that clips it (a card figure with overflow-hidden hides what does not fit instead of scrolling, so the page
 // width alone cannot see it). Rem-based layout grows with that setting, so this sets the default text size the way the
 // browser setting does (CDP Page.setFontSizes) and measures the rendered page: 150% on every width, 200% from a 360 px
-// phone up. A 320 px phone at 200% is not covered (one chart label loses 3 px there).
+// phone up. A phone narrower than 360 px at 200% is not covered (one chart label loses a few px there).
 // The clipped-text rule takes the glyph boxes of every text node (Range.getClientRects) and compares them with every
 // ancestor that hides its overflow sideways, the text's own parent included. A box that scrolls (overflow auto or scroll)
 // is skipped: its content is reachable. It looks sideways only: a box that clips lines vertically on purpose (the score

@@ -48,6 +48,12 @@ else {
   if (bytes.length > 300 * 1024) problems.push(`og:image is ${Math.round(bytes.length / 1024)}KB, keep it under 300KB`);
 }
 
+// Every in-page link lands on something. The content tests compare data with data, so a missing id would pass them.
+const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+for (const fragment of new Set([...html.matchAll(/\shref="#([^"]+)"/g)].map((m) => m[1]))) {
+  if (!ids.has(fragment)) problems.push(`a link to #${fragment} has no element with that id`);
+}
+
 for (const path of ["/robots.txt", "/sitemap.xml"]) {
   const res = await fetch(base + path);
   if (!res.ok) problems.push(`${path} returned ${res.status}`);
@@ -59,4 +65,4 @@ if (problems.length) {
   problems.forEach((p) => console.error("  " + p));
   process.exit(1);
 }
-console.log("check-meta: OK, preview image, tags, icons, JSON-LD, robots, sitemap and 404");
+console.log("check-meta: OK, preview image, tags, icons, JSON-LD, robots, sitemap, 404 and in-page links");
