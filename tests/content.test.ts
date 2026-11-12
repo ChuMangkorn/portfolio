@@ -22,6 +22,12 @@ function walk(v: unknown, path = "root"): string[] {
 
 const ALL = walk({ profile, facts, caseStudies, experience, contact, run, receipts });
 
+const byAnchor = (anchor: string) => {
+  const c = caseStudies.find((study) => study.anchor === anchor);
+  assert.ok(c, `a case study has the anchor #${anchor}`);
+  return c;
+};
+
 test("no client names, placeholders, inflated JLPT level, or dashes", () => {
   for (const s of ALL) {
     for (const b of BANNED) assert.ok(!s.includes(b), `banned "${b}" in ${s}`);
@@ -39,8 +45,8 @@ test("contact uses personal channels", () => {
   assert.match(profile.linkedin, /linkedin\.com\/in\/chulaprungrueang-mangkorn$/);
 });
 
-test("exactly four case studies, each complete and anonymized", () => {
-  assert.equal(caseStudies.length, 4);
+test("exactly five case studies, each complete and anonymized", () => {
+  assert.equal(caseStudies.length, 5);
   for (const c of caseStudies) {
     assert.ok(c.title && c.problem && c.outcome, c.title);
     assert.ok(c.stack.length >= 2, c.title);
@@ -76,11 +82,6 @@ test("the hero run and the case study tell the same story", () => {
 });
 
 test("the strip's measurements match the case text they come from", () => {
-  const byAnchor = (anchor: string) => {
-    const c = caseStudies.find((study) => study.anchor === anchor);
-    assert.ok(c, `a case study has the anchor #${anchor}`);
-    return c;
-  };
   assert.equal(receipts.length, 3);
   const [meetrec, caught, finder] = receipts;
   // MeetRec: the figure is the better result, the label states both results with their "about".
@@ -129,8 +130,8 @@ test("the reviewer's quoted words back the round they sit under", () => {
 });
 
 test("the MeetRec bars draw the numbers its case text states", () => {
-  const m = caseStudies.find((c) => c.anchor === "meetrec");
-  assert.ok(m?.comparison, "the MeetRec case carries the comparison");
+  const m = byAnchor("meetrec");
+  assert.ok(m.comparison, "the MeetRec case carries the comparison");
   const rows = m.comparison.rows;
   assert.equal(rows.length, 2);
   assert.equal(new Set(rows.map((r) => r.label)).size, 2, "each bar has its own label");
@@ -149,6 +150,33 @@ test("the MeetRec bars draw the numbers its case text states", () => {
   };
   assert.deepEqual(byLabel("On-device translation"), stated(/on-device translation kept the meaning in about (\d+) of (\d+)/));
   assert.deepEqual(byLabel("Claude"), stated(/Claude's in about (\d+) of (\d+)/));
+});
+
+test("the restore card's figures are numbers its case text states", () => {
+  const restore = byAnchor("restore");
+  assert.ok(restore.metric && restore.excerpt, "the restore case carries its figure and its check");
+  const { metric, excerpt } = restore;
+  const text = [restore.problem, ...restore.work, restore.outcome].join(" ");
+  // Each count is read out of the case text by its phrase, so a count moved to the wrong row fails.
+  const stated = (pattern: RegExp) => {
+    const hit = text.match(pattern);
+    assert.ok(hit, `the case text states ${pattern}`);
+    return hit[1];
+  };
+  const row = (label: string) => {
+    const hit = excerpt.rows.find((x) => x.label === label);
+    assert.ok(hit, `the check has a "${label}" row`);
+    return hit.value;
+  };
+  const compared = stated(/all (\d+) SKUs with zero field differences/);
+  assert.equal(metric.value, `${compared}/${compared}`);
+  assert.ok(row("compared").startsWith(`${compared} of ${compared} SKUs`));
+  assert.ok(row("deleted").includes(stated(/deleted the (\d+) older products/)));
+  assert.ok(row("before the restore").includes(stated(/Backed up the other (\d+) products/)));
+  assert.ok(row("removed").includes(stated(/the (\d+) newer products removed/)));
+  // And no number is shown anywhere on the figure or the check that the text does not state.
+  const shown = [metric.value, metric.label, ...excerpt.rows.flatMap((x) => [x.label, x.value])].join(" ");
+  for (const n of shown.match(/\d+/g) ?? []) assert.match(text, new RegExp(`\\b${n}\\b`), `${n} is shown but not stated in the case text`);
 });
 
 test("the build proof counts the content tests that exist", () => {
