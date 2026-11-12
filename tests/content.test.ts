@@ -172,7 +172,7 @@ test("the restore card's figures are numbers its case text states", () => {
   assert.equal(metric.value, `${compared}/${compared}`);
   assert.ok(row("compared").startsWith(`${compared} of ${compared} SKUs`));
   assert.ok(row("deleted").includes(stated(/deleted the (\d+) older products/)));
-  assert.ok(row("before the restore").includes(stated(/Backed up the other (\d+) products/)));
+  assert.ok(row("before the restore").includes(stated(/backed up the other (\d+) products/)));
   assert.ok(row("removed").includes(stated(/the (\d+) newer products removed/)));
   // And no number is shown anywhere on the figure or the check that the text does not state.
   const shown = [metric.value, metric.label, ...excerpt.rows.flatMap((x) => [x.label, x.value])].join(" ");

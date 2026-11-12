@@ -232,6 +232,35 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
+    title: "A wrong delete, undone field by field",
+    client: "Japanese D2C cosmetics brand, before launch",
+    problem:
+      "After a spreadsheet import, the new store held 69 duplicate SKUs and 4 duplicate titles across two generations of products, and no up to date master file was at hand to say which set was right.",
+    work: [
+      "Wrote small scripts for duplicate SKUs, missing metadata and collection assignments before changing anything",
+      "Took a full JSON backup, then deleted the 13 older products. I approved that without the client's master sheet, because the store had not launched. It was the wrong call: the deleted set held the fuller variant, barcode and option data",
+      "The next day, asked the client which sheet was the source of truth, backed up the other 41 products, restored the 13 as drafts and compared 90 SKUs field by field",
+    ],
+    outcome:
+      "The restore matched on all 90 SKUs with zero field differences, so the 13 were published and the 41 newer products removed. The catalogue was then trimmed to 70 SKUs, again with a backup taken first, and the store has since launched. The source sheet's stock data also turned out to be about 19 months old.",
+    stack: ["Python", "Shopify API", "JSON backups"],
+    personal: false,
+    anchor: "restore",
+    metric: { value: "90/90", label: "SKUs restored with zero field differences" },
+    excerpt: {
+      title: "restore check",
+      caption: "The recovery, in the order it ran",
+      rows: [
+        { label: "before the delete", value: "full JSON backup" },
+        { label: "deleted", value: "13 older products" },
+        { label: "before the restore", value: "backup of the other 41" },
+        { label: "restored as", value: "drafts, published after the check" },
+        { label: "compared", value: "90 of 90 SKUs, zero differences" },
+        { label: "removed", value: "the 41 newer products" },
+      ],
+    },
+  },
+  {
     title: "Online store with a nationwide store finder",
     client: "Japanese D2C cosmetics brand",
     problem:
@@ -255,37 +284,6 @@ export const caseStudies: CaseStudy[] = [
       height: 2298,
       label: "store finder",
       note: "Rendered at phone width from the production section and its store list as of October 2026 (304 stores, six chains). Searching Yokohama returns eight stores from four chains.",
-    },
-  },
-  {
-    title: "A wrong delete, undone field by field",
-    client: "Japanese D2C cosmetics brand, before launch",
-    problem:
-      "After a spreadsheet import, the new store held 69 duplicate SKUs and 4 duplicate titles across two generations of products, and no up to date master file was at hand to say which set was right.",
-    work: [
-      "Wrote small scripts for duplicate SKUs, structural differences, missing metadata and collection assignments before changing anything",
-      "Took a full JSON backup, then deleted the 13 older products",
-      "I approved that delete without the client's master sheet to check against, because the store had not launched. It was the wrong call: the deleted set held the fuller variant, barcode and option data",
-      "Asked the client the next day which sheet was the source of truth, and asked for the restore",
-      "Backed up the other 41 products, restored the 13 as drafts so the shop front was untouched, and compared 90 SKUs field by field",
-    ],
-    outcome:
-      "The restore matched on all 90 SKUs with zero field differences, so the 13 were published and the 41 newer products removed. The catalogue was then trimmed to 70 SKUs, again with a backup taken first, and the store has since launched. The review also showed the source sheet's stock data was about 19 months old whichever column was used.",
-    stack: ["Python", "Shopify API", "JSON backups"],
-    personal: false,
-    anchor: "restore",
-    metric: { value: "90/90", label: "SKUs restored with zero field differences" },
-    excerpt: {
-      title: "restore check",
-      caption: "The recovery, in the order it ran",
-      rows: [
-        { label: "before the delete", value: "full JSON backup" },
-        { label: "deleted", value: "13 older products" },
-        { label: "before the restore", value: "backup of the other 41" },
-        { label: "restored as", value: "drafts, published after the check" },
-        { label: "compared", value: "90 of 90 SKUs, zero differences" },
-        { label: "removed", value: "the 41 newer products" },
-      ],
     },
   },
   {

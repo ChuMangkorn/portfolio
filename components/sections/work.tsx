@@ -373,7 +373,8 @@ function WideCard({ c }: { c: CaseStudy }) {
 }
 
 /* A case with no picture: the text in three columns from lg (the brief over the result, what was built, then the
-   checks), one column below it in reading order. */
+   checks), one column below it in reading order. The second row takes the slack, so when the middle column runs long
+   the result still sits right under the brief instead of after a gap. */
 function TextCard({ c }: { c: CaseStudy }) {
   return (
     <article id={c.anchor} className={`${CARD} flex flex-col`}>
@@ -383,7 +384,7 @@ function TextCard({ c }: { c: CaseStudy }) {
         <Stack c={c} />
         <Metric c={c} size="text-4xl" className="mt-4" />
       </header>
-      <div className="mt-6 grid max-w-[34rem] gap-y-6 lg:max-w-none lg:grid-cols-3 lg:gap-x-10">
+      <div className="mt-6 grid max-w-[34rem] gap-y-6 lg:max-w-none lg:grid-cols-3 lg:grid-rows-[auto_1fr] lg:gap-x-10">
         <Brief c={c} className="lg:col-start-1 lg:row-start-1" />
         <Built c={c} className="lg:col-start-2 lg:row-span-2 lg:row-start-1" />
         <Result c={c} className="lg:col-start-1 lg:row-start-2" />
