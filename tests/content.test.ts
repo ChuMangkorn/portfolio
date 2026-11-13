@@ -230,8 +230,21 @@ test("the work log snapshot adds up", () => {
 
 test("the work log strip says logged, over the snapshot's months", () => {
   const monthName = (ym: string) => new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
-  assert.match(worklog.label, /\blogged\b/);
-  assert.ok(worklog.label.includes(monthName(worklogStats.since)), worklog.label);
-  assert.ok(worklog.label.includes(monthName(worklogStats.asOf)), worklog.label);
-  for (const s of walk(worklog)) assert.ok(!/completed|per month/i.test(s), s);
+  const shown = worklog.figures[0].label;
+  assert.match(shown, /\blogged\b/);
+  assert.ok(shown.includes(monthName(worklogStats.since)), shown);
+  assert.ok(shown.includes(monthName(worklogStats.until)), shown);
+  for (const s of walk(worklog)) assert.ok(!/completed|per month|as I go/i.test(s), s);
+});
+
+test("the work log counter checks each case and skips fenced templates", () => {
+  const twoTypes = "### 2026-06-01 | W-010 | One\n- type: ops\n- type: fix\n### 2026-06-02 | W-011 | Two\n- problem: x\n";
+  assert.throws(() => countWorkLog([{ month: "2026-06", text: twoTypes }], "2026-11-13"), /W-010|One|2026-06/);
+  assert.throws(() => countWorkLog([{ month: "2026-06", text: "## Routine\n- type: fix\n" }], "2026-11-13"));
+  const fenced = "## Cases\n```\n### 2026-11-10 | W-xxx | <title>\n- type: incident | build\n```\n### 2026-06-03 | W-012 | Real\n- type: build\n";
+  const s = countWorkLog([{ month: "2026-06", text: fenced }, { month: "2026-07", text: "" }], "2026-12-01");
+  assert.equal(s.cases, 1);
+  assert.equal(s.byType.build, 1);
+  assert.equal(s.byType.incident, 0);
+  assert.equal(s.until, "2026-06");
 });

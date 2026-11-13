@@ -60,9 +60,11 @@ export const facts = {
 };
 
 /* The strip above the work cards: how much the anonymised work log holds. Every number comes from the committed
-   snapshot (npm run worklog:stats), and the label names the snapshot's own months, so an old snapshot reads as old. */
+   snapshot (npm run worklog:stats), and the label names the first and last months that have entries, so it never claims
+   a month the log does not cover. */
 const monthName = (ym: string) =>
   new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
+const worklogLabel = `jobs logged, ${monthName(worklogStats.since)} to ${monthName(worklogStats.until)}`;
 const caseTypeLabel: Record<CaseType, string> = {
   build: "Build",
   incident: "Incident",
@@ -72,14 +74,13 @@ const caseTypeLabel: Record<CaseType, string> = {
   migration: "Migration",
 };
 export const worklog = {
-  label: `jobs logged, ${monthName(worklogStats.since)} to ${monthName(worklogStats.asOf)}`,
   figures: [
-    { value: String(worklogStats.total), label: `jobs logged, ${monthName(worklogStats.since)} to ${monthName(worklogStats.asOf)}` },
+    { value: String(worklogStats.total), label: worklogLabel },
     { value: String(worklogStats.cases), label: "written up as cases" },
     { value: String(worklogStats.byType.incident), label: "of the cases were incidents" },
   ],
   barTitle: "The cases by type",
-  caption: "Counted from my own work log, kept as I go. Client names stay out of it.",
+  caption: "Counted from my own anonymised work log. The early months were filled in afterwards from my records.",
   bar: CASE_TYPES.filter((t) => worklogStats.byType[t] > 0).map((type) => ({
     type,
     label: caseTypeLabel[type],
@@ -254,7 +255,7 @@ export const caseStudies: CaseStudy[] = [
       checks: [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
-        { label: "every commit", value: "type check, lint, 16 content tests, no looping motion" },
+        { label: "every commit", value: "type check, lint, 17 content tests, no looping motion" },
         { label: "whole page", value: "about 400 KB over the wire, fonts included" },
       ],
       process:

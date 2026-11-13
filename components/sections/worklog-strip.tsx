@@ -1,21 +1,24 @@
 import { worklog } from "@/lib/data";
 
 /* How much the work log holds, above the cards that show a few of its entries in depth. Three figures, then one bar of
-   the case types. The segments alternate two shades only so neighbours stay apart; each type is named with its count in
-   the list under the bar, so nothing rests on colour. Nothing here moves. */
+   the case types. The segments alternate two neutral shades so neighbours stay apart without amber, which the figures
+   above use, seeming to mark one type; each type is named with its count under the bar, so nothing rests on colour.
+   The strip has no motion of its own: it arrives with the heading's reveal. */
 export function WorklogStrip() {
   const cases = worklog.bar.reduce((n, b) => n + b.count, 0);
-  const shade = (i: number) => (i % 2 === 0 ? "bg-accent" : "bg-fg-faint");
+  const shade = (i: number) => (i % 2 === 0 ? "bg-fg-muted" : "bg-fg-faint");
   return (
     <div className="mt-10 rounded-card bg-bg-tint px-(--card-x) py-6 sm:px-8">
-      <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-3">
+      <ul className="grid gap-x-8 gap-y-5 sm:grid-cols-3">
         {worklog.figures.map((f) => (
-          <div key={f.label} className="flex flex-col-reverse gap-1">
-            <dt className="text-sm text-fg-muted">{f.label}</dt>
-            <dd className="font-mono text-4xl tracking-tight text-accent tabular-nums">{f.value}</dd>
-          </div>
+          <li key={f.label}>
+            <p className="flex flex-col gap-1">
+              <span className="font-mono text-4xl tracking-tight text-accent tabular-nums">{f.value}</span>
+              <span className="text-sm text-fg-muted">{f.label}</span>
+            </p>
+          </li>
         ))}
-      </dl>
+      </ul>
 
       <figure className="mt-6">
         <p className="mb-2 text-label font-medium text-fg-faint">{worklog.barTitle}</p>

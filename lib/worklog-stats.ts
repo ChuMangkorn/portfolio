@@ -3,6 +3,7 @@ import type { WorklogStats } from "./worklog-count.ts";
 
 export const worklogStats: WorklogStats = {
   "since": "2026-03",
+  "until": "2026-11",
   "asOf": "2026-11-13",
   "total": 184,
   "cases": 49,
