@@ -78,6 +78,8 @@ export const worklog = {
     { value: String(worklogStats.cases), label: "written up as cases" },
     { value: String(worklogStats.byType.incident), label: "of the cases were incidents" },
   ],
+  barTitle: "The cases by type",
+  caption: "Counted from my own work log, kept as I go. Client names stay out of it.",
   bar: CASE_TYPES.filter((t) => worklogStats.byType[t] > 0).map((type) => ({
     type,
     label: caseTypeLabel[type],

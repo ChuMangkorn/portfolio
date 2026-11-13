@@ -5,6 +5,7 @@ import { Reveal } from "@/components/reveal";
 import { StaggerRows } from "@/components/stagger-rows";
 import { ScrollRegion } from "@/components/scroll-region";
 import { ScoreChart } from "@/components/score-chart";
+import { WorklogStrip } from "@/components/sections/worklog-strip";
 
 // Half the container at the lg breakpoint and above, full width below it. A wide capture runs the card's full width, at
 // most 60rem of it, and is 40rem wide below sm. The breakpoints are in em because a media condition measures against the
@@ -409,6 +410,7 @@ export function Work() {
           <p className="mt-3 max-w-[60ch] text-fg-muted">
             Client names are withheld. I can walk through any of this in detail.
           </p>
+          <WorklogStrip />
         </Reveal>
 
         <div className="mt-12 space-y-5 sm:space-y-8">
