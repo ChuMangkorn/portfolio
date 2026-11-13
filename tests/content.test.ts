@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { profile, facts, caseStudies, experience, contact, run, buildScores, receipts, COMPARE_ANCHOR } from "../lib/data.ts";
+import { countWorkLog } from "../lib/worklog-count.ts";
 
 // Generic rules live here. Real client names live in tests/banned.local.txt,
 // which is gitignored so the repo itself never contains them (docs/adr/0001).
@@ -184,4 +185,26 @@ test("the build proof counts the content tests that exist", () => {
   const count = (source.match(/^test\(/gm) ?? []).length;
   const checks = caseStudies.find((c) => c.proof)?.proof?.checks.find((c) => c.label === "every commit");
   assert.match(checks?.value ?? "", new RegExp(`\\b${count} content tests`), `the proof says ${checks?.value}, but there are ${count} tests`);
+});
+
+test("the work log counter reads cases, routine lines and types", () => {
+  const files = [
+    { month: "2026-02", text: "# Work log 2026-02\n\n## Cases\n\n## Routine\n" },
+    {
+      month: "2026-03",
+      text: "## Routine\n- 2026-03-04 | W-001 | fix | a form broke > fixed > checked\n- 2026-03-09 | W-261113-1042 | ops | a backup > ran > checked\n",
+    },
+    {
+      month: "2026-04",
+      text: "## Cases\n### 2026-04-02 | W-002 | A shop went down\n- type: incident\n- problem: x\n### 2026-04-10..2026-04-12 | B-019 | A wrong delete, undone\n- type: fix\n\n## Routine\n- 2026-04-05 | W-003 | content | copy > updated > checked\n",
+    },
+  ];
+  const s = countWorkLog(files, "2026-11-13");
+  assert.equal(s.since, "2026-03");
+  assert.equal(s.asOf, "2026-11-13");
+  assert.equal(s.cases, 2);
+  assert.equal(s.routine, 3);
+  assert.equal(s.total, 5);
+  assert.deepEqual(s.byType, { build: 0, incident: 1, fix: 1, ops: 0, analysis: 0, migration: 0 });
+  assert.throws(() => countWorkLog([{ month: "2026-05", text: "### 2026-05-01 | W-004 | No type line\n- problem: x\n" }], "2026-11-13"));
 });

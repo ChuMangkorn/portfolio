@@ -224,7 +224,7 @@ export const caseStudies: CaseStudy[] = [
       checks: [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
-        { label: "every commit", value: "type check, lint, 12 content tests, no looping motion" },
+        { label: "every commit", value: "type check, lint, 13 content tests, no looping motion" },
         { label: "whole page", value: "about 400 KB over the wire, fonts included" },
       ],
       process:
