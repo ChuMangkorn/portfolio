@@ -2,8 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
-import { profile, facts, caseStudies, experience, contact, run, buildScores, receipts, COMPARE_ANCHOR } from "../lib/data.ts";
-import { countWorkLog } from "../lib/worklog-count.ts";
+import { profile, facts, caseStudies, experience, contact, run, buildScores, receipts, COMPARE_ANCHOR, worklog } from "../lib/data.ts";
+import { countWorkLog, CASE_TYPES } from "../lib/worklog-count.ts";
+import { worklogStats } from "../lib/worklog-stats.ts";
 
 // Generic rules live here. Real client names live in tests/banned.local.txt,
 // which is gitignored so the repo itself never contains them (docs/adr/0001).
@@ -21,7 +22,7 @@ function walk(v: unknown, path = "root"): string[] {
   return [];
 }
 
-const ALL = walk({ profile, facts, caseStudies, experience, contact, run, receipts });
+const ALL = walk({ profile, facts, caseStudies, experience, contact, run, receipts, worklog });
 
 const byAnchor = (anchor: string) => {
   const c = caseStudies.find((study) => study.anchor === anchor);
@@ -207,4 +208,30 @@ test("the work log counter reads cases, routine lines and types", () => {
   assert.equal(s.total, 5);
   assert.deepEqual(s.byType, { build: 0, incident: 1, fix: 1, ops: 0, analysis: 0, migration: 0 });
   assert.throws(() => countWorkLog([{ month: "2026-05", text: "### 2026-05-01 | W-004 | No type line\n- problem: x\n" }], "2026-11-13"));
+});
+
+test("the work log strip draws the snapshot's numbers", () => {
+  assert.deepEqual(
+    worklog.figures.map((f) => f.value),
+    [String(worklogStats.total), String(worklogStats.cases), String(worklogStats.byType.incident)],
+  );
+  assert.deepEqual(
+    worklog.bar.map((b) => b.type),
+    CASE_TYPES.filter((t) => worklogStats.byType[t] > 0),
+  );
+  for (const b of worklog.bar) assert.equal(b.count, worklogStats.byType[b.type], `${b.label} bar`);
+});
+
+test("the work log snapshot adds up", () => {
+  const typed = CASE_TYPES.reduce((n, t) => n + worklogStats.byType[t], 0);
+  assert.equal(typed, worklogStats.cases);
+  assert.equal(worklogStats.cases + worklogStats.routine, worklogStats.total);
+});
+
+test("the work log strip says logged, over the snapshot's months", () => {
+  const monthName = (ym: string) => new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
+  assert.match(worklog.label, /\blogged\b/);
+  assert.ok(worklog.label.includes(monthName(worklogStats.since)), worklog.label);
+  assert.ok(worklog.label.includes(monthName(worklogStats.asOf)), worklog.label);
+  for (const s of walk(worklog)) assert.ok(!/completed|per month/i.test(s), s);
 });

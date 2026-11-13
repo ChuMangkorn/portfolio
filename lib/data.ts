@@ -1,4 +1,6 @@
 // All page content lives here. Client names are never written (see docs/adr/0001).
+import { CASE_TYPES, type CaseType } from "./worklog-count.ts";
+import { worklogStats } from "./worklog-stats.ts";
 
 // The Japanese line, phrase by phrase. Safari has no `word-break: auto-phrase`, so the hero breaks the line only between
 // these phrases (a <wbr> after each) and never inside "納品まで".
@@ -55,6 +57,32 @@ export const facts = {
     { key: "Tests", value: "Jest and Playwright in CI" },
     { key: "Based in", value: "Bangkok (UTC+7)" },
   ],
+};
+
+/* The strip above the work cards: how much the anonymised work log holds. Every number comes from the committed
+   snapshot (npm run worklog:stats), and the label names the snapshot's own months, so an old snapshot reads as old. */
+const monthName = (ym: string) =>
+  new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
+const caseTypeLabel: Record<CaseType, string> = {
+  build: "Build",
+  incident: "Incident",
+  fix: "Fix",
+  ops: "Ops",
+  analysis: "Analysis",
+  migration: "Migration",
+};
+export const worklog = {
+  label: `jobs logged, ${monthName(worklogStats.since)} to ${monthName(worklogStats.asOf)}`,
+  figures: [
+    { value: String(worklogStats.total), label: `jobs logged, ${monthName(worklogStats.since)} to ${monthName(worklogStats.asOf)}` },
+    { value: String(worklogStats.cases), label: "written up as cases" },
+    { value: String(worklogStats.byType.incident), label: "of the cases were incidents" },
+  ],
+  bar: CASE_TYPES.filter((t) => worklogStats.byType[t] > 0).map((type) => ({
+    type,
+    label: caseTypeLabel[type],
+    count: worklogStats.byType[type],
+  })),
 };
 
 /* The reviewer's score for each round of this page's build. The hero run and the case study chart both draw from it,
@@ -224,7 +252,7 @@ export const caseStudies: CaseStudy[] = [
       checks: [
         { label: "lighthouse", value: "100 accessibility, 100 best practices, 100 SEO" },
         { label: "axe-core", value: "0 WCAG 2.2 violations" },
-        { label: "every commit", value: "type check, lint, 13 content tests, no looping motion" },
+        { label: "every commit", value: "type check, lint, 16 content tests, no looping motion" },
         { label: "whole page", value: "about 400 KB over the wire, fonts included" },
       ],
       process:
