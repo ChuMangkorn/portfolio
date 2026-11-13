@@ -20,6 +20,7 @@ export function Experience() {
               </div>
             ))}
           </dl>
+          <p className="mt-3 text-label leading-relaxed text-fg-muted">{facts.ledgerNote}</p>
         </Reveal>
 
         <ol className="exp-rail mt-12 space-y-8 [--exp-x:0.3rem] sm:[--exp-x:12rem] md:col-span-8 md:mt-0">

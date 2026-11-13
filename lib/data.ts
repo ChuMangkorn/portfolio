@@ -1,5 +1,4 @@
 // All page content lives here. Client names are never written (see docs/adr/0001).
-import { CASE_TYPES, type CaseType } from "./worklog-count.ts";
 import { worklogStats } from "./worklog-stats.ts";
 
 // The Japanese line, phrase by phrase. Safari has no `word-break: auto-phrase`, so the hero breaks the line only between
@@ -47,45 +46,26 @@ export const profile = {
   photo: "/profile-cutout-refined.png",
 };
 
+/* Two rows of the ledger come from the anonymised work log, through the committed snapshot (npm run worklog:stats). The
+   range names the first and last months with entries, so it never claims a month the log does not cover. */
+const shortMonth = (ym: string) =>
+  new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
+
 /* The facts a reader looks for first, set beside the career list. The story is in the hero, the work and the list; a
    paragraph of its own repeated them. */
 export const facts = {
   ledger: [
     { key: "Brief language", value: `Japanese, ${profile.jlpt}` },
     { key: "Web work", value: "2019 to 2022, 2025 to now" },
+    { key: "Work log", value: `${worklogStats.total} tasks, ${shortMonth(worklogStats.since)} to ${shortMonth(worklogStats.until)}` },
+    { key: "Incidents fixed", value: `${worklogStats.byType.incident} of those tasks` },
     { key: "Daily stack", value: "Shopify, WordPress, Tailwind" },
     { key: "Tests", value: "Jest and Playwright in CI" },
     { key: "Based in", value: "Bangkok (UTC+7)" },
   ],
-};
-
-/* The strip above the work cards: how much the anonymised work log holds. Every number comes from the committed
-   snapshot (npm run worklog:stats), and the label names the first and last months that have entries, so it never claims
-   a month the log does not cover. */
-const monthName = (ym: string) =>
-  new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
-const worklogLabel = `jobs logged, ${monthName(worklogStats.since)} to ${monthName(worklogStats.until)}`;
-const caseTypeLabel: Record<CaseType, string> = {
-  build: "Build",
-  incident: "Incident",
-  fix: "Fix",
-  ops: "Ops",
-  analysis: "Analysis",
-  migration: "Migration",
-};
-export const worklog = {
-  figures: [
-    { value: String(worklogStats.total), label: worklogLabel },
-    { value: String(worklogStats.cases), label: "written up as cases" },
-    { value: String(worklogStats.byType.incident), label: "of the cases were incidents I was called in to fix" },
-  ],
-  barTitle: "The cases by type",
-  caption: "Counted from my own anonymised work log. The early months were filled in afterwards from my records.",
-  bar: CASE_TYPES.filter((t) => worklogStats.byType[t] > 0).map((type) => ({
-    type,
-    label: caseTypeLabel[type],
-    count: worklogStats.byType[type],
-  })),
+  // Said beside the two counts, not under them, so the claim and how it was kept are read together.
+  ledgerNote:
+    "The work log was written up in November 2026 from my session records, and is kept automatically since. Client names stay out of it.",
 };
 
 /* The reviewer's score for each round of this page's build. The hero run and the case study chart both draw from it,

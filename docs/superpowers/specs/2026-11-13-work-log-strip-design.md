@@ -43,3 +43,7 @@ The headline says "One engineer, end to end." Five cards show depth, nothing sho
 ## Left to the builder
 
 Exact copy, spacing, and the bar's look within the existing design system; screenshots at 1440 and 390; `npm run check` must pass. Work on a branch; merging into `main` (which deploys) waits for the owner.
+
+## Revision 2026-11-13: moved to the ledger
+
+A design critic scored the page 8.2 with the strip (8.3 before): it sat where "See the work" lands and delayed the first capture, repeated the hero's three-number strip, used the owner's words ("jobs", "cases"), and its bar added nothing the legend did not say. The strip and bar were removed. The counts are now two rows of the "At a glance" ledger in Experience ("Work log: 184 tasks, Mar 2026 to Nov 2026", "Incidents fixed: 10 of those tasks"), with a note beside them saying the log was written up in November 2026 from session records and is kept automatically since. The counter, snapshot and tests are unchanged.
