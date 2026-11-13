@@ -214,7 +214,7 @@ test("the work log rows draw the snapshot's numbers and months", () => {
   const row = (key: string) => facts.ledger.find((r) => r.key === key)?.value ?? "";
   const short = (ym: string) => new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
   assert.equal(row("Work log"), `${worklogStats.total} tasks, ${short(worklogStats.since)} to ${short(worklogStats.until)}`);
-  assert.equal(row("Incidents fixed"), `${worklogStats.byType.incident} of those tasks`);
+  assert.equal(row("Incidents fixed"), String(worklogStats.byType.incident));
 });
 
 test("the work log snapshot adds up", () => {

@@ -58,14 +58,14 @@ export const facts = {
     { key: "Brief language", value: `Japanese, ${profile.jlpt}` },
     { key: "Web work", value: "2019 to 2022, 2025 to now" },
     { key: "Work log", value: `${worklogStats.total} tasks, ${shortMonth(worklogStats.since)} to ${shortMonth(worklogStats.until)}` },
-    { key: "Incidents fixed", value: `${worklogStats.byType.incident} of those tasks` },
+    { key: "Incidents fixed", value: String(worklogStats.byType.incident) },
     { key: "Daily stack", value: "Shopify, WordPress, Tailwind" },
     { key: "Tests", value: "Jest and Playwright in CI" },
     { key: "Based in", value: "Bangkok (UTC+7)" },
   ],
   // Said beside the two counts, not under them, so the claim and how it was kept are read together.
   ledgerNote:
-    "The work log was written up in November 2026 from my session records, and is kept automatically since. Client names stay out of it.",
+    "The work log was written up in November 2026 from my session records, and is kept automatically since.",
 };
 
 /* The reviewer's score for each round of this page's build. The hero run and the case study chart both draw from it,
