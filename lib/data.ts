@@ -77,7 +77,7 @@ export const worklog = {
   figures: [
     { value: String(worklogStats.total), label: worklogLabel },
     { value: String(worklogStats.cases), label: "written up as cases" },
-    { value: String(worklogStats.byType.incident), label: "of the cases were incidents" },
+    { value: String(worklogStats.byType.incident), label: "of the cases were incidents I was called in to fix" },
   ],
   barTitle: "The cases by type",
   caption: "Counted from my own anonymised work log. The early months were filled in afterwards from my records.",
